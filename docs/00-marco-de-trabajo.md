@@ -1,120 +1,86 @@
 # Marco de trabajo — Sitio Alina Martínez Coaching
 
-**Estado:** propuesta, pendiente de autorización
-**Versión:** 0.1
-**Fecha:** 2026-08-28
-**Responsable:** Damian (Paragraph)
+## 1. Alcance de este documento
 
----
+Define cómo se ejecuta el proyecto: qué etapas hay, qué produce cada una, quién la autoriza y qué debe estar cerrado antes de invertir esfuerzo en la siguiente.
 
-## 1. Para qué sirve este documento
-
-Define cómo se ejecuta el proyecto: qué etapas hay, qué produce cada una, quién la autoriza y qué tiene que estar cerrado antes de invertir esfuerzo en la siguiente.
-
-Este es el primer proyecto de Paragraph que se trabaja así, por lo que el documento cumple doble función: gobierna este sitio y queda como plantilla para los siguientes desarrollos web.
+Gobierna este sitio y sirve como plantilla para los siguientes desarrollos web de Paragraph.
 
 ## 2. Principio de operación
 
 Ninguna etapa que cueste esfuerzo arranca sin el visto bueno de la anterior. Cada etapa cierra con un entregable revisable, no con una conversación.
 
-El mecanismo es el mismo siempre:
+El mecanismo es siempre el mismo:
 
-1. Se produce el entregable de la etapa y se sube al repo en una rama `etapa/NN-nombre`.
+1. El entregable de la etapa se sube al repo en una rama `etapa/NN-nombre`.
 2. Se abre un Pull Request con el resumen de decisiones y las preguntas abiertas.
 3. Quien autoriza revisa y responde en el PR.
-4. Al aprobarse, se hace merge y se registra el visto bueno en `docs/aprobaciones/NN-nombre.md` con fecha y nombre.
+4. Al aprobarse se hace merge y se registra el visto bueno en `docs/aprobaciones/NN-nombre.md`.
 5. Hasta entonces, la siguiente etapa no empieza.
 
-Si una etapa se rechaza, el rechazo se documenta en el mismo PR con el motivo. No se corrige en privado.
+Un rechazo se documenta en el mismo PR con el motivo. No se corrige en privado.
 
-### Quién autoriza qué
+### Quién autoriza
 
 | Tipo de decisión | Autoriza |
 |---|---|
 | Técnica: arquitectura, stack, implementación, deploy | Damian |
 | De cara al público: contenido, mensajes, look & feel | Damian y Alina |
 
-Alina firma las etapas 0, 2, 4, 6 y 7. Damian firma todas.
+Damian firma todas las etapas. Alina firma además las etapas 0, 2, 4, 6 y 7.
 
 ## 3. Etapas
 
-La lista original tenía ocho etapas. Esta versión son once. Los cambios y el motivo de cada uno están en la sección 4.
-
 | # | Etapa | Entregable | Autoriza |
 |---|---|---|---|
-| 0 | Research y estrategia SEO/GEO | Informe de keywords, intención, competencia, ICP y mapa de entidades | Damian + Alina |
-| 1 | Arquitectura y mapa de sitio | Sitemap, jerarquía de URLs, enlazado interno, plan de indexación | Damian |
+| 0 | Research y estrategia SEO/GEO | Informe de keywords, intención de búsqueda, competencia, ICP, mapa de entidades y preguntas que responden hoy los modelos de lenguaje sobre este servicio | Damian + Alina |
+| 1 | Arquitectura y mapa de sitio | Sitemap, jerarquía de URLs, enlazado interno, plan de indexación. Se deriva de los datos de la etapa 0 | Damian |
 | 2 | Estructura de contenido | Modelo de contenido y brief por página: secciones, jerarquía de mensajes, keyword asignada, schema previsto | Damian + Alina |
-| 3 | Stack técnico y configuraciones | ADR de stack, hosting, dominio, analítica, formularios, agendado | Damian |
+| 3 | Stack técnico y configuraciones | ADR de stack, hosting, dominio, analítica, formularios, sistema de agendado | Damian |
 | 4 | Dirección de arte | Style tile: tipografía, paleta, tratamiento fotográfico, principios visuales. Sin layouts | Damian + Alina |
-| 5 | Wireframes y secciones | Wireframes por plantilla, con el contenido descrito de la etapa 2 | Damian |
+| 5 | Wireframes y secciones | Wireframes por plantilla, construidos sobre el contenido descrito en la etapa 2 | Damian |
 | 6 | Desarrollo de contenidos | Copy final por página, optimizado para búsqueda y para citación en modelos | Damian + Alina |
-| 7 | Diseño visual | Etapa 4 aplicada a etapa 5 con el copy de etapa 6. Diseño listo para maquetar | Damian + Alina |
+| 7 | Diseño visual | La dirección de la etapa 4 aplicada a los wireframes de la etapa 5 con el copy de la etapa 6 | Damian + Alina |
 | 8 | Implementación | Sitio funcionando en entorno de staging | Damian |
 | 9 | QA y pre-launch | Checklist firmado: Core Web Vitals, schema validado, accesibilidad, redirects, legales, indexabilidad | Damian |
 | 10 | Deploy y medición | Sitio en producción, Search Console y analítica configurados, línea base registrada | Damian |
 
-## 4. Qué cambió respecto a la lista original y por qué
+### Reglas de secuencia
 
-### Se añadió la Etapa 0 (Research)
+- La arquitectura se deriva de datos de demanda. La etapa 1 no arranca sin la etapa 0 cerrada.
+- La dirección de arte se aprueba en abstracto, sin layouts. Evita rehacer diseño cuando cambia el contenido.
+- El copy final entra antes del diseño visual. No se maqueta con texto de relleno.
+- Los wireframes no esperan al copy: trabajan con la descripción de contenido de la etapa 2.
+- La verificación técnica tiene gate propio. No se resuelve dentro del deploy.
 
-La arquitectura de un sitio optimizado para búsqueda se deriva de datos de demanda: qué busca la gente, con qué intención, qué está resolviendo la competencia y qué preguntas responden hoy los modelos de lenguaje cuando alguien pregunta por coaching terapéutico. Definir el mapa de sitio antes de tener eso convierte la etapa 1 en una decisión de intuición que después hay que rehacer.
+## 4. Workstreams transversales
 
-Para GEO hay un trabajo específico que también vive aquí: identificar qué preguntas hace la gente en ChatGPT, Perplexity o Gemini sobre este tipo de servicio, y qué fuentes citan hoy los modelos al responderlas.
-
-### Look & Feel se dividió en dos momentos
-
-En la lista original, Look & Feel iba antes de wireframes. El problema es que diseñar la estética antes de saber qué contenido lleva cada página produce diseño que después no cabe.
-
-La solución no es invertir el orden sin más, porque Alina necesita ver hacia dónde va lo visual antes de aprobar wireframes grises. Por eso se parte en dos:
-
-- **Etapa 4, dirección de arte:** un style tile con tipografía, color, tratamiento de imagen y principios. Es barato de producir, se aprueba rápido y baja el riesgo de una objeción estética tardía.
-- **Etapa 7, diseño visual:** la dirección aprobada aplicada a wireframes reales con copy real.
-
-### El contenido se movió antes del diseño visual
-
-Diseñar con texto de relleno y sustituirlo después es la forma más común de romper un diseño. El copy final (etapa 6) entra antes del diseño visual (etapa 7).
-
-Los wireframes (etapa 5) no esperan al copy: trabajan con la descripción de contenido de la etapa 2, que ya define qué dice cada sección aunque no cómo lo dice.
-
-### Se añadió QA y pre-launch como etapa propia
-
-Era el punto ciego de la lista original. Un sitio hiperoptimizado se verifica o no lo está: schema que valida, Core Web Vitals medidos, accesibilidad revisada, legales publicados, robots y sitemap correctos. Si esto vive dentro de "Deploy" se hace con prisa o no se hace.
-
-### Deploy incorpora medición
-
-Publicar sin Search Console conectado y sin línea base deja el proyecto sin forma de demostrar resultado. La etapa 10 cierra con las herramientas configuradas y las métricas de arranque registradas.
-
-## 5. Workstreams transversales
-
-No son etapas. Son responsabilidades que cruzan varias y que se revisan en cada gate.
+No son etapas. Son responsabilidades que cruzan varias y se revisan en cada gate.
 
 ### E-E-A-T y contenido YMYL
 
-Este es un sitio de salud mental adyacente. Google lo clasifica como YMYL (Your Money or Your Life) y le aplica un estándar de calidad más alto. Los modelos de lenguaje, por su parte, citan con preferencia fuentes con autoría verificable.
+Este es un sitio de salud mental adyacente. Google lo clasifica como YMYL y le aplica un estándar de calidad más alto. Los modelos de lenguaje citan con preferencia fuentes con autoría verificable.
 
-Implicaciones prácticas:
+- Las credenciales y formación de Alina deben estar visibles y ser verificables.
+- Toda afirmación sobre TCC o ciencias del comportamiento necesita referencia.
+- Debe existir política editorial y fecha de revisión por página.
+- El alcance del servicio, y su frontera con la psicoterapia, debe estar explícito.
 
-- Las credenciales y formación de Alina tienen que estar visibles y ser verificables.
-- El contenido que hace afirmaciones sobre TCC o ciencias del comportamiento necesita referencias.
-- Debe existir una política editorial y una fecha de revisión por página.
-- El alcance del servicio, y su frontera con la psicoterapia, tiene que estar explícito. La guía de contenido ya lo plantea como criterio de comunicación; aquí además es factor de posicionamiento.
-
-Hay una tensión que resolver en la etapa 2: la guía dice que el protagonista es el proceso y no la coach, pero E-E-A-T exige autoría visible. Se resuelve separando la página de servicio (donde manda el proceso) de una página de autoría con las credenciales.
+Hay una tensión que se resuelve en la etapa 2: la guía de contenido establece que el protagonista es el proceso y no la coach, mientras que E-E-A-T exige autoría visible. La solución prevista es separar la página de servicio, donde manda el proceso, de una página de autoría con las credenciales.
 
 ### Legal
 
-Aviso de privacidad, términos de servicio, política de cookies, políticas de cancelación y reprogramación, y el disclaimer de alcance del servicio. Se redactan en la etapa 6 y se verifican en la etapa 9.
+Aviso de privacidad, términos de servicio, política de cookies, políticas de cancelación y reprogramación, y disclaimer de alcance del servicio. Se redactan en la etapa 6 y se verifican en la etapa 9.
 
 ### Accesibilidad
 
-Objetivo WCAG 2.2 nivel AA. Se considera desde la etapa 4 (contraste de la paleta) y se verifica en la etapa 9.
+Objetivo WCAG 2.2 nivel AA. Se considera desde la etapa 4, en el contraste de la paleta, y se verifica en la etapa 9.
 
 ### Medición
 
 Los objetivos de conversión se definen en la etapa 0, se implementan en la etapa 8 y se verifican en la etapa 10.
 
-## 6. Convenciones del repositorio
+## 5. Convenciones del repositorio
 
 ```
 /docs
@@ -127,17 +93,16 @@ Los objetivos de conversión se definen en la etapa 0, se implementan en la etap
 /insumos                      Material original entregado por el cliente
 ```
 
-Reglas:
-
 - La documentación canónica vive en GitHub. Drive queda para insumos crudos del cliente.
 - Ramas: `etapa/NN-nombre`. Nunca se trabaja directo sobre `main`.
 - Toda decisión técnica que descarte alternativas se escribe como ADR en `docs/decisiones`.
 - Los commits describen la decisión, no el archivo tocado.
+- Los documentos describen el estado vigente. El historial de cambios vive en git, no en el texto.
 - Cualquier miembro de Paragraph debe poder leer `/docs` en orden y entender en qué punto está el proyecto y por qué se tomó cada decisión.
 
-## 7. Registro de aprobaciones
+## 6. Formato del registro de aprobaciones
 
-Cada archivo en `docs/aprobaciones/` usa este formato:
+Cada archivo en `docs/aprobaciones/` usa esta estructura:
 
 ```markdown
 # Etapa NN — <nombre>
@@ -148,17 +113,3 @@ Cada archivo en `docs/aprobaciones/` usa este formato:
 - Observaciones: <ajustes solicitados y cómo se resolvieron>
 - Alcance autorizado: <qué queda habilitado a partir de aquí>
 ```
-
-## 8. Insumos pendientes para arrancar la Etapa 0
-
-Sin esto, el research empieza incompleto:
-
-- [ ] Credenciales, formación y trayectoria de Alina, con soporte verificable
-- [ ] Dominio: cuál es, quién lo controla, si ya existe sitio publicado
-- [ ] Si hay sitio actual: acceso y datos de tráfico para no perder lo que ya funciona
-- [ ] Mercado objetivo: solo México o también resto de LATAM y España
-- [ ] Sistema de agendado y de cobro previsto
-- [ ] Tarifas y promoción vigente (la guía de contenido lo deja como pendiente)
-- [ ] Accesos: Google Analytics, Search Console, Google Business Profile si aplica
-- [ ] Perfiles sociales activos y cuáles se enlazan desde el sitio
-- [ ] Si hay testimonios utilizables y bajo qué condiciones de anonimato

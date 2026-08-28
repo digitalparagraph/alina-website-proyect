@@ -34,3 +34,7 @@ El documento `insumos/Guia para desarrollo de contenido.docx` contiene la voz ap
 ## Consideración crítica
 
 Este es contenido YMYL (salud mental adyacente). Google le aplica un estándar de calidad más alto y los modelos de lenguaje prefieren fuentes con autoría verificable. Toda afirmación sobre TCC o ciencias del comportamiento necesita respaldo, y el alcance del servicio frente a la psicoterapia debe quedar explícito.
+
+## Estilo de la documentación
+
+Los documentos describen el estado vigente del proyecto, no cómo llegaron a serlo. Nada de notas de creación, comparativas contra versiones anteriores ni narración de cambios: eso vive en el historial de git y en los PR. Un documento debe leerse como si siempre hubiera dicho eso.

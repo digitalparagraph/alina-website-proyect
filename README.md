@@ -8,14 +8,15 @@ Proyecto de Paragraph. Es el primero que se ejecuta con este marco de trabajo po
 
 1. Lee [`docs/00-marco-de-trabajo.md`](docs/00-marco-de-trabajo.md). Define las etapas, quién autoriza cada una y cómo se registra el visto bueno.
 2. Revisa `docs/aprobaciones/` para saber en qué etapa está el proyecto.
-3. Revisa `docs/decisiones/` antes de proponer cambios técnicos: probablemente la alternativa ya se evaluó.
+3. Revisa `docs/insumos-requeridos.md` para saber qué falta del cliente.
+4. Revisa `docs/decisiones/` antes de proponer cambios técnicos: probablemente la alternativa ya se evaluó.
 
 ## Estado
 
 | Etapa | Estado |
 |---|---|
-| Marco de trabajo | Pendiente de autorización |
-| 0. Research y estrategia SEO/GEO | No iniciada |
+| Marco de trabajo | Aprobado |
+| 0. Research y estrategia SEO/GEO | Bloqueada por insumos |
 
 ## Regla básica
 
