@@ -8,3 +8,8 @@ build/
 .next/
 .astro/
 *.log
+
+# Documentos personales del cliente: contienen CURP y cedula profesional.
+# Se conservan en la carpeta local, no en el repositorio.
+insumos/*.PDF
+insumos/*.pdf
