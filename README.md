@@ -16,7 +16,8 @@ Proyecto de Paragraph. Es el primero que se ejecuta con este marco de trabajo po
 | Etapa | Estado |
 |---|---|
 | Marco de trabajo | Aprobado |
-| 0. Research y estrategia SEO/GEO | Bloqueada por insumos |
+| 0. Research y estrategia SEO/GEO | En revisión |
+| 1. Arquitectura y mapa de sitio | No iniciada |
 
 ## Regla básica
 

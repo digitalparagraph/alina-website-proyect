@@ -85,7 +85,7 @@ Los objetivos de conversión se definen en la etapa 0, se implementan en la etap
 ```
 /docs
   00-marco-de-trabajo.md      Este documento
-  0N-<etapa>.md               Un documento por etapa
+  etapa-NN-<nombre>.md        Un documento por etapa
   /decisiones                 ADRs: decisiones técnicas con su contexto y consecuencias
   /aprobaciones               Registro de vistos buenos, uno por etapa
 /content                      Copy final por página, en markdown

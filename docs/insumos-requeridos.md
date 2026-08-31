@@ -2,12 +2,12 @@
 
 Checklist vigente de material que el proyecto necesita del cliente. Se marca conforme se recibe.
 
-## Bloquean la Etapa 0
+## Bloquean la Etapa 1
 
-- [ ] Credenciales, formación y trayectoria de Alina, con soporte verificable
-- [ ] Dominio: cuál es, quién lo controla, si ya existe sitio publicado
-- [ ] Si hay sitio actual: acceso y datos de tráfico
-- [ ] Mercado objetivo: solo México, o también resto de LATAM y España
+- [ ] Instituciones y años de la certificación como coach y de la formación en TCC
+- [ ] Objetivos de conversión del sitio
+
+Resueltos: no hay dominio ni sitio previo, la decisión de dominio pasa a la Etapa 3. El mercado objetivo y el perfil de cliente quedaron resueltos con datos en la Etapa 0.
 
 ## Necesarios antes de la Etapa 2
 
