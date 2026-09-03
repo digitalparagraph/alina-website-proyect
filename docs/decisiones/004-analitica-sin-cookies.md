@@ -37,6 +37,8 @@ Al lanzar: analítica sin identificadores persistentes y sin banner de cookies. 
 
 Cuando entre inversión publicitaria: se añade medición server-side con su capa de consentimiento, diseñada como parte del sitio y no como parche. Esta decisión se reabre entonces.
 
+**Candidato pendiente de revisión.** Paragraph desarrolló un tracker server-side propio y este sitio es candidato a servir como caso de prueba. No está comprometido en la arquitectura: depende de una revisión técnica cuyo alcance está en `revision-tracker-paragraph.md`. Lo que la decide es si escribe identificadores persistentes, si puede capturar contenido de formularios y si reenvía datos a plataformas externas. Si la revisión sale bien se añade con un ADR propio; si no, el sitio no depende de nada.
+
 ## Motivo
 
 Damian confirmó que no hay pauta planeada por ahora, pero que puede haberla. Poner un banner de consentimiento antes de tener campañas que atribuir es pagar el costo sin recibir el beneficio.
