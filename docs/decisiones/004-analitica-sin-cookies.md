@@ -1,38 +1,51 @@
-# ADR 004 — Analítica sin cookies y sin banner
+# ADR 004 — Analítica sin identificadores al lanzar, con ruta a medición server-side
 
 **Fecha:** 2026-09-03
 **Estado:** aceptada
 **Etapa:** 3
+**Decide:** Damian
 
 ## Contexto
 
-El sitio necesita medición para cerrar la Etapa 10. La opción por default de la industria es Google Analytics 4, que instala cookies y obliga a pedir consentimiento.
+El sitio necesita medición para cerrar la Etapa 10. La opción por default de la industria es Google Analytics 4, que instala identificadores persistentes y obliga a pedir consentimiento.
 
-Un banner de consentimiento tiene tres costos concretos aquí: degrada las métricas de rendimiento que la Etapa 9 va a exigir, es lo primero que ve alguien que llegó buscando ayuda con un problema personal, y contradice la dirección visual sobria que establece la guía de contenido.
+Un banner de consentimiento tiene tres costos aquí: degrada las métricas de rendimiento que exige la Etapa 9, es lo primero que ve alguien que llegó buscando ayuda con un problema personal, y contradice la dirección visual sobria que establece la guía de contenido.
+
+Contra eso pesa la atribución: si hay inversión publicitaria, no poder saber qué campaña trae gente que efectivamente agenda hace la inversión ciega.
+
+### Una precisión que cambia el cálculo
+
+La medición server-side **no elimina la obligación de consentimiento.** Esa obligación no depende de dónde corre el script, sino de si se guarda o lee un identificador en el dispositivo y de si se procesan datos personales para una finalidad que lo requiere. Un contenedor server-side que pone una cookie de primera parte para unir sesiones, o que reenvía datos a Google o Meta, necesita consentimiento igual.
+
+Lo que el server-side sí aporta: menos JavaScript en el cliente, resistencia a bloqueadores, mejor calidad de dato y control sobre qué campos se reenvían. Es la forma correcta de medir *cuando ya hay consentimiento*, no una alternativa a pedirlo.
+
+La disyuntiva real, entonces, no es banner contra server-side. Es tener atribución de campañas o no tenerla.
 
 ## Alternativas evaluadas
 
 | Opción | A favor | En contra |
 |---|---|---|
-| Google Analytics 4 | Estándar, gratuito, integrable con el resto del stack de Paragraph | Cookies, banner obligatorio, y un volumen de datos personales que este sitio no necesita recolectar |
-| **Analítica sin cookies** | Sin banner; suficiente para lo que este sitio mide; menos datos personales en custodia | Sin cohortes ni atribución multisesión |
-| Solo Search Console | Cero recolección | Insuficiente: no mide conversión ni comportamiento en el sitio |
+| GA4 desde el lanzamiento | Estándar, atribución completa | Banner obligatorio sin que haya campañas que atribuir |
+| **Sin identificadores al lanzar, con ruta a server-side** | Sin banner mientras el tráfico sea orgánico; el CRM guarda origen y UTMs desde el día uno, así que añadir la capa de consentimiento después no obliga a rehacer nada | Sin atribución multisesión en el periodo inicial |
+| Sin identificadores, definitivo | Máxima simplicidad | Cierra la puerta a medir pauta sin rediseñar la medición |
 
 ## Decisión
 
-Analítica sin cookies, con Search Console como fuente de datos de búsqueda. La herramienta concreta se fija en la implementación; el requisito es que no use cookies ni identificadores persistentes.
+Al lanzar: analítica sin identificadores persistentes y sin banner de cookies. Search Console como fuente de datos de búsqueda.
 
-Sin banner de cookies, porque no hay cookies que consentir.
+**El CRM guarda página de origen y parámetros UTM desde el primer día** (ver ADR 005). Eso da atribución de última interacción sin identificar a nadie ni requerir consentimiento.
+
+Cuando entre inversión publicitaria: se añade medición server-side con su capa de consentimiento, diseñada como parte del sitio y no como parche. Esta decisión se reabre entonces.
 
 ## Motivo
 
-Lo que este sitio necesita medir es corto: qué páginas de tema traen tráfico, cuántos visitantes llegan al formulario y cuántos lo envían. Eso no requiere identificar a nadie entre sesiones.
+Damian confirmó que no hay pauta planeada por ahora, pero que puede haberla. Poner un banner de consentimiento antes de tener campañas que atribuir es pagar el costo sin recibir el beneficio.
 
-Renunciar a la atribución multisesión sí tiene un costo real: el perfil de cliente investiga bastante antes de contactar, así que habrá conversiones cuyo origen no vamos a poder reconstruir con precisión. Se acepta a cambio de no poner un banner delante de alguien que llegó buscando ayuda.
+Guardar origen y UTMs en el CRM cubre la mayor parte del valor: permite saber qué página y qué campaña trajeron a alguien que llegó a contactar, que es la pregunta que de verdad importa. Lo que falta es la ruta completa entre visitas, y eso se acepta.
 
 ## Consecuencias
 
-- No habrá atribución exacta del primer punto de contacto. Search Console cubre la parte de búsqueda.
-- Si Paragraph necesita después integrar el sitio con HubSpot para atribución de campañas, hay que reabrir esta decisión y añadir el consentimiento correspondiente.
-- Toda dependencia futura que instale cookies obliga a revisar este ADR. No se añade ninguna sin hacerlo.
-- El objetivo de conversión se mide como evento de envío de formulario y clic al enlace de WhatsApp.
+- Sin atribución multisesión al inicio. El perfil de cliente investiga bastante antes de contactar, así que habrá recorridos que no se van a poder reconstruir.
+- El objetivo de conversión se mide como envío de formulario y clic al enlace de WhatsApp, y se cualifica con los estados del CRM: un envío no es una conversión hasta que Alina lo marca como agendado.
+- Cualquier dependencia futura que instale identificadores obliga a reabrir este ADR. No se añade ninguna sin hacerlo.
+- Si el sitio recibe tráfico relevante de España, aplica GDPR y la evaluación cambia. Hay que revisarlo con asesoría legal antes de invertir en pauta hacia allá.

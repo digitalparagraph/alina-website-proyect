@@ -1,6 +1,6 @@
 # Etapa 3 — Stack técnico y configuraciones
 
-Decisiones razonadas en los ADR 002, 003 y 004. Este documento reúne la configuración completa y lo que queda pendiente.
+Decisiones razonadas en los ADR 002, 003, 004 y 005. Este documento reúne la configuración completa y lo que queda pendiente.
 
 ## 1. Resumen
 
@@ -11,9 +11,10 @@ Decisiones razonadas en los ADR 002, 003 y 004. Este documento reúne la configu
 | Estilos | CSS propio con custom properties. Tokens de la Etapa 4 |
 | Interactividad | JavaScript propio y mínimo. Sin framework de componentes |
 | Hosting | Cloudflare Pages, despliegue automático desde `main` |
-| Formulario | Pages Function propia que reenvía por correo sin persistir |
+| Formulario | Pages Function propia. El texto abierto se reenvía por correo y no se persiste |
+| CRM | Cloudflare D1 con el dato partido: operativo en base, confidencias solo en el correo de Alina |
 | Canal alterno | Enlace directo de WhatsApp. Enlace, no widget |
-| Analítica | Sin cookies, sin banner. Search Console para datos de búsqueda |
+| Analítica | Sin identificadores ni banner al lanzar. Atribución por UTMs en el CRM. Ruta a server-side cuando entre pauta |
 | Tipografía | Autoalojada y subsetada. Sin CDN de terceros |
 | Imágenes | Optimización nativa de Astro, AVIF y WebP con respaldo |
 | Dominio | Pendiente. Ver sección 6 |
@@ -33,6 +34,10 @@ Decisiones razonadas en los ADR 002, 003 y 004. Este documento reúne la configu
     tokens.css             Sale de la Etapa 4
 /functions
   contacto.ts              Pages Function del formulario
+  /admin                   Panel de seguimiento, detrás de Cloudflare Access
+/db
+  schema.sql               Esquema de D1
+  migraciones/
 /public
   fonts/                   Tipografía autoalojada
 /docs                      Documentación del proyecto (ya existe)
@@ -68,6 +73,7 @@ Presupuestos que la Etapa 9 va a verificar. Se fijan aquí para que la implement
 - LCP por debajo de 2.0 s en 4G simulada; CLS por debajo de 0.1.
 - Menos de 100 KB de CSS y JS sumados, comprimidos.
 - Cero peticiones a terceros en la carga inicial. La tipografía es propia, la analítica se carga diferida.
+- Excepción única: la protección antispam del formulario en `/agendar/`, cargada de forma diferida y solo en esa página.
 - WCAG 2.2 nivel AA. Contraste verificado sobre la paleta de la Etapa 4, no después.
 - HTML semántico con un solo `h1` por página y jerarquía de encabezados sin saltos.
 
@@ -112,10 +118,30 @@ Consecuencia del ADR 003 y del contexto del sitio.
 
 Ese último punto se redacta en la Etapa 6 y se verifica en la Etapa 9.
 
-## 10. Pendiente
+## 10. El CRM
+
+Definido en el ADR 005. Lo que la implementación tiene que respetar:
+
+**Tabla de contactos.** Identificador, fecha de creación, nombre, correo, página de origen, referente, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, estado, fecha del último cambio de estado, y un campo de notas operativas breves.
+
+**El campo abierto del formulario no se escribe en la base.** Viaja solo en la notificación por correo a Alina.
+
+**Estados:** `nuevo`, `contactado`, `agendado`, `en_proceso`, `no_califica`, `derivado`.
+
+`derivado` importa para la medición: un contacto derivado a atención especializada no es un fracaso de campaña, es el ADR 001 funcionando. Si se cuenta como pérdida, la optimización empuja en la dirección contraria a la que el posicionamiento del sitio quiere.
+
+**Lo que el CRM permite calcular:** conversión cualificada por página de origen y por campaña. Un envío de formulario no cuenta como conversión hasta que Alina lo mueve a `agendado`. Esa es la diferencia entre medir formularios y medir clientes.
+
+**Advertencia que va en la interfaz:** el panel no es un expediente clínico. El campo de notas es para seguimiento operativo, no para notas de sesión.
+
+**Acceso:** Cloudflare Access. Sin autenticación propia. El acceso de Paragraph al panel debe quedar registrado y revisable.
+
+## 11. Pendiente
 
 - **Dominio.** Verificar disponibilidad y decidir. Bloquea el despliegue.
 - **Proveedor de envío de correo** para la Pages Function. Se elige en la implementación y se documenta como ADR.
 - **Herramienta de analítica** concreta. El requisito está fijado; la elección es de implementación.
 - **Correo de destino** del formulario.
 - **Número de WhatsApp** que se va a enlazar.
+- **Política de retención** del CRM, con borrado automático. Requisito del ADR 005.
+- **Quién de Paragraph tiene acceso** al panel, y cómo se revisa.
