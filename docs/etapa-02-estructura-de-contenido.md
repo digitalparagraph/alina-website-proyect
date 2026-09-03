@@ -183,9 +183,11 @@ Las objeciones emocionales **no viven aquí**. Ver sección 6.
 **Propósito:** convertir sin fricción.
 **Schema:** ninguno propio.
 
-Recordatorio de qué es la primera sesión en dos líneas, el mecanismo de agendado, y qué pasa después. La confirmación posterior lleva `noindex`.
+**Primera línea obligatoria:** el mecanismo real. La persona escribe, Alina responde y acuerdan horario. La etiqueta dice "Agendar" y la página tiene que aclarar de inmediato que no hay calendario que elegir.
 
-El mecanismo concreto se decide en la Etapa 3.
+Luego: recordatorio de qué es la primera sesión en dos líneas, el formulario, y el enlace de WhatsApp como alternativa. La confirmación posterior lleva `noindex`.
+
+El formulario pide nombre, correo y un campo abierto. Nada más, y declara antes del botón que no es un canal de atención urgente. Ver Etapa 3, sección 9.
 
 ## 6. Dónde vive cada pregunta de la guía
 
