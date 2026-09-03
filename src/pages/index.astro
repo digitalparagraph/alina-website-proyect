@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const temas = (await getCollection('temas'))
+  .filter((t) => t.data.fase === 1)
+  .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
+---
+<Base
+  titulo="Alina Martínez · Coaching terapéutico en línea"
+  descripcion="Acompañamiento para comprender y modificar patrones de pensamiento, emoción y conducta que interfieren con cómo quieres vivir, decidir o relacionarte."
+>
+  <section class="contenedor seccion pila">
+    <p class="borrador">
+      contenido provisional · la redacción definitiva es de la etapa 6
+    </p>
+    <h1 class="apertura">
+      Hay cosas que <span class="marcador">entiendes perfectamente</span> y aun
+      así sigues haciendo.
+    </h1>
+    <p class="entrada medida">
+      Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
+      Este es un espacio para entender qué mantiene ese patrón y qué otras
+      respuestas tienes disponibles.
+    </p>
+  </section>
+
+  <section class="contenedor seccion pila">
+    <h2>Qué puedes trabajar</h2>
+    <ul class="temas">
+      {temas.map((t) => (
+        <li>
+          <a href={`/temas/${t.slug}/`}>{t.data.titulo}</a>
+          <span>{t.data.reconocimiento}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .apertura{font-size:var(--text-display);line-height:var(--leading-tight);max-width:18ch}
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .temas{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-6);
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .temas li{display:flex;flex-direction:column;gap:var(--space-2);
+    border-top:1px solid var(--border-hairline);padding-top:var(--space-4)}
+  .temas a{font-weight:var(--weight-bold);font-size:var(--text-h3);
+    text-decoration:none;letter-spacing:var(--tracking-tight)}
+  .temas a:hover{text-decoration:underline}
+  .temas span{font-size:var(--text-sm);color:var(--text-secondary)}
+</style>

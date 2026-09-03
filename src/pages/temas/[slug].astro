@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const temas = await getCollection('temas');
+  return temas.map((t) => ({ params: { slug: t.slug }, props: { tema: t } }));
+}
+
+const { tema } = Astro.props;
+const d = tema.data;
+const { Content } = await tema.render();
+
+const todos = await getCollection('temas');
+const hermanos = d.temasHermanos
+  .map((s) => todos.find((t) => t.slug === s))
+  .filter(Boolean);
+
+const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const articulo = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.titulo,
+  description: d.descripcion,
+  inLanguage: 'es-MX',
+  author: { '@id': `${sitio}#alina` },
+  dateModified: d.fechaRevision.toISOString().slice(0, 10),
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
+const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+<Base titulo={d.titulo} descripcion={d.descripcion}>
+  <script slot="schema" type="application/ld+json" set:html={JSON.stringify(articulo)} />
+
+  <article class="contenedor seccion pila">
+
+    {d.borrador && (
+      <p class="borrador">
+        contenido provisional · la redacción definitiva es de la etapa 6
+      </p>
+    )}
+
+    <!-- Bloque 1 · Reconocimiento. Corto a propósito: si crece, entierra la
+         respuesta del bloque 2, que es la que los modelos extraen. -->
+    <header class="pila">
+      <h1>{d.titulo}</h1>
+      <p class="entrada">{d.reconocimiento}</p>
+    </header>
+
+    <!-- Bloque 2 · La pregunta de búsqueda, con respuesta directa arriba. -->
+    <section class="pila">
+      <h2>{d.preguntaBusqueda}</h2>
+      <p class="respuesta">{d.respuestaCorta}</p>
+    </section>
+
+    <!-- Bloques 3, 4 y 5 · cuerpo del documento -->
+    <div class="cuerpo"><Content /></div>
+
+    <!-- Bloque 6 · Delimitación de alcance. Obligatoria por el ADR 001 y
+         validada por el esquema: sin ella el build falla. Va aquí, visible,
+         no en el pie. -->
+    <aside class="alcance" aria-labelledby="alcance-t">
+      <h2 id="alcance-t" class="alcance-titulo">Hasta dónde llega este acompañamiento</h2>
+      <p>{d.delimitacionAlcance}</p>
+      <p><a href="/alcance-del-servicio/">Alcance completo del servicio</a></p>
+    </aside>
+
+    <!-- Bloque 7 · Temas hermanos. Los patrones aparecen combinados. -->
+    {hermanos.length > 0 && (
+      <section class="pila">
+        <h2>Temas relacionados</h2>
+        <ul class="hermanos">
+          {hermanos.map((h) => (
+            <li>
+              <a href={`/temas/${h.slug}/`}>{h.data.titulo}</a>
+              <span>{h.data.reconocimiento.split('.')[0]}.</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Bloque 8 · Cierre. Qué habilita el proceso, nunca qué promete. -->
+    <section class="pila cierre">
+      <p class="medida">
+        Si algo de esto describe lo que te pasa, la primera sesión sirve para
+        entender qué lo mantiene y decidir si tiene sentido trabajarlo.
+      </p>
+      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p class="revision">Última revisión: <time datetime={articulo.dateModified}>{fecha}</time></p>
+    </section>
+
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .respuesta{font-size:var(--text-lg)}
+  .cuerpo{display:flex;flex-direction:column;gap:var(--space-5)}
+  .cuerpo :global(h2){margin-top:var(--space-6)}
+  .cuerpo :global(p){max-width:var(--measure)}
+  .alcance-titulo{font-size:var(--text-h3)}
+  .hermanos{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-4);
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:var(--container-max)}
+  .hermanos li{display:flex;flex-direction:column;gap:var(--space-1);
+    border-top:1px solid var(--border-hairline);padding-top:var(--space-3)}
+  .hermanos a{font-weight:var(--weight-bold);text-decoration:none}
+  .hermanos a:hover{text-decoration:underline}
+  .hermanos span{font-size:var(--text-sm);color:var(--text-muted)}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+  .revision{font-size:var(--text-xs);color:var(--text-muted)}
+</style>

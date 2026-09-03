@@ -1,0 +1,88 @@
+---
+import '@fontsource/poppins/latin-300.css';
+import '@fontsource/poppins/latin-700.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Persona from '../components/schema/Persona.astro';
+
+const { titulo, descripcion, noindex = false } = Astro.props;
+const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const nav = [
+  { href: '/proceso/', texto: 'El proceso' },
+  { href: '/temas/', texto: 'Temas' },
+  { href: '/terapia-o-coaching/', texto: 'Enfoques' },
+  { href: '/sobre-alina/', texto: 'Sobre Alina' },
+];
+---
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{titulo}</title>
+  <meta name="description" content={descripcion} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex,follow" />}
+  <meta property="og:title" content={titulo} />
+  <meta property="og:description" content={descripcion} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_MX" />
+  <Persona sitio={sitio} />
+  <slot name="schema" />
+</head>
+<body>
+  <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="contenedor cabecera-fila">
+      <a href="/" class="marca" aria-label="Alina Martínez, inicio">
+        <span class="marca-nombre">Alina Martínez</span>
+        <span class="eyebrow">existir consciente</span>
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          {nav.map((i) => <li><a href={i.href}>{i.texto}</a></li>)}
+          <li><a href="/agendar/" class="boton">Agendar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido"><slot /></main>
+
+  <footer class="pie">
+    <div class="contenedor pila">
+      <p class="medida">
+        Coaching terapéutico en línea. Sesiones individuales de aproximadamente
+        50 minutos, habitualmente cada 15 días.
+      </p>
+      <ul class="pie-enlaces">
+        <!-- /sobre-alina/ va en el pie de todas las páginas: E-E-A-T pide que
+             la autoría sea alcanzable desde cualquier punto del sitio. -->
+        <li><a href="/sobre-alina/">Sobre Alina</a></li>
+        <li><a href="/alcance-del-servicio/">Alcance del servicio</a></li>
+        <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
+        <li><a href="/terminos-y-condiciones/">Términos y condiciones</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style>
+  .saltar{position:absolute;left:-9999px;top:var(--space-3)}
+  .saltar:focus{left:var(--space-5);background:var(--surface-card);padding:var(--space-3) var(--space-4);z-index:10}
+
+  .cabecera{border-bottom:1px solid var(--border-subtle)}
+  .cabecera-fila{display:flex;flex-wrap:wrap;gap:var(--space-5);
+    align-items:center;justify-content:space-between;padding-block:var(--space-5)}
+  .marca{text-decoration:none;display:flex;flex-direction:column;gap:2px}
+  .marca-nombre{font-weight:var(--weight-bold);font-size:var(--text-lg);letter-spacing:var(--tracking-tight)}
+  nav ul{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:center;list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
+
+  .pie{border-top:1px solid var(--border-subtle);margin-top:var(--space-9);
+    padding-block:var(--space-8);background:var(--surface-mist)}
+  .pie-enlaces{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);
+    list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
+</style>

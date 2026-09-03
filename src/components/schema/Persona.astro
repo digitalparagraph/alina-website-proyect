@@ -1,0 +1,37 @@
+---
+/**
+ * Person es la entidad central del grafo: un sitio de práctica individual se
+ * ancla en la persona, no en una organización. Las demás entidades la
+ * referencian por @id.
+ *
+ * hasCredential declara la certificación ICC como credencial principal.
+ * ADR 001: nunca se presenta como terapeuta, psicóloga ni psicoterapeuta.
+ */
+const { sitio } = Astro.props;
+const persona = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${sitio}#alina`,
+  name: 'Alina Martínez',
+  jobTitle: 'Coach certificada con formación en terapia cognitivo conductual',
+  url: `${sitio}/sobre-alina/`,
+  knowsLanguage: 'es-MX',
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Certificación profesional',
+      name: 'International Certified Coach',
+      recognizedBy: { '@type': 'Organization', name: 'International Coaching Community' },
+      dateCreated: '2014-02-05',
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Especialización',
+      name: 'Especialización en Psicoterapia Cognitivo Conductual',
+      recognizedBy: { '@type': 'Organization', name: 'Instituto de Estudios Superiores SABER+' },
+      dateCreated: '2025-07-16',
+    },
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(persona)} />

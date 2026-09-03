@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Sin bloqueos a rastreadores de modelos de lenguaje: la estrategia GEO
+# depende de que puedan leer el sitio.
+
+Sitemap: https://alina-website.pages.dev/sitemap-index.xml
