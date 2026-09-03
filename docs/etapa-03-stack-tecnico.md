@@ -1,6 +1,6 @@
 # Etapa 3 — Stack técnico y configuraciones
 
-Decisiones razonadas en los ADR 002, 003, 004 y 005. Este documento reúne la configuración completa y lo que queda pendiente.
+Decisiones razonadas en los ADR 002, 003, 004, 005 y 006. Este documento reúne la configuración completa y lo que queda pendiente.
 
 ## 1. Resumen
 
@@ -14,7 +14,8 @@ Decisiones razonadas en los ADR 002, 003, 004 y 005. Este documento reúne la co
 | Formulario | Pages Function propia. El texto abierto se reenvía por correo y no se persiste |
 | CRM | Cloudflare D1 con el dato partido: operativo en base, confidencias solo en el correo de Alina |
 | Canal alterno | Enlace directo de WhatsApp. Enlace, no widget |
-| Analítica | Sin identificadores ni banner al lanzar. Atribución por UTMs en el CRM. Ruta a server-side cuando entre pauta |
+| Analítica | Sin identificadores ni banner al lanzar. Atribución por UTMs en el CRM |
+| Medición server-side | Signal integrado y desactivado. Sin destino publicitario en este sitio |
 | Tipografía | Autoalojada y subsetada. Sin CDN de terceros |
 | Imágenes | Optimización nativa de Astro, AVIF y WebP con respaldo |
 | Dominio | Pendiente. Ver sección 6 |
@@ -145,3 +146,5 @@ Definido en el ADR 005. Lo que la implementación tiene que respetar:
 - **Número de WhatsApp** que se va a enlazar.
 - **Política de retención** del CRM, con borrado automático. Requisito del ADR 005.
 - **Quién de Paragraph tiene acceso** al panel, y cómo se revisa.
+- **Slug de `tenant`** de Signal, y registro de los orígenes de producción y preview en su allowlist.
+- **Subdominio `tracking.<dominio>`** con CNAME y certificado, una vez decidido el dominio.

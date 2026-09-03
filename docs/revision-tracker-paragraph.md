@@ -1,56 +1,70 @@
-# Revisión pendiente — tracker server-side de Paragraph
+# Revisión del tracker de Paragraph (Signal)
 
-Paragraph desarrolló un sistema de medición server-side y este sitio es candidato a servir como caso de prueba.
+Revisión hecha contra la guía técnica de Signal v0.1, que describe el repositorio `paragraph-signal` en el commit `2a7192e`. Decisión resultante en el ADR 006.
 
-**Estado: no comprometido en la arquitectura.** La Etapa 3 queda decidida sin él (ADR 004). Si la revisión sale bien, se añade con un ADR propio; si no, el sitio no depende de nada.
+## Qué es Signal
 
-## Por qué este sitio sirve y por qué no
+Medición server-side propia de Paragraph. Su propósito declarado es responder lo que un píxel no puede: qué campaña trajo al cliente que firmó meses después. Para eso el sitio hace dos cosas —disparar eventos e identificar a la persona en cuanto conoce su correo— y Signal se encarga de leer del CRM cuándo eso se convirtió en dinero y devolverlo a la plataforma de origen.
 
-**A favor:** pequeño, estático, tráfico bajo, sin ingresos dependiendo de la medición. Un error sale barato y se detecta rápido.
+Superficie del SDK: cuatro llamadas. `init`, `consent`, `identify`, `track`.
 
-**En contra:** es un sitio de salud mental adyacente donde las personas describen por qué buscan ayuda. Un error de configuración que en un e-commerce es una molestia, aquí expone información que nadie quiere ver filtrada.
+## Respuestas a la revisión
 
-La conclusión depende enteramente de las respuestas de abajo. Si el tracker recolecta eventos sin identificador y no reenvía a plataformas externas, este sitio es un buen banco de pruebas. Si está en fase de depuración y reenvía datos personales a plataformas de anuncios, hay que estrenarlo en otro proyecto y traerlo aquí cuando esté rodado.
+### Identificadores: sí, cuatro cookies de primera parte
 
-## Lo que necesito revisar
+| Cookie | Vida | Qué es |
+|---|---|---|
+| `_pgh_anon` | 365 días | Este navegador |
+| `_pgh_ses` | 30 min de inactividad | Esta visita |
+| `_pgh_ft` | 365 días | Primer toque, no se sobrescribe nunca |
+| `_pgh_lt` | 365 días | Último toque |
 
-### Identificadores
+Todas `SameSite=Lax` y `Secure`.
 
-- [ ] ¿Escribe cookies, `localStorage`, `sessionStorage` o IndexedDB en el navegador? ¿Cuáles y con qué duración?
-- [ ] ¿Genera algún identificador que persista entre sesiones o entre páginas?
-- [ ] ¿Usa fingerprinting, aunque sea parcial: user agent, resolución, fuentes, canvas?
-- [ ] ¿Qué hace con la dirección IP? ¿La guarda, la trunca, la descarta?
+**Consecuencia: con Signal activo hace falta consentimiento y banner.** Es lo que ya anticipaba el ADR 004: el server-side no elimina la obligación. La propia guía de Signal lo dice sin rodeos: recibe el consentimiento, no lo decide, y las cuatro cookies deben declararse en el aviso de privacidad.
 
-Esta sección decide si hace falta banner de consentimiento. Nada más lo decide.
+### Autocaptura de formularios: no
 
-### Datos que recolecta
+El riesgo que más me preocupaba no existe. El SDK no autocaptura inputs, no graba sesión y no hace mapas de calor. Solo envía lo que el desarrollador dispara explícitamente con `track`, y las propiedades las decide quien integra.
 
-- [ ] Lista completa de campos por evento.
-- [ ] ¿Captura contenido de formularios, aunque sea por accidente? Autocaptura de inputs, grabación de sesión, mapas de calor.
-- [ ] ¿Captura parámetros de URL completos, incluidos los que no son UTM?
-- [ ] ¿Captura texto de la página o solo metadatos?
+En este sitio eso importa mucho: el campo abierto donde alguien describe por qué busca ayuda no puede llegar a Signal por accidente. Solo llegaría si alguien lo pasara a mano como propiedad, y eso queda prohibido en la implementación.
 
-El segundo punto es el crítico. Un tracker con autocaptura de formularios en este sitio recolectaría exactamente lo que el ADR 003 y el 005 se propusieron proteger.
+### Datos personales del visitante
 
-### Destinos
+- **Correo:** se normaliza y se hashea con SHA-256 en el navegador. No sale en claro y Signal no almacena direcciones reales.
+- **IP y user-agent:** apagados por omisión. La guía lo plantea como decisión del cliente, no técnica.
 
-- [ ] ¿A dónde van los eventos? ¿Solo a infraestructura de Paragraph, o se reenvían a Google, Meta u otros?
-- [ ] Si reenvía: ¿es configurable por sitio, y se puede desactivar del todo?
-- [ ] ¿Qué campos exactamente salen en cada reenvío?
+### Destinos: sí reenvía a plataformas de anuncios
 
-### Operación
+Los conectores de **Meta CAPI** y **HubSpot** están marcados como estables. El consentimiento viaja con cada evento con las banderas `analytics` y `advertising`, y cada destino evalúa si puede usarlo.
 
-- [ ] Peso del script en el cliente y si bloquea el renderizado. El presupuesto de la Etapa 3 es cero peticiones a terceros en la carga inicial.
-- [ ] Política de retención de los eventos.
-- [ ] Quién tiene acceso a los datos recolectados.
-- [ ] ¿Hay documentación o repositorio que pueda leer?
+Esta es la parte que obliga a una decisión de fondo para este sitio en particular. Ver ADR 006.
 
-## Qué entregar
+### Estado del producto: el collector no está corriendo
 
-Cualquiera de estas tres cosas alcanza para empezar:
+Lo que la propia guía marca como faltante:
 
-1. Acceso al repositorio del tracker.
-2. Documentación técnica, aunque esté incompleta.
-3. El endpoint más un ejemplo de payload real, y reviso el comportamiento del cliente por mi cuenta.
+- No hay proceso que escuche. Existe `crearCollector()` con sus pruebas, pero no hay `.listen()`, ni Dockerfile, ni servicio en el compose. **Ningún sitio puede enviar todavía.**
+- El SDK no está publicado en npm. Hay que copiar el `dist/` al proyecto.
+- Aprovisionar un tenant es trabajo manual en SQL.
 
-Con eso digo si entra al lanzamiento, si entra desactivado, o si conviene estrenarlo en otro proyecto.
+Lo que sí está estable: el SDK de navegador, el contrato del evento validado con Zod, y la deduplicación por índice único `(tenant_id, event_id)`.
+
+## Lo que esto habilita
+
+El contrato es estable, así que **la integración que se escriba ahora no cambia.** Y con la variable de entorno del endpoint vacía, el SDK no se inicializa: no envía, no escribe cookies y no rompe nada.
+
+Eso resuelve la tensión completa. Se integra ahora como parte del desarrollo normal, el sitio lanza sin cookies y sin banner tal como decidió el ADR 004, y el día que el collector esté en pie se activa sin volver a tocar código.
+
+## Dependencia que hay que resolver pronto
+
+El endpoint tiene que ser un subdominio del cliente —`tracking.dominio.mx`— apuntado al collector por CNAME, para que las cookies sean de primera parte. Eso pasa por DNS y por certificado.
+
+**Sin dominio no hay endpoint.** Es un motivo más para cerrar la decisión de dominio.
+
+## Notas sobre el producto
+
+Dos detalles del diseño que vale reconocer, porque son los que suelen faltar:
+
+- **Una visita sin parámetros de campaña y sin referrer externo no sobrescribe el último toque.** Sin esa regla, cualquier regreso por marcador borraría la campaña que trajo a la persona y todo terminaría en tráfico directo.
+- **El collector responde 202 y no 200.** Recibido y encolado no es entregado, y confundir las dos cosas es justo lo que hace que nadie revise si el evento llegó de verdad.

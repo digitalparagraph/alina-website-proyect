@@ -40,7 +40,7 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | [`docs/mapa-de-sitio.md`](docs/mapa-de-sitio.md) | El mapa de sitio en diagrama |
 | [`docs/credenciales.md`](docs/credenciales.md) | Credenciales verificadas y qué restringen |
 | [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
-| [`docs/revision-tracker-paragraph.md`](docs/revision-tracker-paragraph.md) | Alcance de la revisión pendiente del tracker server-side de Paragraph |
+| [`docs/revision-tracker-paragraph.md`](docs/revision-tracker-paragraph.md) | Revisión de Signal, el tracker server-side de Paragraph |
 | `docs/decisiones/` | ADRs |
 | `docs/aprobaciones/` | Registro de vistos buenos |
 
