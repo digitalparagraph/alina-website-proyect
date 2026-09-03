@@ -1,24 +1,56 @@
 # Sitio web — Alina Martínez Coaching
 
-Desarrollo de sitio optimizado para búsqueda tradicional (SEO) y para citación en modelos de lenguaje (GEO).
+Sitio optimizado para búsqueda tradicional (SEO) y para citación en modelos de lenguaje (GEO). Cliente de Paragraph.
 
-Proyecto de Paragraph. Es el primero que se ejecuta con este marco de trabajo por etapas, por lo que su documentación sirve como plantilla para los siguientes desarrollos web de la agencia.
+Es el primer proyecto de la agencia ejecutado con marco de trabajo por etapas y autorizaciones formales. Su documentación es también la plantilla para los siguientes desarrollos web.
 
-## Por dónde empezar
+## Si acabas de llegar
 
-1. Lee [`docs/00-marco-de-trabajo.md`](docs/00-marco-de-trabajo.md). Define las etapas, quién autoriza cada una y cómo se registra el visto bueno.
-2. Revisa `docs/aprobaciones/` para saber en qué etapa está el proyecto.
-3. Revisa `docs/insumos-requeridos.md` para saber qué falta del cliente.
-4. Revisa `docs/decisiones/` antes de proponer cambios técnicos: probablemente la alternativa ya se evaluó.
+Lee **[`docs/como-retomar-el-proyecto.md`](docs/como-retomar-el-proyecto.md)**. Ahí está el orden de lectura, los accesos que necesitas y las decisiones que ya no se discuten.
+
+Para abrir una sesión de Claude sobre este proyecto, usa el prompt de **[`docs/prompt-de-arranque.md`](docs/prompt-de-arranque.md)**.
 
 ## Estado
 
-| Etapa | Estado |
+Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaciones.
+
+| # | Etapa | Estado |
+|---|---|---|
+| — | Marco de trabajo | Aprobado |
+| 0 | Research y estrategia SEO/GEO | Aprobada por Damian · firma de Alina pendiente |
+| 1 | Arquitectura y mapa de sitio | En revisión (PR #2) |
+| 2 | Estructura de contenido | No iniciada |
+| 3 | Stack técnico y configuraciones | No iniciada |
+| 4 | Dirección de arte | No iniciada |
+| 5 | Wireframes y secciones | No iniciada |
+| 6 | Desarrollo de contenidos | No iniciada |
+| 7 | Diseño visual | No iniciada |
+| 8 | Implementación | No iniciada |
+| 9 | QA y pre-launch | No iniciada |
+| 10 | Deploy y medición | No iniciada |
+
+## Documentación
+
+| Documento | Qué contiene |
 |---|---|
-| Marco de trabajo | Aprobado |
-| 0. Research y estrategia SEO/GEO | Aprobada |
-| 1. Arquitectura y mapa de sitio | En revisión |
-| 2. Estructura de contenido | No iniciada |
+| [`docs/00-marco-de-trabajo.md`](docs/00-marco-de-trabajo.md) | Las once etapas, quién autoriza cada una, protocolo de gates |
+| [`docs/etapa-00-research-seo-geo.md`](docs/etapa-00-research-seo-geo.md) | Demanda de búsqueda, competencia, estrategia GEO, perfil de cliente |
+| [`docs/etapa-01-arquitectura.md`](docs/etapa-01-arquitectura.md) | Mapa de sitio, enlazado, datos estructurados, indexación |
+| [`docs/mapa-de-sitio.md`](docs/mapa-de-sitio.md) | El mapa de sitio en diagrama |
+| [`docs/credenciales.md`](docs/credenciales.md) | Credenciales verificadas y qué restringen |
+| [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
+| `docs/decisiones/` | ADRs |
+| `docs/aprobaciones/` | Registro de vistos buenos |
+
+## Decisiones que ya no se discuten
+
+Están razonadas en los documentos citados. Reproponerlas sin leer el argumento cuesta tiempo a todos.
+
+- El sitio no se posiciona sobre "coaching terapéutico": 20 búsquedas al mes.
+- No se persigue "terapeuta cognitivo conductual" pese a sus 22,200 búsquedas. Ver [ADR 001](docs/decisiones/001-posicionamiento-frente-al-trafico-de-psicoterapia.md).
+- Alina se presenta como coach certificada con formación en TCC. Nunca como terapeuta, psicóloga o psicoterapeuta.
+- México es el mercado primario. No se hacen páginas por ciudad ni por país.
+- No se compite por "terapia en línea": el SERP lo ocupan marketplaces.
 
 ## Regla básica
 
