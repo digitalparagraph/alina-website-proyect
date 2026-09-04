@@ -24,7 +24,7 @@ Derivada de `etapa-00-research-seo-geo.md` y del ADR 001.
 | `/proceso/primera-sesion/` | Qué ocurre en la primera sesión | primera sesión de terapia | — | — |
 | `/sobre-alina/` | Autoría, credenciales, criterio | — | — | — |
 | `/preguntas-frecuentes/` | Objeciones y dudas operativas | — | — | — |
-| `/agendar/` | Conversión | — | — | — |
+| `/agendar/` | Conversión por contacto previo: la persona escribe y se acuerda el horario. Ver Etapa 3, sección 8 | — | — | — |
 
 Las cuatro primeras páginas tienen volumen de búsqueda marginal y eso es correcto: su función es convertir y ser citadas, no atraer. La adquisición ocurre en `/temas/`.
 

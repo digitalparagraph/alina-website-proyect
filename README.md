@@ -19,15 +19,14 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | — | Marco de trabajo | Aprobado |
 | 0 | Research y estrategia SEO/GEO | Aprobada |
 | 1 | Arquitectura y mapa de sitio | Aprobada |
-| 2 | Estructura de contenido | En revisión (PR #4) |
-| 3 | Stack técnico y configuraciones | No iniciada |
-| 4 | Dirección de arte | No iniciada |
-| 5 | Wireframes y secciones | No iniciada |
-| 6 | Desarrollo de contenidos | No iniciada |
-| 7 | Diseño visual | No iniciada |
-| 8 | Implementación | No iniciada |
-| 9 | QA y pre-launch | No iniciada |
-| 10 | Deploy y medición | No iniciada |
+| 2 | Estructura de contenido | Aprobada |
+| 3 | Stack técnico y configuraciones | Aprobada, revisada por el ADR 008 |
+| 4 | Sistema de diseño | Aprobada |
+| 5 | Implementación | Sitio construido, 16 páginas |
+| 6 | Desarrollo de contenidos | Copy escrito, pendiente de revisión de Alina |
+| 7 | Revisión sobre el sitio real | No iniciada |
+| 8 | QA y pre-launch | No iniciada |
+| 9 | Deploy y medición | Staging en Hostinger |
 
 ## Documentación
 
@@ -36,10 +35,11 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | [`docs/00-marco-de-trabajo.md`](docs/00-marco-de-trabajo.md) | Las once etapas, quién autoriza cada una, protocolo de gates |
 | [`docs/etapa-00-research-seo-geo.md`](docs/etapa-00-research-seo-geo.md) | Demanda de búsqueda, competencia, estrategia GEO, perfil de cliente |
 | [`docs/etapa-01-arquitectura.md`](docs/etapa-01-arquitectura.md) | Mapa de sitio, enlazado, datos estructurados, indexación |
-| [`docs/etapa-02-estructura-de-contenido.md`](docs/etapa-02-estructura-de-contenido.md) | Brief por página: bloques, jerarquía de mensajes, keywords, schema |
+| [`docs/etapa-03-stack-tecnico.md`](docs/etapa-03-stack-tecnico.md) | Stack, hosting, formulario, analítica, presupuestos de rendimiento |
 | [`docs/mapa-de-sitio.md`](docs/mapa-de-sitio.md) | El mapa de sitio en diagrama |
 | [`docs/credenciales.md`](docs/credenciales.md) | Credenciales verificadas y qué restringen |
 | [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
+| [`docs/revision-tracker-paragraph.md`](docs/revision-tracker-paragraph.md) | Revisión de Signal, el tracker server-side de Paragraph |
 | `docs/decisiones/` | ADRs |
 | `docs/aprobaciones/` | Registro de vistos buenos |
 
