@@ -73,3 +73,13 @@ El aviso de privacidad y los términos llevan `noindex` y un aviso visible de bo
 No se inventan. Un aviso de privacidad redactado a ojo en un sitio que recibe datos de salud mental es un riesgo real, y además el sitio ya promete cosas concretas sobre el manejo de esos datos que conviene que un abogado revise antes de firmarlas.
 
 En `/alcance-del-servicio/` falta la línea de apoyo en crisis para México. Es requisito antes de publicar: alguien en esa situación puede llegar a ese sitio.
+
+## 9. Candado de staging
+
+Mientras `PUBLIC_STAGING` no sea `false`, el sitio se comporta como despliegue de revisión:
+
+- `noindex,nofollow` en todas las páginas.
+- `robots.txt` cierra el sitio entero.
+- Banda visible arriba de cada página avisando que el contenido está pendiente de aprobación.
+
+Se apaga el día del lanzamiento, con dominio propio. Un sitio de pruebas con el copy real indexado antes de tiempo compite con el definitivo y expone borradores.
