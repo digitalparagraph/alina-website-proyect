@@ -1,0 +1,47 @@
+name: Build y deploy a Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Falla si el esquema de contenido no valida: una página de tema sin
+      # delimitación de alcance no compila (ADR 001).
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLIC_STAGING: ${{ vars.PUBLIC_STAGING }}
+
+      - name: Enlaces internos
+        run: npx --yes linkinator ./dist --recurse --silent --skip "^https?://"
+
+      # El PHP del formulario se copia junto al sitio. config.php no está en el
+      # repo: se sube una sola vez a mano al servidor.
+      - name: Incluir el endpoint del formulario
+        run: cp php/contacto.php dist/contacto.php
+
+      - name: Subir por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ vars.HOSTINGER_DIR }}
+          # config.php vive solo en el servidor y no se pisa en cada deploy.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            config.php
