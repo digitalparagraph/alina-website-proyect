@@ -41,7 +41,15 @@ Los documentos describen el estado vigente del proyecto, no cómo llegaron a ser
 
 ## Si acabas de entrar al proyecto
 
-Lee `docs/como-retomar-el-proyecto.md` antes que nada. Contiene el orden de lectura, los accesos necesarios y las decisiones que ya están cerradas con su razón.
+Lee `docs/decisiones-abiertas.md`: ahí está todo lo que falta por definir, con una decisión por defecto ya tomada para que no te detengas. Si encuentras un hueco que no está listado, añádelo ahí con su valor por defecto en lugar de dejarlo abierto.
+
+Después `docs/como-retomar-el-proyecto.md`. Contiene el orden de lectura, los accesos necesarios y las decisiones que ya están cerradas con su razón.
+
+## Estado del sitio
+
+Construido y compilando: 16 páginas en Astro estático, 8 KB de CSS, cero JavaScript enviado al navegador. El copy está escrito y pendiente de revisión de Alina. Falta desplegar en Hostinger.
+
+`npm install` sobre la carpeta montada de Cowork no termina; en Windows nativo funciona normal. Verificado en navegador a 1280 y 390 px.
 
 ## Entorno
 

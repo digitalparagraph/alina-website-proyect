@@ -8,6 +8,8 @@ Es el primer proyecto de la agencia ejecutado con marco de trabajo por etapas y 
 
 Lee **[`docs/como-retomar-el-proyecto.md`](docs/como-retomar-el-proyecto.md)**. Ahí está el orden de lectura, los accesos que necesitas y las decisiones que ya no se discuten.
 
+Todo lo que falta por definir está en **[`docs/decisiones-abiertas.md`](docs/decisiones-abiertas.md)**, con una decisión por defecto ya tomada para cada cosa.
+
 Para abrir una sesión de Claude sobre este proyecto, usa el prompt de **[`docs/prompt-de-arranque.md`](docs/prompt-de-arranque.md)**.
 
 ## Estado
@@ -38,6 +40,7 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | [`docs/etapa-03-stack-tecnico.md`](docs/etapa-03-stack-tecnico.md) | Stack, hosting, formulario, analítica, presupuestos de rendimiento |
 | [`docs/mapa-de-sitio.md`](docs/mapa-de-sitio.md) | El mapa de sitio en diagrama |
 | [`docs/credenciales.md`](docs/credenciales.md) | Credenciales verificadas y qué restringen |
+| [`docs/decisiones-abiertas.md`](docs/decisiones-abiertas.md) | Lo que falta definir, con su valor por defecto |
 | [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
 | [`docs/revision-tracker-paragraph.md`](docs/revision-tracker-paragraph.md) | Revisión de Signal, el tracker server-side de Paragraph |
 | `docs/decisiones/` | ADRs |
