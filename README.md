@@ -17,9 +17,9 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | # | Etapa | Estado |
 |---|---|---|
 | — | Marco de trabajo | Aprobado |
-| 0 | Research y estrategia SEO/GEO | Aprobada por Damian · firma de Alina pendiente |
-| 1 | Arquitectura y mapa de sitio | En revisión (PR #2) |
-| 2 | Estructura de contenido | No iniciada |
+| 0 | Research y estrategia SEO/GEO | Aprobada |
+| 1 | Arquitectura y mapa de sitio | Aprobada |
+| 2 | Estructura de contenido | En revisión (PR #4) |
 | 3 | Stack técnico y configuraciones | No iniciada |
 | 4 | Dirección de arte | No iniciada |
 | 5 | Wireframes y secciones | No iniciada |
@@ -36,6 +36,7 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | [`docs/00-marco-de-trabajo.md`](docs/00-marco-de-trabajo.md) | Las once etapas, quién autoriza cada una, protocolo de gates |
 | [`docs/etapa-00-research-seo-geo.md`](docs/etapa-00-research-seo-geo.md) | Demanda de búsqueda, competencia, estrategia GEO, perfil de cliente |
 | [`docs/etapa-01-arquitectura.md`](docs/etapa-01-arquitectura.md) | Mapa de sitio, enlazado, datos estructurados, indexación |
+| [`docs/etapa-02-estructura-de-contenido.md`](docs/etapa-02-estructura-de-contenido.md) | Brief por página: bloques, jerarquía de mensajes, keywords, schema |
 | [`docs/mapa-de-sitio.md`](docs/mapa-de-sitio.md) | El mapa de sitio en diagrama |
 | [`docs/credenciales.md`](docs/credenciales.md) | Credenciales verificadas y qué restringen |
 | [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
