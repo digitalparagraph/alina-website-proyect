@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+/**
+ * La conversión es contacto previo, no agendado directo (Etapa 3). La etiqueta
+ * dice "Agendar" porque describe mejor la intención de quien hace clic, y la
+ * primera línea aclara el mecanismo real para que no prometa un calendario que
+ * no existe.
+ *
+ * El formulario pide tres campos. Nada de listas de síntomas: convierten un
+ * mensaje en un expediente. Ver ADR 003 y 005.
+ */
+---
+<Base
+  titulo="Agendar una primera sesión"
+  descripcion="Escribe y acordamos horario. Sesión individual en línea de aproximadamente 50 minutos."
+>
+  <section class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Agendar una primera sesión</h1>
+      <p class="entrada">
+        Escribes, Alina te responde y acuerdan el horario entre las dos partes.
+        No hay calendario que elegir aquí.
+      </p>
+    </header>
+
+    <div class="dos">
+      <form class="form pila" id="contacto" novalidate>
+        <div class="campo">
+          <label for="nombre">Cómo quieres que te llame</label>
+          <input id="nombre" name="nombre" type="text" required autocomplete="name" />
+        </div>
+        <div class="campo">
+          <label for="correo">Correo</label>
+          <input id="correo" name="correo" type="email" required autocomplete="email" />
+        </div>
+        <div class="campo">
+          <label for="mensaje">Qué te gustaría trabajar</label>
+          <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
+          <p class="ayuda">
+            Con unas líneas alcanza. No hace falta que llegues con el problema
+            ordenado.
+          </p>
+        </div>
+
+        <div class="aviso">
+          <p>
+            Tu mensaje llega por correo a Alina y no se guarda en este sitio.
+            Del formulario se registran tu nombre, tu correo y desde qué página
+            llegaste, para dar seguimiento.
+            <a href="/aviso-de-privacidad/">Aviso de privacidad</a>.
+          </p>
+          <p>
+            <strong>Esta no es una vía de atención urgente.</strong> Si estás
+            en una situación de crisis o riesgo, busca atención inmediata en
+            los servicios de emergencia o en una línea de apoyo en salud
+            mental.
+          </p>
+        </div>
+
+        <button type="submit" class="boton">Enviar</button>
+        <p class="estado" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="lateral pila">
+        <h2>Antes de escribir</h2>
+        <p>
+          La primera sesión sirve para entender qué está pasando y para que
+          valores si esta forma de trabajo tiene sentido para ti.
+          <a href="/proceso/primera-sesion/">Qué pasa en la primera sesión</a>.
+        </p>
+        <p>
+          Si tienes dudas sobre si esto es lo que necesitas, la comparación de
+          enfoques puede ayudarte a decidir:
+          <a href="/terapia-o-coaching/">terapia, coaching o coaching terapéutico</a>.
+        </p>
+        <h2>Formato</h2>
+        <p>Sesiones individuales en línea, de aproximadamente 50 minutos, habitualmente cada 15 días.</p>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .dos{display:grid;gap:var(--space-8);grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:start}
+  @media (max-width:760px){.dos{grid-template-columns:1fr}}
+  .form{max-width:var(--measure)}
+  .campo{display:flex;flex-direction:column;gap:var(--space-2)}
+  label{font-weight:var(--weight-bold);font-size:var(--text-sm)}
+  input,textarea{font:inherit;padding:var(--space-3);border:1px solid var(--border-subtle);
+    border-radius:var(--radius-sm);background:var(--surface-card);color:inherit}
+  .ayuda{font-size:var(--text-xs);color:var(--text-muted)}
+  .aviso{background:var(--surface-mist);padding:var(--space-4);
+    border-left:2px solid var(--border-hairline);font-size:var(--text-sm)}
+  .aviso p+p{margin-top:var(--space-3)}
+  .boton{border:1px solid var(--border-hairline);cursor:pointer;align-self:flex-start}
+  .estado{font-size:var(--text-sm)}
+  .lateral{background:var(--surface-brand-soft);padding:var(--space-6)}
+  .lateral h2{font-size:var(--text-h3)}
+</style>

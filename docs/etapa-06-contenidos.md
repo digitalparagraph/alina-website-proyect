@@ -1,6 +1,6 @@
 # Etapa 6 — Desarrollo de contenidos
 
-En curso. Primera página redactada: `/temas/autoexigencia-y-perfeccionismo/`.
+Quince páginas escritas y compilando. Pendientes de revisión de Alina, y dos de revisión legal.
 
 ## 1. Cómo se produce el copy
 
@@ -38,8 +38,38 @@ Más allá de si el texto le gusta, tres cosas que solo ella puede contestar:
 2. **La prueba del párrafo cinco.** "Piensa en alguien a quien respetas haciendo exactamente lo que tú hiciste esta semana." ¿Es una intervención que ella usaría, o suena a ejercicio de manual?
 3. **El cierre.** "Los estándares no desaparecen. Se vuelven una decisión." ¿Promete de más?
 
-## 6. Siguientes
+## 6. Estado por página
 
-- Las otras dos páginas de tema, con el molde ya probado.
-- El núcleo: `/proceso/`, `/que-es-el-coaching-terapeutico/`, `/terapia-o-coaching/`, `/sobre-alina/`, `/preguntas-frecuentes/`, `/agendar/`, `/temas/`.
-- Legales. Bloqueadas por la tarifa, que la guía de contenido dejó marcada como pendiente.
+| Página | Estado |
+|---|---|
+| `/` | Escrita |
+| `/temas/autoexigencia-y-perfeccionismo/` | Escrita |
+| `/temas/sobrepensar-y-rumiacion/` | Escrita |
+| `/temas/procrastinacion-y-evitacion/` | Escrita |
+| `/temas/` | Escrita |
+| `/proceso/` | Escrita |
+| `/proceso/primera-sesion/` | Escrita |
+| `/que-es-el-coaching-terapeutico/` | Escrita |
+| `/terapia-o-coaching/` | Escrita |
+| `/sobre-alina/` | Escrita |
+| `/preguntas-frecuentes/` | Escrita, falta la tarifa |
+| `/agendar/` | Escrita |
+| `/alcance-del-servicio/` | Escrita, falta la línea de apoyo en crisis |
+| `/aviso-de-privacidad/` | Borrador, requiere revisión legal. `noindex` |
+| `/terminos-y-condiciones/` | Borrador, requiere revisión legal y tarifa. `noindex` |
+
+## 7. Auditoría del sitio completo
+
+5,488 palabras. Contraste falso: cero, tras corregir tres apariciones. Guion largo decorativo: cero. Enlaces internos rotos: cero.
+
+Las tres correcciones de contraste fueron en `/sobre-alina/`, `/proceso/` y la página de procrastinación. Una de ellas venía textual de la guía de contenido —"el objetivo no es convertirte en otra persona"— y se reescribió en positivo conservando el sentido. Vale avisarlo a Alina, porque es su frase.
+
+El auditor marca 19 encabezados con verbo conjugado. Es la desviación deliberada de la sección 3.
+
+## 8. Dos páginas que no se publican todavía
+
+El aviso de privacidad y los términos llevan `noindex` y un aviso visible de borrador. Describen con precisión lo que el sistema hace de verdad, según los ADR 003 y 005, y marcan lo que falta: responsable y domicilio, plazo de conservación, procedimiento de derechos ARCO, tarifa, y condiciones de cancelación.
+
+No se inventan. Un aviso de privacidad redactado a ojo en un sitio que recibe datos de salud mental es un riesgo real, y además el sitio ya promete cosas concretas sobre el manejo de esos datos que conviene que un abogado revise antes de firmarlas.
+
+En `/alcance-del-servicio/` falta la línea de apoyo en crisis para México. Es requisito antes de publicar: alguien en esa situación puede llegar a ese sitio.

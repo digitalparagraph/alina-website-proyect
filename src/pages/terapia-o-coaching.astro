@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+
+/**
+ * Activo GEO del sitio. Su valor depende de que sea útil incluso para quien
+ * decide no contratar, así que no lleva llamada a la acción en el cuerpo
+ * (decisión de la Etapa 1). El bloque de honestidad del final no se recorta:
+ * es lo que hace citable esta página.
+ */
+const enfoques = [
+  {
+    nombre: 'Coaching terapéutico',
+    foco: 'Patrones actuales de pensamiento, emoción y conducta; cambio funcional y habilidades.',
+    tiempo: 'Presente y futuro, con la historia personal cuando ayuda a entender el patrón de hoy.',
+    herramientas: 'Análisis funcional, identificación de patrones cognitivos y conductuales, autorregistros, experimentación conductual, entrenamiento de habilidades, tareas entre sesiones.',
+    cliente: 'Alguien que quiere comprender y modificar patrones que interfieren con sus decisiones, relaciones, hábitos o bienestar, sin que el trabajo se organice alrededor de un diagnóstico.',
+  },
+  {
+    nombre: 'Life coaching',
+    foco: 'Objetivos personales, desempeño, hábitos, motivación y desarrollo.',
+    tiempo: 'Presente y futuro; suele centrarse en metas y acciones.',
+    herramientas: 'Definición de objetivos, planificación, seguimiento, preguntas de coaching, hábitos y rendición de cuentas.',
+    cliente: 'Alguien que busca avanzar hacia una meta o mejorar un área de su vida, sin que exista un problema psicológico específico.',
+  },
+  {
+    nombre: 'Coaching ejecutivo',
+    foco: 'Desempeño, liderazgo, toma de decisiones y retos profesionales.',
+    tiempo: 'Presente y futuro, con atención al contexto de la organización.',
+    herramientas: 'Retroalimentación, reflexión estructurada, objetivos, planes de acción, análisis de situaciones de trabajo y seguimiento.',
+    cliente: 'Personas con responsabilidad de liderazgo que quieren mejorar su efectividad o su manejo de retos dentro del trabajo.',
+  },
+  {
+    nombre: 'Terapia cognitivo conductual',
+    foco: 'Relación entre pensamientos, emociones y conductas; problemas actuales y lo que los mantiene.',
+    tiempo: 'Principalmente presente, incorporando historia y aprendizajes cuando ayudan a modificar patrones actuales.',
+    herramientas: 'Evaluación y conceptualización del caso, análisis funcional, reestructuración cognitiva, exposición, activación conductual, entrenamiento de habilidades, tareas terapéuticas.',
+    cliente: 'Personas con dificultades psicológicas específicas o trastornos para los que las intervenciones de TCC resultan adecuadas.',
+  },
+  {
+    nombre: 'Psicoterapia',
+    foco: 'Salud mental, malestar psicológico y funcionamiento emocional, conductual y relacional.',
+    tiempo: 'Puede trabajar pasado, presente y futuro, según el modelo y la persona.',
+    herramientas: 'Dependen del enfoque: evaluación clínica, intervención sobre pensamientos y conductas, trabajo emocional, relaciones, historia personal.',
+    cliente: 'Personas que buscan atención profesional para dificultades de salud mental, con el alcance que definan el modelo terapéutico y la formación del profesional.',
+  },
+];
+
+const preguntas = [
+  {
+    q: '¿Necesito terapia o coaching?',
+    a: 'Depende de qué quieras resolver y de qué tan interferido esté tu funcionamiento. Si hay un patrón concreto que quieres comprender y cambiar, y tu vida sigue funcionando aunque ese patrón te cueste, el coaching terapéutico es una opción razonable. Si hay malestar psicológico intenso o persistente, sospecha de un trastorno, o algo que afecta tu capacidad de sostener el día, corresponde un profesional de la salud mental.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre un coach y un psicólogo?',
+    a: 'La formación, la habilitación profesional y el alcance de lo que pueden atender. Un psicólogo tiene formación clínica y cédula que lo habilita para evaluar y tratar problemas de salud mental. Un coach acompaña procesos de cambio y desarrollo, y no diagnostica ni trata trastornos, aunque su formación incluya herramientas que vengan de la psicología.',
+  },
+  {
+    q: '¿El coaching terapéutico sustituye a la psicoterapia?',
+    a: 'No. Es un proceso de acompañamiento con un alcance definido: trabaja patrones concretos en situaciones de la vida diaria. Cuando una situación rebasa ese alcance, lo responsable es reconocerlo y orientar hacia el profesional correspondiente.',
+  },
+];
+
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'es-MX',
+  mainEntity: preguntas.map((p) => ({
+    '@type': 'Question',
+    name: p.q,
+    acceptedAnswer: { '@type': 'Answer', text: p.a },
+  })),
+};
+---
+<Base
+  titulo="Terapia, coaching o coaching terapéutico · en qué se diferencian"
+  descripcion="Comparación de cinco enfoques de acompañamiento: coaching terapéutico, life coaching, coaching ejecutivo, terapia cognitivo conductual y psicoterapia."
+>
+  <script slot="schema" type="application/ld+json" set:html={JSON.stringify(faq)} />
+
+  <article class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Terapia, coaching o coaching terapéutico</h1>
+      <p class="entrada">
+        Los nombres se usan de maneras distintas según quién los use, y eso
+        vuelve difícil saber qué se está contratando. Esta comparación describe
+        en qué se diferencian por su foco, su alcance y para quién funciona
+        cada uno.
+      </p>
+    </header>
+
+    <section class="pila">
+      <h2>Cómo saber cuál te corresponde</h2>
+      <p>
+        Un criterio que sirve casi siempre: mira qué tan interferido está tu
+        funcionamiento. Si hay un patrón que te cuesta y aun así sostienes tu
+        vida —trabajas, te relacionas, duermes—, un proceso de coaching
+        orientado a ese patrón tiene sentido. Si el malestar es intenso o
+        persistente, si sospechas un trastorno, o si hay algo que te está
+        impidiendo sostener el día, corresponde un profesional de la salud
+        mental con formación clínica.
+      </p>
+      <p>
+        La duda misma también informa. Cuando alguien no sabe si lo suyo
+        "amerita" terapia, suele llevar bastante tiempo tratando de resolverlo
+        por su cuenta.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Los cinco enfoques</h2>
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Enfoque</th><th>Foco principal</th><th>Línea de tiempo</th>
+              <th>Herramientas habituales</th><th>Para quién</th>
+            </tr>
+          </thead>
+          <tbody>
+            {enfoques.map((e) => (
+              <tr>
+                <th scope="row">{e.nombre}</th>
+                <td>{e.foco}</td>
+                <td>{e.tiempo}</td>
+                <td>{e.herramientas}</td>
+                <td>{e.cliente}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pila advertencia">
+      <h2>Una advertencia sobre esta comparación</h2>
+      <p>
+        Las fronteras entre estos enfoques no son absolutas, y hay
+        profesionales que combinan herramientas de varios. La tabla resume
+        diferencias de orientación. No establece una clasificación universal ni
+        sustituye la definición que cada profesional hace de su propio
+        servicio.
+      </p>
+      <p>
+        Vale la pena decirlo también al revés: quien escribe esta página
+        ofrece uno de los cinco servicios comparados. La comparación intenta
+        ser justa con los otros cuatro, y aun así conviene leerla sabiendo eso.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Preguntas frecuentes</h2>
+      <dl class="preguntas">
+        {preguntas.map((p) => (<><dt>{p.q}</dt><dd>{p.a}</dd></>))}
+      </dl>
+    </section>
+
+    <section class="pila cierre">
+      <p class="medida">
+        Si quieres ver con detalle qué incluye el coaching terapéutico y hasta
+        dónde llega, está explicado en <a href="/que-es-el-coaching-terapeutico/">qué
+        es el coaching terapéutico</a>. La formación y el alcance profesional
+        de quien lo ofrece están en <a href="/sobre-alina/">sobre Alina</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .tabla-scroll{overflow-x:auto;border:1px solid var(--border-subtle)}
+  table{border-collapse:collapse;min-width:900px;background:var(--surface-card);font-size:var(--text-sm)}
+  th,td{text-align:left;vertical-align:top;padding:var(--space-4);border-bottom:1px solid var(--border-subtle)}
+  thead th{background:var(--surface-brand-soft);font-size:var(--text-xs);
+    letter-spacing:var(--tracking-wide);text-transform:lowercase;white-space:nowrap}
+  tbody th{font-weight:var(--weight-bold);white-space:nowrap}
+  tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+  .advertencia{background:var(--surface-mist);padding:var(--space-6);border-left:2px solid var(--border-hairline)}
+  .preguntas{margin:0;max-width:var(--measure)}
+  .preguntas dt{font-weight:var(--weight-bold);margin-top:var(--space-5)}
+  .preguntas dd{margin:var(--space-2) 0 0}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+</style>

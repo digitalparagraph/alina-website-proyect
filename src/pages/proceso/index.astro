@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const fases = [
+  {
+    n: '01', nombre: 'Entender',
+    texto: 'Delimitamos qué está ocurriendo y formulamos una hipótesis de trabajo. Describir el problema no alcanza: buscamos identificar qué lo desencadena, qué lo mantiene y en qué contextos aparece. Eso permite pasar de una sensación general de que algo no funciona a un problema que se puede observar.',
+  },
+  {
+    n: '02', nombre: 'Observar',
+    texto: 'Identificamos cómo se relacionan pensamientos, emociones, sensaciones y conductas en situaciones concretas. Esta observación detecta patrones que pasan desapercibidos cuando solo se mira el resultado final. La idea es entender la secuencia que conduce a algo, sin juzgar lo que haces.',
+  },
+  {
+    n: '03', nombre: 'Experimentar',
+    texto: 'Probamos alternativas de manera deliberada y, cuando es útil, con ejercicios o experimentos conductuales. Se trata de obtener información de la experiencia: qué ocurre cuando respondes de otra manera, qué obstáculos aparecen y qué habilidades hacen falta. La meta es aprender qué funciona, no hacerlo perfecto.',
+  },
+  {
+    n: '04', nombre: 'Integrar',
+    texto: 'Convertimos los aprendizajes en herramientas que puedas usar fuera de la sesión. Revisamos avances, dificultades y situaciones inesperadas, y ajustamos la estrategia cuando hace falta. El objetivo final es que aumente tu capacidad de observar, decidir y actuar por tu cuenta.',
+  },
+];
+---
+<Base
+  titulo="Cómo es el proceso"
+  descripcion="Las cuatro fases del trabajo en coaching terapéutico: entender, observar, experimentar e integrar. Qué se hace en cada una y qué requiere de ti."
+>
+  <article class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Cómo es el proceso</h1>
+      <p class="entrada">
+        El trabajo parte de ti y de lo que quieres comprender o cambiar, y es
+        colaborativo. Consiste en crear las condiciones para que puedas
+        observarte con más claridad y ampliar tus posibilidades de elección.
+      </p>
+    </header>
+
+    <section class="pila">
+      <h2>Las cuatro fases</h2>
+      <ol class="fases">
+        {fases.map((f) => (
+          <li>
+            <span class="num" aria-hidden="true">{f.n}</span>
+            <div>
+              <h3>{f.nombre}</h3>
+              <p>{f.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="nota medida">
+        Las fases se nombran en orden porque el trabajo avanza así, aunque en
+        la práctica se vuelve a las anteriores todo el tiempo. Un experimento
+        que no sale como se esperaba manda de vuelta a observar, y eso también
+        es parte del proceso.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué puede incluir</h2>
+      <p class="medida">
+        Según el objetivo: análisis funcional de situaciones, identificación de
+        patrones cognitivos y conductuales, observación de antecedentes y
+        consecuencias, autorregistros, revisión de hábitos, entrenamiento de
+        habilidades, experimentación conductual y ejercicios entre sesiones.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué requiere de ti</h2>
+      <p>
+        No necesitas llegar sabiendo exactamente qué quieres cambiar. Sí
+        necesitas cierta disposición para explorarlo: curiosidad para
+        observarte con honestidad, apertura para cuestionar ideas que llevas
+        tiempo dando por ciertas, y participación activa.
+      </p>
+      <p>
+        Buena parte del trabajo ocurre fuera de los cincuenta minutos. Lo que
+        se ve en sesión cobra sentido cuando se traslada a la vida diaria:
+        observar qué sucede, probar respuestas distintas, revisar qué funcionó
+        y qué no. Sin hacerlo perfecto; con disposición a experimentar y
+        ajustar.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué se suele notar primero</h2>
+      <p>
+        No hay una secuencia idéntica para todas las personas, y uno de los
+        primeros cambios suele ser empezar a observarse con más claridad.
+        Situaciones que antes parecían "así soy yo" empiezan a verse como
+        patrones: formas concretas de interpretar, reaccionar, evitar o
+        exigirse.
+      </p>
+      <p>
+        También puede aparecer algo valioso: un espacio pequeño entre lo que
+        ocurre y la respuesta automática. Ese espacio permite notar "esto es lo
+        que suelo hacer" antes de hacerlo.
+      </p>
+      <p>
+        El cambio no siempre se siente como "ya no me pasa". A veces empieza
+        como "me sigue pasando, y ahora entiendo qué ocurre y puedo responder
+        de otra manera".
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué no se promete</h2>
+      <p>
+        Que dejes de sentir ansiedad, miedo, frustración, culpa o tristeza.
+        Son experiencias humanas que cumplen funciones y que no siempre hay que
+        eliminar. Cuando una emoción está interfiriendo con tu vida, el trabajo
+        puede ser aprender a regularla mejor y modificar lo que la mantiene.
+      </p>
+      <p>
+        Tampoco se promete que las circunstancias externas cambien, ni
+        resultados idénticos para todas las personas, ni un número determinado
+        de sesiones para resolver algo.
+      </p>
+    </section>
+
+    <section class="pila cierre">
+      <p class="medida">
+        La primera sesión tiene su propia lógica y conviene saber qué esperar:
+        <a href="/proceso/primera-sesion/">qué pasa en la primera sesión</a>.
+      </p>
+      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .fases{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-6)}
+  .fases li{display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);align-items:start}
+  .num{font-weight:var(--weight-bold);font-size:var(--text-h3);
+    background:var(--surface-brand);padding:var(--space-1) var(--space-3);
+    font-variant-numeric:tabular-nums}
+  .fases h3{margin-bottom:var(--space-2)}
+  .nota{font-size:var(--text-sm);color:var(--text-secondary)}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+</style>

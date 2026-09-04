@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const temas = (await getCollection('temas'))
+  .filter((t) => t.data.fase === 1)
+  .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
+---
+<Base
+  titulo="Temas"
+  descripcion="Los patrones que se trabajan con más frecuencia en coaching terapéutico: autoexigencia, sobrepensar, procrastinación y evitación."
+>
+  <section class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Temas</h1>
+      <p class="entrada">
+        Estos son los patrones que aparecen con más frecuencia. Rara vez vienen
+        solos: quien se exige de más suele también sobrepensar, y quien
+        sobrepiensa suele posponer.
+      </p>
+    </header>
+    <ul class="lista">
+      {temas.map((t) => (
+        <li>
+          <h2><a href={`/temas/${t.slug}/`}>{t.data.titulo}</a></h2>
+          <p>{t.data.reconocimiento}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-7)}
+  .lista li{border-top:1px solid var(--border-hairline);padding-top:var(--space-4)}
+  .lista h2{margin-bottom:var(--space-3)}
+  .lista a{text-decoration:none}
+  .lista a:hover{text-decoration:underline}
+</style>

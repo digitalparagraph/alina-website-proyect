@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+/**
+ * Resuelve la tensión de la Etapa 2. La guía de contenido pide que el
+ * protagonista sea el proceso; E-E-A-T exige autoría verificable. Esta página
+ * invierte el orden habitual: abre con cómo trabaja y qué no hace, y las
+ * credenciales van después. Un lector encuentra criterio; un evaluador
+ * encuentra formación verificable.
+ *
+ * Es la única página donde se usa la ilustración de la marca (Etapa 4).
+ */
+---
+<Base
+  titulo="Sobre Alina Martínez"
+  descripcion="Coach certificada por la International Coaching Community desde 2014, con formación en terapia cognitivo conductual. Cómo trabaja, qué no practica y cuál es el alcance de su servicio."
+>
+  <article class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Sobre Alina Martínez</h1>
+      <p class="entrada">
+        Coach certificada con formación en terapia cognitivo conductual.
+        Acompaña procesos individuales en línea.
+      </p>
+    </header>
+
+    <section class="pila">
+      <h2>Cómo entiende el trabajo</h2>
+      <p>
+        Hay una convicción detrás de esto: las personas tenemos capacidad de
+        crecer, de hacernos cargo de lo que queremos y de construir una manera
+        más consciente de vivir. Y también una curiosidad por entender qué hace
+        posible ese cambio y qué, a veces, lo dificulta.
+      </p>
+      <p>
+        Lo que pensamos, lo que sentimos, nuestra biología, nuestra historia de
+        aprendizaje y el contexto se entrelazan para dar forma a nuestras
+        decisiones. Dentro de esa complejidad casi siempre hay una hebra que
+        permite comprender qué está ocurriendo y abrir posibilidades
+        distintas.
+      </p>
+      <p>
+        Esa forma de entender el comportamiento determina cómo trabaja. Una
+        sesión no busca producir una conversación interesante. Busca que la
+        comprensión se traduzca en algo observable: formular hipótesis, mirar
+        qué pasa en situaciones reales, poner a prueba respuestas nuevas y
+        aprender de lo que ocurre.
+      </p>
+      <p>
+        El objetivo es que te comprendas mejor, decidas con más claridad y te
+        relaciones de manera más flexible con aquello que hoy te limita.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué no practica</h2>
+      <p>
+        La idea de que todo depende de cambiar tu mentalidad, pensar positivo o
+        echarle suficientes ganas. Las fórmulas universales, las frases
+        motivacionales y las respuestas prefabricadas para problemas
+        complejos.
+      </p>
+      <p>
+        Una persona puede saber perfectamente que necesita poner un límite,
+        dejar de procrastinar o bajar su autoexigencia y aun así seguir sin
+        poder hacerlo. No somos máquinas a las que baste introducirles el
+        pensamiento correcto. Por eso prefiere un enfoque más crítico y menos
+        espectacular: entender primero qué está pasando y qué mantiene el
+        patrón, antes de decidir qué vale la pena cambiar.
+      </p>
+      <p>
+        Tampoco busca generar dependencia del proceso. La intención es que
+        conforme avanzas tengas más herramientas para observarte y decidir por
+        tu cuenta.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Formación</h2>
+      <dl class="credenciales">
+        <dt>International Certified Coach</dt>
+        <dd>
+          International Coaching Community, programa Lambent, febrero de 2014.
+          Con aval del European Quality Award de la EMCC.
+        </dd>
+        <dt>Especialización en Psicoterapia Cognitivo Conductual</dt>
+        <dd>
+          Instituto de Estudios Superiores SABER+, 360 horas, concluida en
+          julio de 2025. Con Registro de Validez Oficial de Estudios.
+        </dd>
+      </dl>
+    </section>
+
+    <aside class="alcance">
+      <h2 class="alcance-titulo">Alcance profesional</h2>
+      <p>
+        Su formación la habilita para acompañar procesos de coaching orientados
+        a comprender y modificar patrones concretos. No es psicóloga ni
+        psicoterapeuta, y este servicio no sustituye psicoterapia ni atención
+        psiquiátrica.
+      </p>
+      <p>
+        Cuando una situación requiere un tipo de atención que rebasa ese
+        alcance, lo responsable es reconocerlo y orientar hacia el profesional
+        correspondiente.
+        <a href="/alcance-del-servicio/">Ver el alcance completo del servicio</a>.
+      </p>
+    </aside>
+
+    <section class="pila cierre">
+      <p class="medida">
+        Si quieres ver cómo se traduce esto en un proceso concreto, está
+        descrito en <a href="/proceso/">cómo es el proceso</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .credenciales{margin:0;max-width:var(--measure)}
+  .credenciales dt{font-weight:var(--weight-bold);margin-top:var(--space-5)}
+  .credenciales dd{margin:var(--space-2) 0 0}
+  .alcance-titulo{font-size:var(--text-h3)}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+</style>

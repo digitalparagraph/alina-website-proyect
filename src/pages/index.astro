@@ -5,24 +5,42 @@ import Base from '../layouts/Base.astro';
 const temas = (await getCollection('temas'))
   .filter((t) => t.data.fase === 1)
   .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
+
+/** Los ocho reconocimientos de la guía de contenido. Es el bloque de
+ *  identificación más importante del sitio. Pendiente que Alina confirme si
+ *  falta alguno o si alguno no aparece nunca en consulta. */
+const reconocimientos = [
+  'Sabes que quieres hacer cambios y sigues repitiendo ciertos patrones.',
+  'Sobrepiensas decisiones o situaciones una y otra vez.',
+  'Te cuesta poner límites sin sentir culpa.',
+  'Eres muy exigente contigo y te cuesta bajar el nivel.',
+  'Hay cosas que entiendes perfectamente y que emocionalmente sigues viviendo igual.',
+  'Estás atravesando una etapa de cambio y necesitas ordenar qué quieres.',
+  'Tus relaciones, tu trabajo o tus decisiones están empezando a resentir un patrón que quieres comprender.',
+  'Lo has intentado por tu cuenta y sientes que sigues dando vueltas en el mismo lugar.',
+];
 ---
 <Base
   titulo="Alina Martínez · Coaching terapéutico en línea"
   descripcion="Acompañamiento para comprender y modificar patrones de pensamiento, emoción y conducta que interfieren con cómo quieres vivir, decidir o relacionarte."
 >
-  <section class="contenedor seccion pila">
-    <p class="borrador">
-      contenido provisional · la redacción definitiva es de la etapa 6
-    </p>
-    <h1 class="apertura">
+  <section class="contenedor seccion pila apertura">
+    <h1>
       Hay cosas que <span class="marcador">entiendes perfectamente</span> y aun
       así sigues haciendo.
     </h1>
-    <p class="entrada medida">
+    <p class="entrada">
       Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
       Este es un espacio para entender qué mantiene ese patrón y qué otras
       respuestas tienes disponibles.
     </p>
+  </section>
+
+  <section class="contenedor seccion pila">
+    <h2>Este espacio puede ser para ti si</h2>
+    <ul class="reconocimientos">
+      {reconocimientos.map((r) => <li>{r}</li>)}
+    </ul>
   </section>
 
   <section class="contenedor seccion pila">
@@ -36,11 +54,62 @@ const temas = (await getCollection('temas'))
       ))}
     </ul>
   </section>
+
+  <section class="contenedor seccion pila">
+    <h2>Cómo se trabaja</h2>
+    <ol class="fases">
+      <li><b>Entender.</b> Qué está ocurriendo, qué lo desencadena y qué lo mantiene.</li>
+      <li><b>Observar.</b> Cómo se relacionan pensamientos, emociones y conductas en situaciones concretas.</li>
+      <li><b>Experimentar.</b> Probar respuestas distintas y aprender de lo que ocurre.</li>
+      <li><b>Integrar.</b> Convertir eso en herramientas que puedas usar sin acompañamiento.</li>
+    </ol>
+    <p><a href="/proceso/">Ver el proceso completo</a></p>
+  </section>
+
+  <section class="contenedor seccion pila">
+    <h2>Qué es esto</h2>
+    <p class="medida">
+      Coaching terapéutico: un proceso que combina herramientas de coaching con
+      principios de la terapia cognitivo conductual. Tiene un alcance definido
+      y no sustituye psicoterapia. Quien acompaña es coach certificada con
+      formación en TCC.
+    </p>
+    <p>
+      <a href="/que-es-el-coaching-terapeutico/">Qué incluye</a> ·
+      <a href="/terapia-o-coaching/">En qué se diferencia de la terapia</a> ·
+      <a href="/sobre-alina/">Quién acompaña</a>
+    </p>
+  </section>
+
+  <section class="contenedor seccion pila objecion">
+    <h2>"¿Lo que me pasa es suficientemente importante?"</h2>
+    <p class="medida">
+      No hace falta estar al límite para pedir acompañamiento. Si algo está
+      ocupando demasiado espacio mental, o afectando tus relaciones, tus
+      decisiones o tu descanso, ya es razón suficiente para explorarlo.
+    </p>
+    <p class="medida">
+      Esperar a estar suficientemente mal es, de hecho, uno de los patrones más
+      comunes. Y los patrones tienden a sostenerse mientras las condiciones que
+      los mantienen sigan igual.
+    </p>
+  </section>
+
+  <section class="contenedor seccion pila cierre">
+    <p class="medida">
+      La primera sesión sirve para entender qué está pasando y para que
+      valores si esta forma de trabajo tiene sentido para ti.
+    </p>
+    <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+  </section>
 </Base>
 
 <style>
-  .apertura{font-size:var(--text-display);line-height:var(--leading-tight);max-width:18ch}
+  .apertura h1{font-size:var(--text-display);line-height:var(--leading-tight);max-width:16ch}
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .reconocimientos{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-4);
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:var(--container-max)}
+  .reconocimientos li{border-left:2px solid var(--accent-highlight);padding-left:var(--space-4)}
   .temas{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-6);
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
   .temas li{display:flex;flex-direction:column;gap:var(--space-2);
@@ -49,4 +118,7 @@ const temas = (await getCollection('temas'))
     text-decoration:none;letter-spacing:var(--tracking-tight)}
   .temas a:hover{text-decoration:underline}
   .temas span{font-size:var(--text-sm);color:var(--text-secondary)}
+  .fases{max-width:var(--measure);padding-left:1.2em;display:flex;flex-direction:column;gap:var(--space-3)}
+  .objecion{background:var(--surface-mist);padding-block:var(--space-8)}
+  .cierre{border-top:1px solid var(--border-subtle)}
 </style>

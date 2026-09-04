@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+/** Borrador. Requiere revisión legal y la tarifa, que sigue pendiente. */
+---
+<Base
+  titulo="Términos y condiciones"
+  descripcion="Condiciones del servicio de coaching terapéutico: alcance, pago, cancelación y reprogramación de sesiones."
+  noindex={true}
+>
+  <article class="contenedor seccion pila">
+    <h1>Términos y condiciones</h1>
+
+    <p class="revision">
+      Borrador pendiente de revisión legal y de la tarifa. No publicar en esta
+      forma.
+    </p>
+
+    <section class="pila">
+      <h2>Qué se contrata</h2>
+      <p>
+        Sesiones individuales de coaching terapéutico, en línea, de
+        aproximadamente 50 minutos. El alcance del servicio está descrito en
+        <a href="/alcance-del-servicio/">alcance del servicio</a> y forma parte
+        de estos términos.
+      </p>
+      <p>
+        Este servicio no constituye psicoterapia, atención psiquiátrica ni
+        atención de urgencias.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Tarifa y pago</h2>
+      <p class="pendiente">
+        Pendiente: tarifa por sesión, formas de pago aceptadas, momento del
+        pago y promoción vigente si aplica. La guía de contenido ya lo dejaba
+        marcado como pendiente.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Cancelación y reprogramación</h2>
+      <p class="pendiente">
+        Pendiente: con cuánta anticipación se puede cancelar o reprogramar sin
+        costo, qué ocurre con una sesión cancelada fuera de ese plazo, y qué
+        ocurre si la persona no se presenta.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Confidencialidad</h2>
+      <p>
+        Lo que se conversa en sesión es confidencial. Las excepciones, si las
+        hay, deben quedar explícitas.
+      </p>
+      <p class="pendiente">
+        Pendiente de revisión legal: qué excepciones aplican y cómo se
+        formulan.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Conclusión del proceso</h2>
+      <p>
+        Cualquiera de las partes puede dar por terminado el proceso. Cuando una
+        situación rebasa el alcance del servicio, se orienta hacia el
+        profesional correspondiente.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .revision{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
+    padding:var(--space-4);font-weight:var(--weight-bold);font-size:var(--text-sm)}
+  .pendiente{border-left:2px solid var(--accent-brush);background:var(--surface-lilac);
+    padding:var(--space-3) var(--space-4);font-size:var(--text-sm)}
+</style>

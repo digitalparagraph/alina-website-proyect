@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const art = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Qué pasa en la primera sesión',
+  inLanguage: 'es-MX',
+  author: { '@id': `${sitio}#alina` },
+  dateModified: '2026-09-03',
+};
+---
+<Base
+  titulo="Qué pasa en la primera sesión"
+  descripcion="Qué se hace en la primera sesión de coaching terapéutico, qué no se hace, y por qué también sirve para que evalúes si este enfoque es para ti."
+>
+  <script slot="schema" type="application/ld+json" set:html={JSON.stringify(art)} />
+
+  <article class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Qué pasa en la primera sesión</h1>
+      <p class="entrada">
+        Es sobre todo un espacio para entender qué está pasando. Exploramos qué
+        te trae, qué has intentado hasta ahora, qué situaciones se repiten y
+        qué impacto tienen en tu vida.
+      </p>
+    </header>
+
+    <section class="pila">
+      <h2>Ir más allá del problema tal como llega</h2>
+      <p>
+        Buena parte de la sesión es mirar debajo de la primera formulación.
+        Alguien puede llegar diciendo "no sé tomar decisiones", y al explorar
+        aparece una combinación de sobreanálisis, miedo a equivocarse,
+        necesidad de certeza y dificultad para tolerar las consecuencias de
+        elegir. Son cuatro cosas distintas y se trabajan distinto.
+      </p>
+      <p>
+        De ahí sale una hipótesis de trabajo: qué está ocurriendo, qué podría
+        estar influyéndolo y qué tendría sentido trabajar.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué no pasa</h2>
+      <p>
+        No se llega con una conclusión predeterminada ni se sale con una lista
+        de consejos. Tampoco hay una batería de preguntas estandarizadas que
+        haya que completar.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>"¿Y si no sé qué decir?"</h2>
+      <p>
+        No hace falta llegar con un discurso preparado ni tener claro el
+        problema. Parte del trabajo de esta sesión es precisamente ayudarte a
+        ordenar lo que está pasando, y eso es más fácil de hacer en voz alta y
+        con alguien preguntando.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>También la evalúas tú</h2>
+      <p>
+        La primera sesión sirve para que valores si este enfoque y esta forma
+        de trabajo tienen sentido para lo que buscas. No hace falta que te
+        comprometas con un proceso antes de saber cómo se siente.
+      </p>
+      <p>
+        Si al terminar concluyes que necesitas otra cosa, eso también es un
+        resultado útil, y cuando corresponde se orienta hacia dónde buscarla.
+      </p>
+    </section>
+
+    <section class="pila cierre">
+      <p class="medida">Sesión individual en línea, de aproximadamente 50 minutos.</p>
+      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+</style>
