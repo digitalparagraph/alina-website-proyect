@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+/**
+ * Borrador. Describe con precisión lo que el sistema hace de verdad
+ * (ADR 003 y 005), y marca lo que falta. Requiere revisión legal antes de
+ * publicar: la LFPDPPP tiene elementos obligatorios y este documento no
+ * sustituye asesoría.
+ */
+---
+<Base
+  titulo="Aviso de privacidad"
+  descripcion="Qué datos personales se recaban en este sitio, para qué se usan, cuánto tiempo se conservan y cómo ejercer los derechos ARCO."
+  noindex={true}
+>
+  <article class="contenedor seccion pila">
+    <h1>Aviso de privacidad</h1>
+
+    <p class="revision">
+      Borrador pendiente de revisión legal. No publicar en esta forma.
+    </p>
+
+    <section class="pila">
+      <h2>Responsable</h2>
+      <p class="pendiente">
+        Pendiente: nombre o razón social del responsable, domicilio y correo de
+        contacto para asuntos de datos personales.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué datos se recaban</h2>
+      <p>Únicamente los que envías por el formulario de contacto:</p>
+      <ul>
+        <li>El nombre con el que pides que te llamen.</li>
+        <li>Tu correo electrónico.</li>
+        <li>El texto que escribes describiendo qué te gustaría trabajar.</li>
+      </ul>
+      <p>
+        Además, de forma automática se registra desde qué página del sitio
+        llegaste al formulario y, si venías de una campaña, los parámetros de
+        esa campaña.
+      </p>
+      <p>
+        Este sitio no instala cookies de publicidad ni de análisis, y no utiliza
+        identificadores que te sigan entre sesiones.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Dónde se guarda cada cosa</h2>
+      <p>
+        El texto que escribes en el formulario se envía por correo electrónico
+        y no se almacena en este sitio ni en ninguna base de datos.
+      </p>
+      <p>
+        Tu nombre, tu correo, la página de origen y los parámetros de campaña sí
+        se registran, con el único fin de dar seguimiento a tu solicitud y de
+        entender qué contenidos del sitio resultan útiles.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Para qué se usan</h2>
+      <ul>
+        <li>Responder tu mensaje y acordar una sesión.</li>
+        <li>Dar seguimiento al estado de esa solicitud.</li>
+        <li>Entender de forma agregada qué páginas llevan a contacto.</li>
+      </ul>
+      <p>
+        Tus datos no se venden, no se comparten con terceros con fines
+        comerciales y no se utilizan para publicidad dirigida.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Cuánto tiempo se conservan</h2>
+      <p class="pendiente">
+        Pendiente: definir plazo de conservación y el procedimiento de borrado
+        automático. Requisito del ADR 005.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Derechos ARCO</h2>
+      <p>
+        Puedes solicitar el acceso, la rectificación, la cancelación o la
+        oposición al tratamiento de tus datos personales, así como revocar tu
+        consentimiento.
+      </p>
+      <p class="pendiente">
+        Pendiente: correo y procedimiento para ejercer estos derechos, y plazo
+        de respuesta.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Cambios a este aviso</h2>
+      <p>
+        Cualquier modificación se publicará en esta misma página, con la fecha
+        de la última actualización.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .revision{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
+    padding:var(--space-4);font-weight:var(--weight-bold);font-size:var(--text-sm)}
+  .pendiente{border-left:2px solid var(--accent-brush);background:var(--surface-lilac);
+    padding:var(--space-3) var(--space-4);font-size:var(--text-sm)}
+  ul{max-width:var(--measure);padding-left:1.2em;display:flex;flex-direction:column;gap:var(--space-2)}
+</style>

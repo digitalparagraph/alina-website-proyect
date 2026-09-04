@@ -17,17 +17,16 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | # | Etapa | Estado |
 |---|---|---|
 | — | Marco de trabajo | Aprobado |
-| 0 | Research y estrategia SEO/GEO | Aprobada por Damian · firma de Alina pendiente |
-| 1 | Arquitectura y mapa de sitio | En revisión (PR #2) |
-| 2 | Estructura de contenido | No iniciada |
-| 3 | Stack técnico y configuraciones | En revisión (PR #5) |
-| 4 | Dirección de arte | No iniciada |
-| 5 | Wireframes y secciones | No iniciada |
-| 6 | Desarrollo de contenidos | No iniciada |
-| 7 | Diseño visual | No iniciada |
-| 8 | Implementación | No iniciada |
-| 9 | QA y pre-launch | No iniciada |
-| 10 | Deploy y medición | No iniciada |
+| 0 | Research y estrategia SEO/GEO | Aprobada |
+| 1 | Arquitectura y mapa de sitio | Aprobada |
+| 2 | Estructura de contenido | Aprobada |
+| 3 | Stack técnico y configuraciones | Aprobada, revisada por el ADR 008 |
+| 4 | Sistema de diseño | Aprobada |
+| 5 | Implementación | Sitio construido, 16 páginas |
+| 6 | Desarrollo de contenidos | Copy escrito, pendiente de revisión de Alina |
+| 7 | Revisión sobre el sitio real | No iniciada |
+| 8 | QA y pre-launch | No iniciada |
+| 9 | Deploy y medición | Staging en Hostinger |
 
 ## Documentación
 

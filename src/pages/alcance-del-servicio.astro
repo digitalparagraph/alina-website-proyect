@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  titulo="Alcance del servicio"
+  descripcion="Qué incluye y qué no incluye el coaching terapéutico, qué habilita la formación de Alina Martínez, y cómo se procede cuando una situación requiere otro tipo de atención."
+>
+  <article class="contenedor seccion pila">
+    <h1>Alcance del servicio</h1>
+    <p class="entrada">
+      Esta página existe para que sepas exactamente qué estás contratando y
+      qué no, antes de agendar.
+    </p>
+
+    <section class="pila">
+      <h2>Qué es este servicio</h2>
+      <p>
+        Un proceso de acompañamiento individual orientado a comprender y
+        modificar patrones de pensamiento, emoción y conducta en situaciones de
+        la vida diaria. Combina herramientas de coaching con principios de la
+        terapia cognitivo conductual y ciencias del comportamiento.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué no es</h2>
+      <p>
+        No es psicoterapia. No es atención psiquiátrica. No incluye diagnóstico
+        de trastornos ni tratamiento de condiciones de salud mental, y no
+        sustituye ninguna de esas atenciones.
+      </p>
+      <p>
+        Tampoco es un servicio de atención en crisis ni una vía de contacto
+        urgente.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué habilita la formación de quien acompaña</h2>
+      <p>
+        Alina Martínez es coach certificada por la International Coaching
+        Community desde 2014, con especialización en Psicoterapia Cognitivo
+        Conductual concluida en 2025. Esa formación la habilita para acompañar
+        procesos de coaching orientados a patrones concretos.
+      </p>
+      <p>
+        No cuenta con cédula profesional en psicología. No ejerce como
+        psicóloga ni como psicoterapeuta, y no se presenta como tales.
+        <a href="/sobre-alina/">Ver formación completa</a>.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué ocurre si aparece algo fuera de este alcance</h2>
+      <p>
+        Se revisa la situación contigo y, cuando corresponde, se recomienda
+        buscar atención con el profesional adecuado. Eso puede pasar en la
+        primera sesión o a mitad de un proceso ya avanzado. Reconocerlo es
+        parte del trabajo, y no significa que el proceso haya fallado.
+      </p>
+    </section>
+
+    <section class="pila urgencia">
+      <h2>Si estás en una situación de riesgo</h2>
+      <p>
+        Este sitio no es una vía de atención urgente. Si estás en crisis o
+        sientes que puedes hacerte daño, busca atención inmediata en los
+        servicios de emergencia de tu localidad o en una línea de apoyo en
+        salud mental.
+      </p>
+      <p class="pendiente">
+        Pendiente: incluir aquí los datos de contacto de la línea de apoyo que
+        Alina considere adecuada para México. Requisito antes de publicar.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .urgencia{background:var(--surface-mist);padding:var(--space-6);border-left:2px solid var(--border-hairline)}
+  .pendiente{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
+    padding:var(--space-4);font-size:var(--text-sm)}
+</style>

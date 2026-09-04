@@ -36,21 +36,20 @@ Damian firma todas las etapas. Alina firma además las etapas 0, 2, 4, 6 y 7.
 | 0 | Research y estrategia SEO/GEO | Informe de keywords, intención de búsqueda, competencia, ICP, mapa de entidades y preguntas que responden hoy los modelos de lenguaje sobre este servicio | Damian + Alina |
 | 1 | Arquitectura y mapa de sitio | Sitemap, jerarquía de URLs, enlazado interno, plan de indexación. Se deriva de los datos de la etapa 0 | Damian |
 | 2 | Estructura de contenido | Modelo de contenido y brief por página: secciones, jerarquía de mensajes, keyword asignada, schema previsto | Damian + Alina |
-| 3 | Stack técnico y configuraciones | ADR de stack, hosting, dominio, analítica, formularios, sistema de agendado | Damian |
-| 4 | Dirección de arte | Style tile: tipografía, paleta, tratamiento fotográfico, principios visuales. Sin layouts | Damian + Alina |
-| 5 | Wireframes y secciones | Wireframes por plantilla, construidos sobre el contenido descrito en la etapa 2 | Damian |
+| 3 | Stack técnico y configuraciones | ADR de stack, hosting, formulario, analítica, presupuestos de rendimiento | Damian |
+| 4 | Sistema de diseño | Adopción del sistema de la marca, con las precisiones que exige llevarlo a un sitio público | Damian + Alina |
+| 5 | Implementación | Sitio funcionando en staging, con las plantillas construidas y contenido provisional marcado | Damian |
 | 6 | Desarrollo de contenidos | Copy final por página, optimizado para búsqueda y para citación en modelos | Damian + Alina |
-| 7 | Diseño visual | La dirección de la etapa 4 aplicada a los wireframes de la etapa 5 con el copy de la etapa 6 | Damian + Alina |
-| 8 | Implementación | Sitio funcionando en entorno de staging | Damian |
-| 9 | QA y pre-launch | Checklist firmado: Core Web Vitals, schema validado, accesibilidad, redirects, legales, indexabilidad | Damian |
-| 10 | Deploy y medición | Sitio en producción, Search Console y analítica configurados, línea base registrada | Damian |
+| 7 | Revisión sobre el sitio real | Ajuste visual y de contenido en el navegador, con el copy definitivo puesto | Damian + Alina |
+| 8 | QA y pre-launch | Checklist firmado: Core Web Vitals, schema validado, accesibilidad, redirects, legales, indexabilidad | Damian |
+| 9 | Deploy y medición | Sitio en producción, Search Console y analítica configurados, línea base registrada | Damian |
 
 ### Reglas de secuencia
 
 - La arquitectura se deriva de datos de demanda. La etapa 1 no arranca sin la etapa 0 cerrada.
-- La dirección de arte se aprueba en abstracto, sin layouts. Evita rehacer diseño cuando cambia el contenido.
-- El copy final entra antes del diseño visual. No se maqueta con texto de relleno.
-- Los wireframes no esperan al copy: trabajan con la descripción de contenido de la etapa 2.
+- Las plantillas se construyen en código contra la estructura de bloques de la etapa 2, no contra copy inventado. El layout construido es el wireframe.
+- El ajuste visual fino se hace con el copy definitivo puesto, en el navegador. Iterar sobre el sitio real es más rápido y más honesto que iterar sobre una maqueta.
+- Nada se da por terminado visualmente antes de la etapa 7.
 - La verificación técnica tiene gate propio. No se resuelve dentro del deploy.
 
 ## 4. Workstreams transversales

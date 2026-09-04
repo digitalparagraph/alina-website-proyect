@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Falla si el esquema de contenido no valida. Una página de tema sin
+      # delimitación de alcance no compila: es el requisito del ADR 001
+      # convertido en condición de build.
+      - name: Build
+        run: npm run build
+
+      - name: Enlaces internos
+        run: npx --yes linkinator ./dist --recurse --silent --skip "^https?://"

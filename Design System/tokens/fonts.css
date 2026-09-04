@@ -1,0 +1,6 @@
+/* Fallback for environments without the licensed Adobe file. Poppins is the nearest
+   widely available geometric sans for the logo/tagline lettering. */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+/* Acumin Variable Concept — the brand's working typeface (packaged from the Illustrator
+   post templates: "Acumin Variable Concept Light / Bold"). Variable OTF, weights 100-900. */
+@font-face{font-family:"Acumin Variable Concept";src:url("../assets/fonts/AcuminVariableConcept.otf") format("opentype-variations"),url("../assets/fonts/AcuminVariableConcept.otf") format("opentype");font-weight:100 900;font-style:normal;font-display:swap}

@@ -2,19 +2,23 @@
 
 Checklist vigente de material que el proyecto necesita del cliente. Se marca conforme se recibe.
 
-## Bloquean la Etapa 1
+## Bloquean la Etapa 3
 
-- [ ] Instituciones y años de la certificación como coach y de la formación en TCC
 - [ ] Objetivos de conversión del sitio
-
-Resueltos: no hay dominio ni sitio previo, la decisión de dominio pasa a la Etapa 3. El mercado objetivo y el perfil de cliente quedaron resueltos con datos en la Etapa 0.
-
-## Necesarios antes de la Etapa 2
-
 - [ ] Sistema de agendado y de cobro previsto
-- [ ] Tarifas y promoción vigente
-- [ ] Testimonios utilizables y condiciones de anonimato
+
+## Bloquean la Etapa 6
+
+- [ ] Tarifa y promoción vigente
+- [ ] Confirmación de Alina sobre los ocho reconocimientos de "¿Para quién es este proceso?"
+- [ ] Decisión sobre testimonios y condiciones de anonimato
+
+Resueltos: credenciales verificadas en `credenciales.md`. No hay dominio ni sitio previo; la decisión de dominio pasa a la Etapa 3. Mercado objetivo y perfil de cliente resueltos con datos en la Etapa 0.
+
+## Necesarios antes de la Etapa 7
+
 - [ ] Perfiles sociales activos y cuáles se enlazan desde el sitio
+- [ ] Fotografía disponible, si se va a usar
 
 ## Necesarios antes de la Etapa 8
 

@@ -1,0 +1,11 @@
+:root{
+  /* The brand is flat: solid fields, hairline rules, no drop shadows in print/social work.
+     Shadows exist only for screen affordances (overlays, floating panels) and stay soft + warm. */
+  --shadow-none:none;
+  --shadow-soft:0 2px 10px rgba(88,88,90,.08);
+  --shadow-card:0 8px 28px rgba(88,88,90,.10);
+  --shadow-overlay:0 24px 60px rgba(26,26,26,.18);
+  --ring-focus:0 0 0 3px rgba(179,160,182,.55);
+  --overlay-scrim:rgba(26,26,26,.42);
+  --blur-veil:blur(8px); /* @kind other */
+}

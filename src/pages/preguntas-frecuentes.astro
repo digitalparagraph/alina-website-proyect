@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+/**
+ * Solo dudas operativas. Las objeciones emocionales viven en el cuerpo de la
+ * página donde bloquean la conversión (Etapa 2): una objeción respondida en
+ * una FAQ ya perdió, porque quien la tenía se fue antes de llegar aquí.
+ */
+const preguntas = [
+  { q: '¿Necesito saber exactamente qué quiero trabajar?',
+    a: 'No. Se puede empezar precisamente por ordenar qué está ocurriendo y qué necesitas.' },
+  { q: '¿Cuánto dura un proceso?',
+    a: 'No existe un número universal de sesiones. Depende del objetivo, de la situación y de cómo avance el proceso.' },
+  { q: '¿Cada cuánto son las sesiones?',
+    a: 'Habitualmente cada 15 días. La frecuencia se ajusta a las necesidades del proceso.' },
+  { q: '¿Las sesiones son en línea?',
+    a: 'Sí. Son sesiones individuales en línea de aproximadamente 50 minutos.' },
+  { q: '¿Qué pasa si después de la primera sesión considero que esto no es para mí?',
+    a: 'La primera sesión también sirve para valorar si el enfoque y la forma de trabajo son adecuados para lo que buscas. No hace falta comprometerse con un proceso que no tenga sentido.' },
+  { q: '¿Esto sustituye una terapia psicológica?',
+    a: 'No. El coaching terapéutico tiene un alcance definido y no sustituye psicoterapia ni atención psiquiátrica. Cuando una situación requiere atención especializada, se reconoce y se orienta hacia el profesional correspondiente.' },
+  { q: '¿Qué pasa si durante el proceso aparece algo que requiere otro tipo de atención?',
+    a: 'Se revisa la situación y, cuando corresponde, se recomienda buscar el apoyo profesional adecuado. Reconocerlo es parte del trabajo.' },
+  { q: '¿Puedo trabajar un problema específico aunque no tenga un diagnóstico?',
+    a: 'Sí. El proceso puede centrarse en una situación, un patrón o un objetivo concreto sin que exista un diagnóstico.' },
+  { q: '¿Qué ocurre si necesito cancelar o cambiar una sesión?',
+    a: 'Se aplican las políticas de pago, cancelación y reprogramación establecidas al agendar.' },
+];
+const faq = {
+  '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: 'es-MX',
+  mainEntity: preguntas.map((p) => ({
+    '@type': 'Question', name: p.q,
+    acceptedAnswer: { '@type': 'Answer', text: p.a },
+  })),
+};
+---
+<Base
+  titulo="Preguntas frecuentes"
+  descripcion="Duración, frecuencia, modalidad, alcance del servicio y políticas de cancelación del coaching terapéutico con Alina Martínez."
+>
+  <script slot="schema" type="application/ld+json" set:html={JSON.stringify(faq)} />
+  <section class="contenedor seccion pila">
+    <h1>Preguntas frecuentes</h1>
+    <dl class="preguntas">
+      {preguntas.map((p) => (<><dt>{p.q}</dt><dd>{p.a}</dd></>))}
+    </dl>
+    <p class="pendiente">
+      Falta aquí la tarifa vigente y, si aplica, la promoción. Pendiente de
+      confirmar con Alina antes de publicar.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .preguntas{margin:0;max-width:var(--measure)}
+  .preguntas dt{font-weight:var(--weight-bold);margin-top:var(--space-6)}
+  .preguntas dd{margin:var(--space-2) 0 0}
+  .pendiente{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
+    padding:var(--space-4);font-size:var(--text-sm);margin-top:var(--space-7)}
+</style>

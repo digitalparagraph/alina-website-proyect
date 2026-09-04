@@ -13,3 +13,9 @@ build/
 # Se conservan en la carpeta local, no en el repositorio.
 insumos/*.PDF
 insumos/*.pdf
+
+# Tipografia con licencia de Adobe Fonts: comping interno, no se redistribuye
+Design System/assets/fonts/*.otf
+# Material fuente del design system: pesado y ya destilado en el propio sistema
+Design System/uploads/
+fuente.tgz

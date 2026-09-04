@@ -1,0 +1,36 @@
+<!-- @dsCard group="Social" viewport="1080x760" name="Social post system" subtitle="The four live post formats — click to switch" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Alina Martínez · Social kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;background:var(--surface-page);font-family:var(--font-core);color:var(--text-body)}a{color:var(--text-accent)}a:hover{color:var(--ink-900)}.wrap{display:flex;gap:32px;padding:28px 32px;align-items:flex-start}.stage{width:648px;height:810px;overflow:hidden;flex:0 0 auto}.stage>div{transform:scale(.6);transform-origin:top left}.side{display:flex;flex-direction:column;gap:14px;padding-top:6px}</style></head>
+<body><div id="root"></div>
+<script type="text/babel">
+const {Button,Badge,Tag,Divider,QuotePost,IllustrationPost,PhotoAdPost,CarouselPost}=window.AlinaMartNezDesignSystem_f6c15e;
+const FORMATS=[
+ {id:'ilustracion',label:'Ilustración',render:()=><IllustrationPost pose="point" quote={'El verdadero bienestar emocional es poder decir “esto me duele” y avanzar para superarlo.'}/>},
+ {id:'frase',label:'Frase',render:()=><QuotePost bold="El problema no está en el optimismo," quote="sino en evitar sentirte mal a toda costa"/>},
+ {id:'carrusel',label:'Carrusel',render:()=><CarouselPost title={'Frases que sueles escuchar (y repetirte) cuando algo te duele'} orbit={['Enfócate en lo positivo','Todo pasa por algo','Al mal tiempo, buena cara']}/>},
+ {id:'anuncio',label:'Anuncio',render:()=><PhotoAdPost lines={['Cada una de tus','decisiones importa']} footnote="Te ayudo a tomarlas de manera consciente" cta="Agenda tu sesión hoy."/>}
+];
+function App(){
+  const [id,setId]=React.useState('ilustracion');
+  const fmt=FORMATS.find(f=>f.id===id);
+  return (
+    <div className="wrap">
+      <div className="stage"><div>{fmt.render()}</div></div>
+      <div className="side">
+        <p style={{margin:0,fontSize:11,letterSpacing:'.2em',textTransform:'uppercase',color:'var(--text-muted)'}}>formatos 1080 × 1350</p>
+        {FORMATS.map(f=><Tag key={f.id} selected={f.id===id} onClick={()=>setId(f.id)}>{f.label}</Tag>)}
+        <Divider tone="subtle" spacing="6px"/>
+        <p style={{margin:0,fontWeight:300,fontSize:14,maxWidth:230,lineHeight:1.6}}>Un solo campo de color por pieza, logo arriba, texto centrado. La ilustración siempre se apoya en la línea de piso.</p>
+        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}><Badge>feed</Badge><Badge tone="lilac">carrusel</Badge><Badge tone="outline">story 1080×1920</Badge></div>
+        <Button size="sm" variant="secondary" onClick={()=>setId(FORMATS[(FORMATS.findIndex(f=>f.id===id)+1)%FORMATS.length].id)}>Siguiente formato</Button>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>
