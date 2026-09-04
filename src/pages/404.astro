@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base titulo="Página no encontrada" descripcion="La página que buscas no existe o cambió de dirección." noindex={true}>
+  <section class="contenedor seccion pila">
+    <h1>Esta página no existe</h1>
+    <p class="medida">
+      Puede que la dirección esté mal escrita o que el contenido haya cambiado
+      de lugar.
+    </p>
+    <ul class="atajos">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/temas/">Temas</a></li>
+      <li><a href="/proceso/">Cómo es el proceso</a></li>
+      <li><a href="/agendar/">Agendar una primera sesión</a></li>
+    </ul>
+  </section>
+</Base>
+<style>
+  .atajos{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-5)}
+</style>

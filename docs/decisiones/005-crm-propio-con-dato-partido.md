@@ -1,7 +1,7 @@
 # ADR 005 — CRM propio, con el dato partido
 
 **Fecha:** 2026-09-03
-**Estado:** aceptada
+**Estado:** vigente en su razonamiento, reemplazada en su implementación por el ADR 008
 **Etapa:** 3
 **Decide:** Damian
 

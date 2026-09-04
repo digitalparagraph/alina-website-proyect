@@ -23,4 +23,10 @@ jobs:
         run: npm run build
 
       - name: Enlaces internos
-        run: npx --yes linkinator ./dist --recurse --silent --skip "^https?://"
+        run: npm run verificar:enlaces
+
+      # Tercer control de la Etapa 3. Valida lo que el proyecto decidió: las dos
+      # credenciales de Person, que nunca se declare terapeuta (ADR 001), y que
+      # el FAQPage corresponda a lo visible en la página.
+      - name: Datos estructurados
+        run: npm run verificar:schema

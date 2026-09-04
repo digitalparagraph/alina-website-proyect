@@ -19,3 +19,4 @@ Design System/assets/fonts/*.otf
 # Material fuente del design system: pesado y ya destilado en el propio sistema
 Design System/uploads/
 fuente.tgz
+php/config.php

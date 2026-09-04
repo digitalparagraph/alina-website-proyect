@@ -8,6 +8,12 @@ import Base from '../layouts/Base.astro';
  *
  * El formulario pide tres campos. Nada de listas de síntomas: convierten un
  * mensaje en un expediente. Ver ADR 003 y 005.
+ *
+ * Envía por POST a /contacto.php, el script del ADR 008. El method y el action
+ * van en el HTML y no dependen del JavaScript a propósito: un GET pondría el
+ * mensaje en la barra de direcciones, en el historial y en el log de accesos
+ * del servidor, que es exactamente lo que el ADR 003 prohíbe. Si el script no
+ * carga, el navegador hace el POST solo y el mensaje sigue llegando.
  */
 ---
 <Base
@@ -24,7 +30,7 @@ import Base from '../layouts/Base.astro';
     </header>
 
     <div class="dos">
-      <form class="form pila" id="contacto" novalidate>
+      <form class="form pila" id="contacto" method="post" action="/contacto.php" novalidate>
         <div class="campo">
           <label for="nombre">Cómo quieres que te llame</label>
           <input id="nombre" name="nombre" type="text" required autocomplete="name" />
@@ -40,6 +46,15 @@ import Base from '../layouts/Base.astro';
             Con unas líneas alcanza. No hace falta que llegues con el problema
             ordenado.
           </p>
+        </div>
+
+        <!-- Campo trampa. Los bots lo llenan, las personas no lo ven ni lo
+             alcanzan con el tabulador. Fuera de pantalla en lugar de display
+             none, porque algunos bots ignoran lo segundo. -->
+        <div class="trampa" aria-hidden="true">
+          <label for="sitio_web">No llenes este campo</label>
+          <input id="sitio_web" name="sitio_web" type="text" tabindex="-1"
+                 autocomplete="off" />
         </div>
 
         <div class="aviso">
@@ -95,6 +110,81 @@ import Base from '../layouts/Base.astro';
   .aviso p+p{margin-top:var(--space-3)}
   .boton{border:1px solid var(--border-hairline);cursor:pointer;align-self:flex-start}
   .estado{font-size:var(--text-sm)}
+  .estado-listo{background:var(--surface-brand-soft);border-left:2px solid var(--border-hairline);
+    padding:var(--space-4);font-size:var(--text-base);max-width:var(--measure)}
   .lateral{background:var(--surface-brand-soft);padding:var(--space-6)}
   .lateral h2{font-size:var(--text-h3)}
+  .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 </style>
+
+<script>
+  /**
+   * Mejora del envío. El formulario ya funciona sin esto: hace POST nativo a
+   * /contacto.php. Lo que añade el script es no perder la página, informar del
+   * resultado en el bloque con aria-live y adjuntar los datos de seguimiento
+   * que el CRM necesita (ADR 005) y que un POST nativo no lleva.
+   *
+   * Las UTM se leen de la URL actual. Si la persona llegó por campaña a otra
+   * página y navegó hasta aquí, se pierden: capturarlas al aterrizar exige
+   * JavaScript en todas las páginas y hoy el sitio no envía ninguno. Queda como
+   * decisión abierta en la Etapa 5.
+   */
+  const form = document.querySelector('#contacto');
+  const estado = form.querySelector('.estado');
+  const boton = form.querySelector('button[type="submit"]');
+
+  const MENSAJES = {
+    422: 'Revisa que el nombre, el correo y unas líneas del mensaje estén completos.',
+    429: 'Ya se enviaron varios mensajes desde esta conexión. Intenta más tarde.',
+    502: 'No se pudo enviar el mensaje. Vuelve a intentar en un momento.',
+  };
+
+  form.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+
+    const datos = new FormData(form);
+    const parametros = new URLSearchParams(location.search);
+    const utm = (clave) => parametros.get(clave) ?? '';
+
+    const cuerpo = {
+      nombre: datos.get('nombre'),
+      correo: datos.get('correo'),
+      mensaje: datos.get('mensaje'),
+      sitio_web: datos.get('sitio_web'),
+      paginaOrigen: location.pathname,
+      referente: document.referrer,
+      utm_source: utm('utm_source'),
+      utm_medium: utm('utm_medium'),
+      utm_campaign: utm('utm_campaign'),
+      utm_content: utm('utm_content'),
+      utm_term: utm('utm_term'),
+    };
+
+    boton.disabled = true;
+    estado.textContent = 'Enviando…';
+
+    try {
+      const respuesta = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(cuerpo),
+      });
+
+      if (respuesta.ok) {
+        form.hidden = true;
+        estado.textContent =
+          'Tu mensaje llegó al correo de Alina. Te responde ahí para acordar el horario.';
+        estado.classList.add('estado-listo');
+        return;
+      }
+
+      boton.disabled = false;
+      estado.textContent =
+        MENSAJES[respuesta.status] ?? 'No se pudo enviar el mensaje. Vuelve a intentar.';
+    } catch {
+      // Sin red o con el fetch bloqueado, el POST nativo sigue siendo válido.
+      // No dispara este mismo manejador, así que no hay bucle.
+      form.submit();
+    }
+  });
+</script>

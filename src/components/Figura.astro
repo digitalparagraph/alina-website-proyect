@@ -1,0 +1,36 @@
+---
+/**
+ * Figura ilustrada de la marca. Es el dispositivo de firma del sistema de
+ * diseño y la Etapa 4 lo restringe a /sobre-alina/: en cualquier otra página
+ * volvería protagonista a la coach, que es justo lo que descarta la guía de
+ * contenido.
+ *
+ * El arte llega como una composición cerrada de redes: trae el campo butter y
+ * la regla de suelo ya dibujados dentro del PNG. Así que aquí no se le añade
+ * fondo, ni línea, ni mezcla de capas; se coloca como panel y se deja en paz.
+ *
+ * La ilustración es decorativa. Todo lo que dice de Alina está en el texto de
+ * la página, así que el alt va vacío y los lectores de pantalla la saltan.
+ *
+ * El respaldo del picture es WebP y no PNG: el PNG de origen pesa 342 KB y
+ * emitirlo, más su versión 2x, metía medio megabyte al dist para un navegador
+ * que casi nadie usa. Si alguno no entiende WebP, se queda sin una imagen
+ * decorativa y no pierde nada de la página.
+ */
+import { Picture } from 'astro:assets';
+import figura from '../assets/ilustraciones/alina-figura-brazos.png';
+
+const { ancho = 280, class: clase } = Astro.props;
+---
+<Picture
+  src={figura}
+  formats={['avif', 'webp']}
+  fallbackFormat="webp"
+  width={ancho}
+  densities={[1, 2]}
+  alt=""
+  loading="lazy"
+  decoding="async"
+  class:list={['figura', clase]}
+/>
+

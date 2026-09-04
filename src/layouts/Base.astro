@@ -48,8 +48,8 @@ const nav = [
   <header class="cabecera">
     <div class="contenedor cabecera-fila">
       <a href="/" class="marca" aria-label="Alina Martínez, inicio">
-        <span class="marca-nombre">Alina Martínez</span>
-        <span class="eyebrow">existir consciente</span>
+        <img src="/logo/alina-logo.svg" alt="Alina Martínez · existir consciente"
+             width="200" height="127" />
       </a>
       <nav aria-label="Principal">
         <ul>
@@ -64,6 +64,10 @@ const nav = [
 
   <footer class="pie">
     <div class="contenedor pila">
+      <div class="pie-marca">
+        <img src="/logo/alina-iso-morado.svg" alt="" width="56" height="56" aria-hidden="true" />
+        <p class="eyebrow">existir consciente</p>
+      </div>
       <p class="medida">
         Coaching terapéutico en línea. Sesiones individuales de aproximadamente
         50 minutos, habitualmente cada 15 días.
@@ -82,22 +86,34 @@ const nav = [
 </html>
 
 <style>
-  .banda-staging{margin:0;padding:var(--space-2) var(--space-5);text-align:center;
-    background:var(--ink-800);color:var(--text-inverse);font-size:var(--text-xs);
-    letter-spacing:var(--tracking-wide)}
+  /* max-width explícito: la regla de medida de lectura aplica a todo p y aquí
+     recortaba la banda a 62 caracteres en lugar de cruzar la pantalla. */
+  .banda-staging{margin:0;max-width:none;padding:var(--space-2) var(--space-5);
+    text-align:center;background:var(--ink-800);color:var(--text-inverse);
+    font-size:var(--text-xs);letter-spacing:var(--tracking-wide)}
 
   .saltar{position:absolute;left:-9999px;top:var(--space-3)}
   .saltar:focus{left:var(--space-5);background:var(--surface-card);padding:var(--space-3) var(--space-4);z-index:10}
 
-  .cabecera{border-bottom:1px solid var(--border-subtle)}
-  .cabecera-fila{display:flex;flex-wrap:wrap;gap:var(--space-5);
-    align-items:center;justify-content:space-between;padding-block:var(--space-5)}
-  .marca{text-decoration:none;display:flex;flex-direction:column;gap:2px}
-  .marca-nombre{font-weight:var(--weight-bold);font-size:var(--text-lg);letter-spacing:var(--tracking-tight)}
-  nav ul{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:center;list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
+  .cabecera{background:var(--surface-card);border-bottom:1px solid var(--border-subtle)}
+  .cabecera-fila{display:flex;flex-wrap:wrap;gap:var(--space-4);
+    align-items:center;justify-content:space-between;padding-block:var(--space-4)}
+  .marca{text-decoration:none;display:block;line-height:0}
+  .marca img{width:clamp(112px,16vw,175px);height:auto}
+  nav ul{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);
+    align-items:center;list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
 
-  .pie{border-top:1px solid var(--border-subtle);margin-top:var(--space-9);
-    padding-block:var(--space-8);background:var(--surface-mist)}
+  @media (max-width:640px){
+    .cabecera-fila{padding-block:var(--space-3);gap:var(--space-3)}
+    nav ul{gap:var(--space-2) var(--space-4);font-size:var(--text-xs);justify-content:flex-end}
+    nav ul .boton{padding:var(--space-2) var(--space-4)}
+  }
+
+  .pie{border-top:1px solid var(--border-subtle);
+    padding-block:var(--space-8);background:var(--butter-100)}
+  .pie-marca{display:flex;align-items:center;gap:var(--space-3)}
+  .pie-marca img{width:48px;height:auto}
+  .pie-marca p{margin:0}
   .pie-enlaces{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);
     list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
 </style>

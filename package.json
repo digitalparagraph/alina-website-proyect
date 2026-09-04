@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "verificar": "npm run build && npm run verificar:enlaces && npm run verificar:schema",
+    "verificar:enlaces": "npx --yes linkinator dist --config linkinator.config.json",
+    "verificar:schema": "node scripts/verificar-datos-estructurados.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",

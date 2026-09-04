@@ -19,106 +19,157 @@ const reconocimientos = [
   'Tus relaciones, tu trabajo o tus decisiones están empezando a resentir un patrón que quieres comprender.',
   'Lo has intentado por tu cuenta y sientes que sigues dando vueltas en el mismo lugar.',
 ];
+
+const fases = [
+  ['Entender', 'Qué está ocurriendo, qué lo desencadena y qué lo mantiene.'],
+  ['Observar', 'Cómo se relacionan pensamientos, emociones y conductas en situaciones concretas.'],
+  ['Experimentar', 'Probar respuestas distintas y aprender de lo que ocurre.'],
+  ['Integrar', 'Convertir eso en herramientas que puedas usar sin acompañamiento.'],
+];
 ---
 <Base
   titulo="Alina Martínez · Coaching terapéutico en línea"
   descripcion="Acompañamiento para comprender y modificar patrones de pensamiento, emoción y conducta que interfieren con cómo quieres vivir, decidir o relacionarte."
 >
-  <section class="contenedor seccion pila apertura">
-    <h1>
-      Hay cosas que <span class="marcador">entiendes perfectamente</span> y aun
-      así sigues haciendo.
-    </h1>
-    <p class="entrada">
-      Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
-      Este es un espacio para entender qué mantiene ese patrón y qué otras
-      respuestas tienes disponibles.
-    </p>
+  <!-- Hero: bloque lila con retrato, según el moodboard -->
+  <section class="banda banda--lila marco">
+    <div class="contenedor par">
+      <div class="pila">
+        <p class="eyebrow">coaching terapéutico en línea</p>
+        <h1>
+          Hay cosas que <span class="marcador">entiendes perfectamente</span> y
+          aun así sigues haciendo.
+        </h1>
+        <p class="entrada">
+          Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
+          Este es un espacio para entender qué mantiene ese patrón y qué otras
+          respuestas tienes disponibles.
+        </p>
+        <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      </div>
+      <div>
+        <picture>
+          <source srcset="/img/alina-retrato.webp" type="image/webp" />
+          <img class="retrato" src="/img/alina-retrato.jpg"
+               alt="Alina Martínez" width="900" height="900"
+               fetchpriority="high" decoding="async" />
+        </picture>
+      </div>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila">
-    <h2>Este espacio puede ser para ti si</h2>
-    <ul class="reconocimientos">
-      {reconocimientos.map((r) => <li>{r}</li>)}
-    </ul>
+  <section class="banda banda--pagina">
+    <div class="contenedor pila">
+      <h2>Este espacio puede ser para ti si</h2>
+      <ul class="reconocimientos">
+        {reconocimientos.map((r) => <li>{r}</li>)}
+      </ul>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila">
-    <h2>Qué puedes trabajar</h2>
-    <ul class="temas">
-      {temas.map((t) => (
-        <li>
-          <a href={`/temas/${t.slug}/`}>{t.data.titulo}</a>
-          <span>{t.data.reconocimiento}</span>
-        </li>
-      ))}
-    </ul>
+  <section class="banda banda--blanco">
+    <div class="contenedor pila">
+      <h2>Qué puedes trabajar</h2>
+      <ul class="rejilla temas">
+        {temas.map((t) => (
+          <li class="tarjeta">
+            <h3><a href={`/temas/${t.slug}/`}>{t.data.titulo}</a></h3>
+            <p>{t.data.reconocimiento}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila">
-    <h2>Cómo se trabaja</h2>
-    <ol class="fases">
-      <li><b>Entender.</b> Qué está ocurriendo, qué lo desencadena y qué lo mantiene.</li>
-      <li><b>Observar.</b> Cómo se relacionan pensamientos, emociones y conductas en situaciones concretas.</li>
-      <li><b>Experimentar.</b> Probar respuestas distintas y aprender de lo que ocurre.</li>
-      <li><b>Integrar.</b> Convertir eso en herramientas que puedas usar sin acompañamiento.</li>
-    </ol>
-    <p><a href="/proceso/">Ver el proceso completo</a></p>
+  <section class="banda banda--sage">
+    <div class="contenedor pila">
+      <h2>Cómo se trabaja</h2>
+      <ol class="fases">
+        {fases.map(([n, t], i) => (
+          <li>
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div><b>{n}.</b> {t}</div>
+          </li>
+        ))}
+      </ol>
+      <p><a href="/proceso/">Ver el proceso completo</a></p>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila">
-    <h2>Qué es esto</h2>
-    <p class="medida">
-      Coaching terapéutico: un proceso que combina herramientas de coaching con
-      principios de la terapia cognitivo conductual. Tiene un alcance definido
-      y no sustituye psicoterapia. Quien acompaña es coach certificada con
-      formación en TCC.
-    </p>
-    <p>
-      <a href="/que-es-el-coaching-terapeutico/">Qué incluye</a> ·
-      <a href="/terapia-o-coaching/">En qué se diferencia de la terapia</a> ·
-      <a href="/sobre-alina/">Quién acompaña</a>
-    </p>
+  <section class="banda banda--crema">
+    <div class="contenedor pila">
+      <h2>Qué es esto</h2>
+      <p class="medida">
+        Coaching terapéutico: un proceso que combina herramientas de coaching
+        con principios de la terapia cognitivo conductual. Tiene un alcance
+        definido y no sustituye psicoterapia. Quien acompaña es coach
+        certificada con formación en TCC.
+      </p>
+      <p class="enlaces">
+        <a href="/que-es-el-coaching-terapeutico/">Qué incluye</a>
+        <a href="/terapia-o-coaching/">En qué se diferencia de la terapia</a>
+        <a href="/sobre-alina/">Quién acompaña</a>
+      </p>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila objecion">
-    <h2>"¿Lo que me pasa es suficientemente importante?"</h2>
-    <p class="medida">
-      No hace falta estar al límite para pedir acompañamiento. Si algo está
-      ocupando demasiado espacio mental, o afectando tus relaciones, tus
-      decisiones o tu descanso, ya es razón suficiente para explorarlo.
-    </p>
-    <p class="medida">
-      Esperar a estar suficientemente mal es, de hecho, uno de los patrones más
-      comunes. Y los patrones tienden a sostenerse mientras las condiciones que
-      los mantienen sigan igual.
-    </p>
+  <section class="banda banda--lila objecion">
+    <div class="contenedor pila">
+      <h2>"¿Lo que me pasa es suficientemente importante?"</h2>
+      <p class="medida">
+        No hace falta estar al límite para pedir acompañamiento. Si algo está
+        ocupando demasiado espacio mental, o afectando tus relaciones, tus
+        decisiones o tu descanso, ya es razón suficiente para explorarlo.
+      </p>
+      <p class="medida">
+        Esperar a estar suficientemente mal es, de hecho, uno de los patrones
+        más comunes. Y los patrones tienden a sostenerse mientras las
+        condiciones que los mantienen sigan igual.
+      </p>
+    </div>
   </section>
 
-  <section class="contenedor seccion pila cierre">
-    <p class="medida">
-      La primera sesión sirve para entender qué está pasando y para que
-      valores si esta forma de trabajo tiene sentido para ti.
-    </p>
-    <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+  <section class="banda banda--pagina">
+    <div class="contenedor pila">
+      <p class="entrada medida">
+        La primera sesión sirve para entender qué está pasando y para que
+        valores si esta forma de trabajo tiene sentido para ti.
+      </p>
+      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+    </div>
   </section>
 </Base>
 
 <style>
-  .apertura h1{font-size:var(--text-display);line-height:var(--leading-tight);max-width:16ch}
+  h1{font-size:var(--text-display);line-height:var(--leading-tight)}
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
-  .reconocimientos{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-4);
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:var(--container-max)}
-  .reconocimientos li{border-left:2px solid var(--accent-highlight);padding-left:var(--space-4)}
-  .temas{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-6);
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-  .temas li{display:flex;flex-direction:column;gap:var(--space-2);
-    border-top:1px solid var(--border-hairline);padding-top:var(--space-4)}
-  .temas a{font-weight:var(--weight-bold);font-size:var(--text-h3);
-    text-decoration:none;letter-spacing:var(--tracking-tight)}
+
+  .reconocimientos{list-style:none;margin:0;padding:0;display:grid;
+    gap:var(--space-4) var(--space-6);
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .reconocimientos li{border-left:3px solid var(--accent-highlight);
+    padding-left:var(--space-4);font-size:var(--text-sm)}
+
+  .temas{list-style:none;margin:0;padding:0}
+  .temas h3{margin:0}
+  .temas a{text-decoration:none}
   .temas a:hover{text-decoration:underline}
-  .temas span{font-size:var(--text-sm);color:var(--text-secondary)}
-  .fases{max-width:var(--measure);padding-left:1.2em;display:flex;flex-direction:column;gap:var(--space-3)}
-  .objecion{background:var(--surface-mist);padding-block:var(--space-8)}
-  .cierre{border-top:1px solid var(--border-subtle)}
+  .temas p{font-size:var(--text-sm);color:var(--text-secondary)}
+
+  .fases{list-style:none;margin:0;padding:0;max-width:var(--measure);
+    display:flex;flex-direction:column;gap:var(--space-4)}
+  .fases li{display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);align-items:baseline}
+  .num{font-weight:var(--weight-bold);font-variant-numeric:tabular-nums;
+    color:var(--lilac-700)}
+
+  .enlaces{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);max-width:none}
+
+  /* La objeción más común del visitante. Se destaca con el trazo de pincel
+     del sistema, no con una banda oscura. */
+  /* Trazo de pincel pintado como fondo del propio texto: con z-index
+     negativo quedaba detrás del fondo de la banda y no se veía. */
+  .objecion h2{max-width:22ch;
+    background:linear-gradient(var(--accent-brush),var(--accent-brush))
+      0 .86em / 100% .34em no-repeat;
+    background-origin:content-box;padding-inline:.15em}
 </style>

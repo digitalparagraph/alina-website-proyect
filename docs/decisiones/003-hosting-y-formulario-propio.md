@@ -1,7 +1,7 @@
 # ADR 003 — Hosting en Cloudflare Pages y formulario propio
 
 **Fecha:** 2026-09-03
-**Estado:** aceptada
+**Estado:** vigente en su razonamiento, reemplazada en su implementación por el ADR 008
 **Etapa:** 3
 
 ## Contexto
