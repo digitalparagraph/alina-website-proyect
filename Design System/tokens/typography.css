@@ -1,0 +1,28 @@
+:root{
+  --font-core:"Acumin Variable Concept","Poppins",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --font-logo:"Poppins","Acumin Variable Concept",system-ui,sans-serif; /* wordmark-adjacent lettering */
+
+  --weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;
+
+  /* Sizes — social-first scale (posts are authored at 1080px wide) */
+  --text-display-xl:clamp(44px,6vw,88px);
+  --text-display:clamp(36px,4.5vw,64px);
+  --text-h1:clamp(30px,3.4vw,48px);
+  --text-h2:clamp(24px,2.4vw,34px);
+  --text-h3:22px;
+  --text-lg:19px;
+  --text-body:17px;
+  --text-sm:15px;
+  --text-xs:13px;
+  --text-tag:12px;
+
+  --leading-tight:1.06;--leading-snug:1.2;--leading-normal:1.5;--leading-loose:1.65;
+  --tracking-tight:-0.02em;--tracking-normal:0;--tracking-wide:0.08em;--tracking-widest:0.22em;
+
+  /* Semantic roles */
+  --type-display:var(--weight-bold) var(--text-display)/var(--leading-tight) var(--font-core);
+  --type-heading:var(--weight-bold) var(--text-h2)/var(--leading-snug) var(--font-core);
+  --type-body:var(--weight-light) var(--text-body)/var(--leading-loose) var(--font-core);
+  --type-quote:var(--weight-light) var(--text-h2)/var(--leading-snug) var(--font-core);
+  --type-eyebrow:var(--weight-regular) var(--text-xs)/1.2 var(--font-core);
+}

@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+
+const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const servicio = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Coaching terapéutico',
+  serviceType: 'Coaching terapéutico',
+  provider: { '@id': `${sitio}#alina` },
+  areaServed: 'MX',
+  availableChannel: { '@type': 'ServiceChannel', serviceUrl: `${sitio}/agendar/` },
+  description:
+    'Proceso de acompañamiento para comprender y modificar patrones de pensamiento, emoción y conducta que interfieren con la manera en que una persona quiere vivir, decidir o relacionarse.',
+};
+---
+<Base
+  titulo="Qué es el coaching terapéutico"
+  descripcion="Un proceso para comprender y modificar patrones que interfieren con cómo quieres vivir, decidir o relacionarte. Qué incluye, cómo funciona y hasta dónde llega."
+>
+  <script slot="schema" type="application/ld+json" set:html={JSON.stringify(servicio)} />
+
+  <article class="contenedor seccion pila">
+    <header class="pila">
+      <h1>Qué es el coaching terapéutico</h1>
+      <p class="entrada">
+        Un proceso de acompañamiento para comprender y modificar patrones de
+        pensamiento, emoción y conducta que están interfiriendo con la manera
+        en que quieres vivir, decidir o relacionarte.
+      </p>
+    </header>
+
+    <aside class="alcance">
+      <h2 class="alcance-titulo">Hasta dónde llega</h2>
+      <p>
+        Este servicio tiene un alcance definido. Trabaja patrones concretos en
+        situaciones de tu vida diaria y no sustituye psicoterapia ni atención
+        psiquiátrica. Cuando una situación requiere otro tipo de atención, se
+        reconoce y se orienta hacia el profesional correspondiente.
+      </p>
+      <p>
+        Quien acompaña es coach certificada con formación en terapia cognitivo
+        conductual. No es psicóloga ni psicoterapeuta.
+        <a href="/alcance-del-servicio/">Ver el alcance completo</a>.
+      </p>
+    </aside>
+
+    <section class="pila">
+      <h2>De dónde viene el enfoque</h2>
+      <p>
+        Combina herramientas de coaching con principios y estrategias de la
+        terapia cognitivo conductual, y con una mirada basada en ciencias del
+        comportamiento. El trabajo parte de situaciones concretas y busca que
+        la comprensión se traduzca en cambios que se puedan observar.
+      </p>
+      <p>
+        Detrás hay una idea sobre cómo funcionamos: lo que pensamos, lo que
+        sentimos, nuestra biología, nuestra historia de aprendizaje y el
+        contexto en el que vivimos se entrelazan para dar forma a nuestras
+        decisiones. Entender cómo se entrelazan en tu caso suele abrir opciones
+        que antes no se veían.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Cómo se traduce en la práctica</h2>
+      <p>
+        Una sesión no busca producir una conversación interesante ni una
+        explicación satisfactoria. Busca que la comprensión se convierta en
+        algo observable: formular hipótesis sobre lo que está ocurriendo,
+        mirar qué pasa en situaciones reales, probar respuestas nuevas y
+        aprender de lo que resulta.
+      </p>
+      <p>
+        Eso significa que parte del trabajo ocurre fuera de la sesión. Lo que
+        se ve en los cincuenta minutos cobra sentido cuando se traslada a la
+        semana: observar qué sucede, probar algo distinto, revisar qué
+        funcionó.
+      </p>
+      <p><a href="/proceso/">Ver cómo es el proceso completo</a>.</p>
+    </section>
+
+    <section class="pila">
+      <h2>Qué no incluye</h2>
+      <p>
+        Este proceso no promete transformaciones rápidas ni fórmulas
+        universales. No trabaja desde la idea de que hay una única manera
+        correcta de vivir, ni desde la de que las emociones difíciles haya que
+        eliminarlas.
+      </p>
+      <p>
+        Tampoco busca que te quedes. La intención es que, conforme avanza,
+        tengas más herramientas para observarte, comprender tus patrones y
+        decidir por tu cuenta. El acompañamiento debería aumentar tu
+        autonomía.
+      </p>
+    </section>
+
+    <section class="pila">
+      <h2>Formato</h2>
+      <ul class="formato">
+        <li>Sesiones individuales, en línea.</li>
+        <li>Duración aproximada de 50 minutos.</li>
+        <li>Habitualmente cada 15 días, con la frecuencia ajustada al proceso.</li>
+        <li>En español.</li>
+      </ul>
+    </section>
+
+    <section class="pila cierre">
+      <p class="medida">
+        La primera sesión sirve para entender qué está pasando y para que
+        valores si esta forma de trabajo tiene sentido para lo que buscas.
+      </p>
+      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .alcance-titulo{font-size:var(--text-h3)}
+  .formato{max-width:var(--measure);padding-left:1.1em;display:flex;flex-direction:column;gap:var(--space-2)}
+  .cierre{border-top:1px solid var(--border-subtle);padding-top:var(--space-6)}
+</style>

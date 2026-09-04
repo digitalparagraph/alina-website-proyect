@@ -1,0 +1,63 @@
+/* La marca es plana, centrada y con vacíos intencionales. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--surface-page);color:var(--text-body);
+  font:var(--weight-light) var(--text-base)/var(--leading-loose) var(--font-core);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-weight:var(--weight-bold);letter-spacing:var(--tracking-tight);text-wrap:balance;margin:0}
+h1{font-size:var(--text-h1);line-height:var(--leading-tight)}
+h2{font-size:var(--text-h2);line-height:var(--leading-snug)}
+h3{font-size:var(--text-h3);line-height:var(--leading-snug)}
+p{margin:0;max-width:var(--measure)}
+img{max-width:100%;height:auto;display:block}
+
+a{color:inherit;text-underline-offset:.18em}
+a:hover{text-decoration-thickness:2px}
+
+/* Foco visible: 4.66:1 sobre butter. El token original era invisible. */
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:2px}
+
+.contenedor{max-width:var(--container-max);margin-inline:auto;padding-inline:var(--gutter)}
+.seccion{padding-block:var(--section-y)}
+.medida{max-width:var(--measure)}
+.pila{display:flex;flex-direction:column;gap:var(--space-5)}
+
+.eyebrow{
+  font-size:var(--text-xs);letter-spacing:var(--tracking-widest);
+  text-transform:lowercase;color:var(--text-secondary);margin:0;
+}
+
+/* Cápsula de marcador: bloque butter tras palabras en negrita.
+   Esquina recta a propósito — se lee como pintura, no como etiqueta. */
+.marcador{background:var(--accent-highlight);color:var(--text-on-brand);
+  padding:.06em .28em;border-radius:var(--radius-none);box-decoration-break:clone;
+  -webkit-box-decoration-break:clone}
+
+.boton{
+  display:inline-block;border:1px solid var(--border-hairline);
+  background:var(--surface-brand);color:var(--text-on-brand);
+  font-weight:var(--weight-bold);font-size:var(--text-sm);
+  padding:var(--space-3) var(--space-6);border-radius:var(--radius-pill);
+  text-decoration:none;transition:background var(--dur-base) var(--ease),transform var(--dur-fast) var(--ease);
+}
+/* El hover aclara, nunca oscurece ni levanta. */
+.boton:hover{background:var(--butter-300)}
+.boton:active{transform:scale(.985)}
+
+.alcance{
+  border-left:2px solid var(--border-hairline);background:var(--surface-mist);
+  padding:var(--space-5);max-width:var(--measure);
+}
+.alcance p{font-size:var(--text-sm)}
+
+.borrador{
+  border:1px dashed var(--border-hairline);background:var(--surface-lilac);
+  padding:var(--space-3) var(--space-4);font-size:var(--text-xs);
+  letter-spacing:var(--tracking-wide);text-transform:lowercase;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+}
