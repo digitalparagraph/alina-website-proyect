@@ -9,29 +9,82 @@
  *    sensible que entra, y quien lo escribe lo escribe para ella.
  *  - En la base queda solo lo operativo.
  *  - El contenido del mensaje nunca se escribe en logs.
+ *
+ * Acepta dos formas de envío, y por eso el mensaje nunca viaja en una URL:
+ *  - JSON, que es lo que manda el script de /agendar/.
+ *  - Formulario clásico, que es lo que manda el navegador si el script no
+ *    carga. En ese caso responde con una página mínima, porque quien llega así
+ *    no tiene JavaScript para leer un JSON.
  */
 declare(strict_types=1);
 
 require __DIR__ . '/config.php';   // no se versiona; ver config.example.php
 
-header('Content-Type: application/json; charset=utf-8');
+$tipoEntrada = $_SERVER['CONTENT_TYPE'] ?? '';
+$esJson = stripos($tipoEntrada, 'application/json') !== false;
+
+/**
+ * Cierra la petición en el formato que el cliente puede leer.
+ * El texto es el mismo en los dos casos; solo cambia el envoltorio.
+ */
+function responder(int $codigo, bool $ok, string $texto, array $extra = []): void
+{
+    global $esJson;
+    http_response_code($codigo);
+
+    if ($esJson) {
+        header('Content-Type: application/json; charset=utf-8');
+        exit(json_encode(
+            $ok ? ['ok' => true] + $extra : ['error' => $texto],
+            JSON_UNESCAPED_UNICODE
+        ));
+    }
+
+    header('Content-Type: text/html; charset=utf-8');
+    $t = htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
+    exit(<<<HTML
+    <!doctype html>
+    <html lang="es-MX">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="robots" content="noindex,nofollow">
+      <title>Formulario de contacto</title>
+      <style>
+        body{margin:0;padding:48px 24px;background:#FFFBF2;color:#1A1A1A;
+          font:300 17px/1.65 system-ui,-apple-system,"Helvetica Neue",sans-serif}
+        main{max-width:62ch;margin-inline:auto}
+        a{color:inherit}
+      </style>
+    </head>
+    <body>
+      <main>
+        <p>{$t}</p>
+        <p><a href="/">Volver al inicio</a></p>
+      </main>
+    </body>
+    </html>
+    HTML);
+}
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    http_response_code(405);
-    exit(json_encode(['error' => 'Método no permitido']));
+    responder(405, false, 'Método no permitido.');
 }
 
 // Solo se aceptan envíos desde el propio sitio.
 $origen = $_SERVER['HTTP_ORIGIN'] ?? '';
 if ($origen !== '' && !in_array($origen, ORIGENES_PERMITIDOS, true)) {
-    http_response_code(403);
-    exit(json_encode(['error' => 'Origen no permitido']));
+    responder(403, false, 'Origen no permitido.');
 }
 
-$entrada = json_decode(file_get_contents('php://input') ?: '[]', true);
+if ($esJson) {
+    $entrada = json_decode(file_get_contents('php://input') ?: '[]', true);
+} else {
+    // Envío nativo del navegador, sin el script de la página.
+    $entrada = $_POST;
+}
 if (!is_array($entrada)) {
-    http_response_code(400);
-    exit(json_encode(['error' => 'Cuerpo inválido']));
+    responder(400, false, 'Cuerpo inválido.');
 }
 
 $limpiar = static fn($v, int $max): string =>
@@ -43,21 +96,18 @@ $mensaje = $limpiar($entrada['mensaje'] ?? null, 4000);
 
 // Campo trampa: los bots lo llenan, las personas no lo ven.
 if ($limpiar($entrada['sitio_web'] ?? null, 200) !== '') {
-    http_response_code(202);
-    exit(json_encode(['ok' => true]));
+    responder(202, true, 'Mensaje recibido.');
 }
 
 if ($nombre === '' || !filter_var($correo, FILTER_VALIDATE_EMAIL) || mb_strlen($mensaje) < 10) {
-    http_response_code(422);
-    exit(json_encode(['error' => 'Faltan datos o el mensaje es muy corto']));
+    responder(422, false, 'Faltan datos o el mensaje es muy corto. Vuelve a intentar.');
 }
 
 // Límite por IP: 3 envíos por hora.
 $ventana = sys_get_temp_dir() . '/alina_' . md5($_SERVER['REMOTE_ADDR'] ?? 'sin-ip');
 $previos = file_exists($ventana) ? (int) file_get_contents($ventana) : 0;
 if ($previos >= 3 && (time() - filemtime($ventana)) < 3600) {
-    http_response_code(429);
-    exit(json_encode(['error' => 'Demasiados envíos. Intenta más tarde.']));
+    responder(429, false, 'Demasiados envíos. Intenta más tarde.');
 }
 file_put_contents($ventana, (string) ($previos + 1));
 
@@ -106,9 +156,12 @@ $cabeceras = [
 ];
 
 if (!mail(CORREO_DESTINO, 'Contacto desde el sitio', $cuerpo, implode("\r\n", $cabeceras))) {
-    http_response_code(502);
-    exit(json_encode(['error' => 'No se pudo enviar el mensaje']));
+    responder(502, false, 'No se pudo enviar el mensaje. Vuelve a intentar en un momento.');
 }
 
-http_response_code(202);
-echo json_encode(['ok' => true, 'id' => $id]);
+responder(
+    202,
+    true,
+    'Tu mensaje llegó al correo de Alina. Te responde ahí para acordar el horario.',
+    ['id' => $id]
+);

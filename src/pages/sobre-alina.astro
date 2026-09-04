@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Figura from '../components/Figura.astro';
 /**
  * Resuelve la tensión de la Etapa 2. La guía de contenido pide que el
  * protagonista sea el proceso; E-E-A-T exige autoría verificable. Esta página
@@ -15,12 +16,15 @@ import Base from '../layouts/Base.astro';
   descripcion="Coach certificada por la International Coaching Community desde 2014, con formación en terapia cognitivo conductual. Cómo trabaja, qué no practica y cuál es el alcance de su servicio."
 >
   <article class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Sobre Alina Martínez</h1>
-      <p class="entrada">
-        Coach certificada con formación en terapia cognitivo conductual.
-        Acompaña procesos individuales en línea.
-      </p>
+    <header class="portada">
+      <div class="pila">
+        <h1>Sobre Alina Martínez</h1>
+        <p class="entrada">
+          Coach certificada con formación en terapia cognitivo conductual.
+          Acompaña procesos individuales en línea.
+        </p>
+      </div>
+      <Figura ancho={200} />
     </header>
 
     <section class="pila">
@@ -117,6 +121,13 @@ import Base from '../layouts/Base.astro';
 
 <style>
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+
+  /* La ilustración acompaña la entrada, no la encabeza: primero se lee quién
+     acompaña y con qué formación. En pantalla angosta va después del texto. */
+  .portada{display:grid;gap:var(--space-6);align-items:center}
+  @media (min-width:900px){
+    .portada{grid-template-columns:minmax(0,1fr) 200px}
+  }
   .credenciales{margin:0;max-width:var(--measure)}
   .credenciales dt{font-weight:var(--weight-bold);margin-top:var(--space-5)}
   .credenciales dd{margin:var(--space-2) 0 0}

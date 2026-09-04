@@ -33,14 +33,15 @@ Decisiones razonadas en los ADR 002, 003, 004, 005 y 006. Este documento reúne 
     schema/                Componentes de JSON-LD
   /styles
     tokens.css             Sale de la Etapa 4
-/functions
-  contacto.ts              Pages Function del formulario
-  /admin                   Panel de seguimiento, detrás de Cloudflare Access
+/php
+  contacto.php             Endpoint del formulario
+  config.example.php       Plantilla de credenciales; config.php no se versiona
 /db
-  schema.sql               Esquema de D1
+  schema.mysql.sql         Esquema de MySQL
   migraciones/
 /public
-  fonts/                   Tipografía autoalojada
+  .htaccess                Rutas, cabeceras y caché del servidor
+/scripts                   Verificadores que corre el CI
 /docs                      Documentación del proyecto (ya existe)
 ```
 
@@ -84,7 +85,7 @@ No existe todavía. Con la Etapa 0 quedó claro que un dominio de keyword no apo
 
 Criterios: nombre de Alina, `.com` o `.mx`, sin guiones, sin la palabra coaching como relleno, pronunciable por teléfono.
 
-**Decisión pendiente de Damian.** Hay que verificar disponibilidad antes de proponer. Bloquea el despliegue, no la implementación: se puede desarrollar contra la URL temporal de Cloudflare Pages.
+**Decisión pendiente de Damian.** Hay que verificar disponibilidad antes de proponer. Bloquea el despliegue, no la implementación: se desarrolla contra `localhost` y se despliega contra la URL que entregue Hostinger, ambas por `PUBLIC_SITE_URL`.
 
 ## 7. Integración continua
 
@@ -92,10 +93,10 @@ GitHub Actions en cada PR:
 
 1. Build. Falla si el esquema de contenido no valida.
 2. Verificación de enlaces internos.
-3. Validación de los datos estructurados.
-4. Lighthouse contra los presupuestos de la sección 5.
+3. Validación de los datos estructurados, con las reglas del proyecto y sin salir a la red.
+4. Lighthouse contra los presupuestos de la sección 5. Necesita una URL desplegada, así que entra con la Etapa 8.
 
-Un PR que no pasa no se aprueba. Es la única forma de que los presupuestos signifiquen algo.
+Los tres primeros corren con `npm run verificar`, que es lo mismo que ejecuta el CI. Un PR que no pasa no se aprueba: es la única forma de que los presupuestos signifiquen algo.
 
 ## 8. Corrección a la Etapa 1
 
@@ -135,12 +136,13 @@ Definido en el ADR 005. Lo que la implementación tiene que respetar:
 
 **Advertencia que va en la interfaz:** el panel no es un expediente clínico. El campo de notas es para seguimiento operativo, no para notas de sesión.
 
-**Acceso:** Cloudflare Access. Sin autenticación propia. El acceso de Paragraph al panel debe quedar registrado y revisable.
+**Acceso:** autenticación propia, pendiente de decidir. El ADR 008 la dejó abierta al salir de Cloudflare Access, y no bloquea el lanzamiento: el formulario funciona solo con correo mientras el panel no exista. El acceso de Paragraph al panel debe quedar registrado y revisable.
 
 ## 11. Pendiente
 
 - **Dominio.** Verificar disponibilidad y decidir. Bloquea el despliegue.
-- **Proveedor de envío de correo** para la Pages Function. Se elige en la implementación y se documenta como ADR.
+- **Proveedor de envío de correo** del script PHP. Hoy usa `mail()`; si el plan no entrega correo con fiabilidad se decide SMTP autenticado y se documenta como ADR.
+- **Versión de PHP** del plan contratado, requisito del ADR 008.
 - **Herramienta de analítica** concreta. El requisito está fijado; la elección es de implementación.
 - **Correo de destino** del formulario.
 - **Número de WhatsApp** que se va a enlazar.

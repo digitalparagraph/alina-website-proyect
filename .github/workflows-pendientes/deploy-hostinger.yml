@@ -16,6 +16,16 @@ jobs:
           cache: npm
       - run: npm ci
 
+      # Sin URL el build emitiría canonical y sitemap apuntando a localhost, y
+      # se subirían así. Vale más que el deploy no corra.
+      - name: Comprobar la URL del despliegue
+        run: |
+          if [ -z "${{ vars.PUBLIC_SITE_URL }}" ]; then
+            echo "Falta la variable PUBLIC_SITE_URL del repositorio." >&2
+            echo "Settings -> Secrets and variables -> Actions -> Variables" >&2
+            exit 1
+          fi
+
       # Falla si el esquema de contenido no valida: una página de tema sin
       # delimitación de alcance no compila (ADR 001).
       - name: Build
@@ -25,7 +35,13 @@ jobs:
           PUBLIC_STAGING: ${{ vars.PUBLIC_STAGING }}
 
       - name: Enlaces internos
-        run: npx --yes linkinator ./dist --recurse --silent --skip "^https?://"
+        run: npm run verificar:enlaces
+
+      # Tercer control de la Etapa 3. Valida lo que el proyecto decidió: las dos
+      # credenciales de Person, que nunca se declare terapeuta (ADR 001), y que
+      # el FAQPage corresponda a lo visible en la página.
+      - name: Datos estructurados
+        run: npm run verificar:schema
 
       # El PHP del formulario se copia junto al sitio. config.php no está en el
       # repo: se sube una sola vez a mano al servidor.

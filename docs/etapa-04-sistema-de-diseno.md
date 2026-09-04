@@ -61,7 +61,26 @@ Los componentes del sistema son React JSX y el stack es Astro sin framework (ADR
 - `Design System/assets/fonts/*.otf` — tipografía con licencia de Adobe. No se redistribuye.
 - `Design System/uploads/` — material fuente ya destilado en el propio sistema.
 
-## 5. Pendiente de confirmar con Alina
+## 5. Aplicación al sitio
+
+El moodboard del cliente —`2026/Sitio Web/Moodboard` en Drive— fija cuatro criterios que el sistema de diseño no recoge y que el sitio sí tiene que cumplir:
+
+- Layout limpio.
+- Información clara y jerarquizada.
+- Fotografía que destaque la conexión humana.
+- Combinaciones con elementos orgánicos y dinámicos.
+
+De ahí salen tres decisiones de composición:
+
+**Bandas de color por sección.** Las referencias del moodboard alternan bloques de color de borde a borde: lila, crema, salvia, blanco. El sitio hace lo mismo con `.banda--*`. Una sola superficie con líneas divisorias lee como documento, no como marca.
+
+**Sin bandas oscuras.** La marca es pastel y sólida. La primera versión usaba un bloque casi negro para destacar la objeción principal; se cambió a lila con el trazo de pincel del sistema.
+
+**Los assets van al sitio, no al inventario.** El logo en la cabecera, el isotipo en el pie y el retrato de Alina en el home y en su página. Estaban en `Design System/assets/` desde el principio y la primera versión del sitio no los usaba, lo que dejó una maqueta tipográfica sin identidad.
+
+Origen de los assets: logo e isotipo de `Design System/assets/logos/`, retrato de `2025/01. Branding/Perfil/Alina_Perfil_Facebook.png` en Drive, reescalado a 900 px y servido en WebP con respaldo JPG.
+
+## 6. Pendiente de confirmar con Alina
 
 El readme del sistema lo deja marcado y sigue abierto:
 
