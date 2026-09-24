@@ -46,6 +46,8 @@ Más allá de si el texto le gusta, tres cosas que solo ella puede contestar:
 | `/temas/autoexigencia-y-perfeccionismo/` | Escrita |
 | `/temas/sobrepensar-y-rumiacion/` | Escrita |
 | `/temas/procrastinacion-y-evitacion/` | Escrita |
+| `/temas/limites-y-relaciones/` | Escrita, abierta con el ADR 009 |
+| `/temas/decisiones-y-cambios/` | Escrita, abierta con el ADR 009 |
 | `/temas/` | Escrita |
 | `/proceso/` | Escrita |
 | `/proceso/primera-sesion/` | Escrita |

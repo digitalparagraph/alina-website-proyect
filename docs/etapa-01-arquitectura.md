@@ -36,13 +36,15 @@ Las cuatro primeras páginas tienen volumen de búsqueda marginal y eso es corre
 | `/temas/autoexigencia-y-perfeccionismo/` | autoexigencia · perfeccionismo | 590 · 2,400 | 17 · 26 | 1 |
 | `/temas/sobrepensar-y-rumiacion/` | cómo dejar de sobrepensar · rumiación | 2,400 · 4,400 | 22 · 41 | 1 |
 | `/temas/procrastinacion-y-evitacion/` | cómo dejar de procrastinar · procrastinación | 880 · 3,600 | 28 · 53 | 1 |
-| `/temas/limites-y-relaciones/` | límites emocionales · límites en una relación · límites sanos | 170 · 260 · 170 | 14 · 27 · 35 | 2 |
-| `/temas/decisiones-y-cambios/` | sin término de cabeza claro | — | — | 2 |
+| `/temas/limites-y-relaciones/` | límites emocionales · límites en una relación · límites sanos | 170 · 260 · 170 | 14 · 27 · 35 | 2, publicada |
+| `/temas/decisiones-y-cambios/` | sin término de cabeza claro | — | — | 2, publicada |
 | `/temas/regulacion-emocional/` | regulación emocional | 1,600 | 31 | 2 |
 
 Los seis temas corresponden a las cinco categorías de "¿Qué puedes trabajar?" de la guía de contenido. Se separó "pensamiento y emociones" en dos páginas porque contiene dos términos de cabeza distintos, que compiten entre sí si comparten URL.
 
-**Se lanza con tres temas, no con seis.** Tres páginas con contenido serio superan a seis delgadas, y las tres de fase 1 son las de mejor relación volumen-dificultad para un dominio sin autoridad.
+**Se lanza con cinco temas, no con seis.** El criterio no cambió —tres páginas con contenido serio superan a seis delgadas— y por eso una página solo se abre si se puede escribir con mecanismo propio y situaciones concretas.
+
+Las tres de fase 1 son las de mejor relación volumen-dificultad para un dominio sin autoridad. `limites-y-relaciones` y `decisiones-y-cambios` se adelantaron con el ADR 009, porque eran las dos áreas de la guía de contenido que quedaban sin destino en el sitio. `regulacion-emocional` sigue pendiente por solaparse con `sobrepensar-y-rumiacion`.
 
 ### Legales y confianza
 

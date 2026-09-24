@@ -28,8 +28,11 @@ const articulo = {
   dateModified: d.fechaRevision.toISOString().slice(0, 10),
   mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
 };
+// En UTC a propósito. El frontmatter da una fecha sin hora, que se parsea como
+// medianoche UTC; formateada en horario local retrocede un día, y entonces la
+// fecha visible contradice la que el JSON-LD declara en dateModified.
 const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
-  year: 'numeric', month: 'long', day: 'numeric',
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
 });
 ---
 <Base titulo={d.titulo} descripcion={d.descripcion}>

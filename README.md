@@ -25,7 +25,7 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | 3 | Stack técnico y configuraciones | Aprobada, revisada por el ADR 008 |
 | 4 | Sistema de diseño | Aprobada |
 | 5 | Implementación | Sitio construido, 16 páginas |
-| 6 | Desarrollo de contenidos | Copy escrito, pendiente de revisión de Alina |
+| 6 | Desarrollo de contenidos | Copy escrito, 18 páginas, pendiente de revisión de Alina |
 | 7 | Revisión sobre el sitio real | No iniciada |
 | 8 | QA y pre-launch | No iniciada |
 | 9 | Deploy y medición | Desplegado en [dev.paragraph.mx/alina](https://dev.paragraph.mx/alina/), sin indexar |

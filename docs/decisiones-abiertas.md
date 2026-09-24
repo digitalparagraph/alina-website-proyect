@@ -65,9 +65,11 @@ En hosting compartido se mide primero y se ajusta el objetivo o el plan de hosti
 
 ### Temas de fase 2
 
-`/temas/limites-y-relaciones/`, `/temas/decisiones-y-cambios/` y `/temas/regulacion-emocional/` **no se construyen todavía** y no aparecen en el índice de temas.
+`/temas/limites-y-relaciones/` y `/temas/decisiones-y-cambios/` **están construidas** y publicadas. Se abrieron por cobertura de alcance y no por tracción, con el ADR 009: eran las dos áreas de la guía que quedaban sin destino, y el disparador de Search Console no se puede evaluar en un sitio que todavía no se indexa.
 
-Se abren cuando los tres de fase 1 tengan tracción medible en Search Console. Tres páginas con contenido serio superan a seis delgadas.
+`/temas/regulacion-emocional/` **sigue sin construirse**. Su campo semántico se solapa con `sobrepensar-y-rumiacion`, y dos páginas que compiten por el mismo término se restan entre sí. Antes de abrirla hay que decidir cuál de las dos se queda con ese campo.
+
+La condición de calidad no cambia: no se abre una página que no se pueda escribir con mecanismo propio y situaciones concretas. Tres páginas serias siguen superando a seis delgadas.
 
 ### `/articulos/`
 

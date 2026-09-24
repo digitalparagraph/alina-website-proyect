@@ -93,14 +93,16 @@ const fases = [
         ))}
       </ul>
 
-      <div class="tambien">
-        <h3>También se trabajan</h3>
-        <ul class="lista-simple">
-          {AREAS_SIN_PAGINA.map((a) => (
-            <li><b>{a.nombre}.</b> {a.cubre}</li>
-          ))}
-        </ul>
-      </div>
+      {AREAS_SIN_PAGINA.length > 0 && (
+        <div class="tambien">
+          <h3>También se trabajan</h3>
+          <ul class="lista-simple">
+            {AREAS_SIN_PAGINA.map((a) => (
+              <li><b>{a.nombre}.</b> {a.cubre}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   </section>
 

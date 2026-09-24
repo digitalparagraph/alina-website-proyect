@@ -3,8 +3,10 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { ruta } from '../../lib/rutas';
 import { AREAS_SIN_PAGINA } from '../../data/areas-de-trabajo';
+// Se listan todas las que existen. El filtro por fase dejaba fuera las de
+// fase 2 cuando no estaban escritas; ahora lo están (ADR 009) y ocultarlas
+// sería esconder páginas publicadas.
 const temas = (await getCollection('temas'))
-  .filter((t) => t.data.fase === 1)
   .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
 ---
 <Base
@@ -16,8 +18,7 @@ const temas = (await getCollection('temas'))
       <div class="contenedor pila">
         <h1>Temas</h1>
         <p class="entrada">
-          Estos son los patrones que aparecen con más frecuencia y que tienen una
-          página propia. Rara vez vienen solos: quien se exige de más suele
+          Estos son los patrones que aparecen con más frecuencia. Rara vez vienen solos: quien se exige de más suele
           también sobrepensar, y quien sobrepiensa suele posponer.
         </p>
       </div>
@@ -33,18 +34,19 @@ const temas = (await getCollection('temas'))
       ))}
     </ul>
 
-    <!-- Las áreas que todavía no tienen página se nombran, no se enlazan. El
-         motivo que dio la Etapa 2 para no mostrarlas era el enlace roto y la
-         página vacía, y así no hay ninguno de los dos; lo que se evita es que
-         el índice se lea como el alcance completo del trabajo. -->
-    <section class="otras pila">
-      <h2>También se trabajan</h2>
-      <ul class="lista-simple">
-        {AREAS_SIN_PAGINA.map((a) => (
-          <li><b>{a.nombre}.</b> {a.cubre}</li>
-        ))}
-      </ul>
-    </section>
+    <!-- Un área que todavía no tenga página se nombra aquí, sin enlace. Hoy no
+         hay ninguna; el bloque se conserva para que añadir un área nueva no
+         obligue a rehacer la página. -->
+    {AREAS_SIN_PAGINA.length > 0 && (
+      <section class="otras pila">
+        <h2>También se trabajan</h2>
+        <ul class="lista-simple">
+          {AREAS_SIN_PAGINA.map((a) => (
+            <li><b>{a.nombre}.</b> {a.cubre}</li>
+          ))}
+        </ul>
+      </section>
+    )}
     </div>
   </section>
 </Base>

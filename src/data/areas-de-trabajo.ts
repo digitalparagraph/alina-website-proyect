@@ -1,13 +1,12 @@
 /**
  * Las cinco áreas de "¿Qué puedes trabajar?" de la guía de contenido, en su
- * orden y con las palabras de Alina. Son la respuesta a la observación de que
- * el sitio se sentía limitado a tres temas: el servicio siempre cubrió cinco
- * áreas, pero la portada solo mostraba las tres que tienen página propia.
+ * orden y con las palabras de Alina.
  *
- * `tema` apunta a la página de la colección cuando existe. Las áreas de fase 2
- * se nombran sin enlace: la Etapa 1 decidió lanzar con tres páginas serias en
- * lugar de seis delgadas, y esa decisión sigue en pie. Lo que cambia es que
- * ahora se ve el alcance completo del trabajo, no solo la parte construida.
+ * `tema` apunta a la página de la colección. Las cinco la tienen desde que se
+ * abrieron las dos de fase 2 (ADR 009), así que hoy las cinco van en tarjeta.
+ * El mecanismo de las que no tienen página se conserva: si mañana se añade un
+ * área antes que su página, se nombra en texto y no queda una tarjeta con el
+ * hueco del enlace vacío.
  */
 export type Area = {
   nombre: string;
@@ -19,7 +18,7 @@ export const AREAS: Area[] = [
   {
     nombre: 'Decisiones y cambios',
     cubre: 'Claridad, toma de decisiones y transiciones personales o profesionales.',
-    tema: null,
+    tema: 'decisiones-y-cambios',
   },
   {
     nombre: 'Pensamiento y emociones',
@@ -31,7 +30,7 @@ export const AREAS: Area[] = [
     nombre: 'Relaciones',
     cubre:
       'Límites, comunicación, conflictos, patrones relacionales y formas de responder ante los demás.',
-    tema: null,
+    tema: 'limites-y-relaciones',
   },
   {
     nombre: 'Autoexigencia',
