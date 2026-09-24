@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta, raizAbsoluta } from '../lib/rutas';
 
-const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const sitio = raizAbsoluta(Astro.site);
 const servicio = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -20,15 +21,19 @@ const servicio = {
 >
   <script slot="schema" type="application/ld+json" set:html={JSON.stringify(servicio)} />
 
-  <article class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Qué es el coaching terapéutico</h1>
-      <p class="entrada">
-        Un proceso de acompañamiento para comprender y modificar patrones de
-        pensamiento, emoción y conducta que están interfiriendo con la manera
-        en que quieres vivir, decidir o relacionarte.
-      </p>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Qué es el coaching terapéutico</h1>
+        <p class="entrada">
+          Un proceso de acompañamiento para comprender y modificar patrones de
+          pensamiento, emoción y conducta que están interfiriendo con la manera
+          en que quieres vivir, decidir o relacionarte.
+        </p>
+      </div>
     </header>
+
+    <div class="contenedor seccion pila">
 
     <aside class="alcance">
       <h2 class="alcance-titulo">Hasta dónde llega</h2>
@@ -41,7 +46,7 @@ const servicio = {
       <p>
         Quien acompaña es coach certificada con formación en terapia cognitivo
         conductual. No es psicóloga ni psicoterapeuta.
-        <a href="/alcance-del-servicio/">Ver el alcance completo</a>.
+        <a href={ruta('/alcance-del-servicio/')}>Ver el alcance completo</a>.
       </p>
     </aside>
 
@@ -77,7 +82,31 @@ const servicio = {
         semana: observar qué sucede, probar algo distinto, revisar qué
         funcionó.
       </p>
-      <p><a href="/proceso/">Ver cómo es el proceso completo</a>.</p>
+      <p><a href={ruta('/proceso/')}>Ver cómo es el proceso completo</a>.</p>
+    </section>
+
+    <!-- Responde "¿realmente sirve esto?", que la Etapa 2 asignó a esta página.
+         La afirmación sobre evidencia es la única del sitio que necesita
+         referencia, y por eso el hueco queda marcado y visible. -->
+    <section class="pila">
+      <h2>Qué tan bien funciona</h2>
+      <p class="medida">
+        Una conversación aislada no produce un cambio. Lo que sostiene el
+        trabajo es que sea un proceso estructurado: comprender qué mantiene un
+        patrón, poner a prueba respuestas distintas y trasladar lo trabajado a
+        situaciones reales.
+      </p>
+      <p class="medida">
+        La evidencia disponible sobre intervenciones basadas en terapia
+        cognitivo conductual respalda ese trabajo estructurado sobre
+        pensamientos, emociones y conductas. Con una advertencia que conviene
+        leer completa: ningún enfoque funciona igual para todas las personas, y
+        ninguno garantiza un resultado concreto.
+      </p>
+      <p class="pendiente">
+        Falta la referencia que respalda lo que aquí se dice sobre la evidencia
+        en TCC. La elige Alina antes de publicar.
+      </p>
     </section>
 
     <section class="pila">
@@ -111,8 +140,9 @@ const servicio = {
         La primera sesión sirve para entender qué está pasando y para que
         valores si esta forma de trabajo tiene sentido para lo que buscas.
       </p>
-      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p><a href={ruta('/agendar/')} class="boton">Agendar una primera sesión</a></p>
     </section>
+    </div>
   </article>
 </Base>
 

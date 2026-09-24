@@ -83,3 +83,52 @@ Mientras `PUBLIC_STAGING` no sea `false`, el sitio se comporta como despliegue d
 - Banda visible arriba de cada página avisando que el contenido está pendiente de aprobación.
 
 Se apaga el día del lanzamiento, con dominio propio. Un sitio de pruebas con el copy real indexado antes de tiempo compite con el definitivo y expone borradores.
+
+## 10. Primera revisión de Alina
+
+Tres observaciones, recibidas por ClickUp. Las tres tocan el copy y dos revelaron un defecto de fondo, no una preferencia.
+
+### El titular del home no decía lo que la guía dice
+
+Decía *"Hay cosas que entiendes perfectamente y aun así sigues haciendo"*. Su propio subtítulo dice *"Saber que necesitas poner un límite no es lo mismo que poder ponerlo"*. Apuntan en direcciones opuestas: uno habla de **seguir haciendo** algo que entiendes, el otro de **no poder hacer** algo que sabes que necesitas.
+
+La guía es inequívoca: *"Una persona puede saber perfectamente que necesita poner un límite, dejar de procrastinar, bajar su autoexigencia o dejar de darle vueltas a una situación y, aun así, seguir sin poder hacerlo."*
+
+El titular vigente es **"Entender qué te pasa no siempre alcanza para cambiarlo"**: nombra el mecanismo sin cerrar ninguna de las dos direcciones, y sostiene lo que la guía marca como la diferencia de fondo frente al coaching que reduce todo a cambiar la mentalidad.
+
+El brief de la Etapa 2 describía ese bloque como "entender algo y aun así seguir haciéndolo". Esa formulación queda corregida ahí mismo: era la que producía el titular rechazado.
+
+### Los temas se sentían limitados porque el home no cumplía su brief
+
+Alina pidió incluir relaciones, hábitos de vida, propósito y metas, y procesos de cambio. Las cuatro ya estaban en su propia guía y ya estaban mapeadas en la Etapa 1. El problema no era el alcance del servicio, era lo que el sitio mostraba de él.
+
+El brief del home pide en el bloque 3 **las cinco categorías** de "¿Qué puedes trabajar?". Lo construido mostraba tres tarjetas: las tres páginas de fase 1. El visitante leía tres patrones estrechos donde el servicio cubre cinco áreas.
+
+Ahora el home muestra las cinco, con las palabras de la guía, y `/temas/` cierra con las que todavía no tienen página. Las de fase 2 se nombran y no se enlazan: la decisión de lanzar con tres páginas serias en lugar de seis delgadas sigue en pie, y el motivo que dio la Etapa 2 para no mostrarlas —el enlace roto y la página vacía— se respeta, porque no hay ninguno de los dos.
+
+Las cinco áreas viven en `src/data/areas-de-trabajo.ts`, en una sola fuente, para que el home y el índice no puedan divergir.
+
+### Qué faltaba de la guía
+
+La tercera observación —"podemos desarrollar más con la guía"— se convirtió en una comparación de cada sección de la guía contra el texto del sitio.
+
+La comparación automática es por coincidencia de frases y marcó siete secciones como ausentes. Revisadas a mano, cuatro eran paráfrasis que el comparador no reconoció y ya estaban escritas:
+
+| Marcado como ausente | Dónde estaba en realidad |
+|---|---|
+| "¿Qué tipo de trabajo se hace durante el proceso?" | `/proceso/`, sección "Qué puede incluir" |
+| "¿Cómo sé si esto es para mí?" | `/proceso/primera-sesion/`, sección "También la evalúas tú" |
+| "¿Qué suele frenar a alguien…?" | Home, bloque de objeción |
+| Fila "Coaching ejecutivo" | `/terapia-o-coaching/`, ya está en la tabla |
+
+Quedaron tres huecos reales, los tres asignados por la Etapa 2 a una página concreta y nunca redactados:
+
+| Material de la guía | Dónde vive ahora |
+|---|---|
+| "¿Me van a decir qué tengo que hacer?" | `/proceso/`, sección "Quién decide qué se trabaja", antes de las fases |
+| "¿Realmente sirve esto?" | `/que-es-el-coaching-terapeutico/`, sección "Qué tan bien funciona" |
+| "Debería poder manejarlo solo" | Home, tercer párrafo del bloque de objeción |
+
+Los tres pasaron el auditor de huella de IA. La única falla real fue un contraste falso —"lo que detiene no es la duda sobre el proceso, sino…"— que se corrigió quitando la negación: la cláusula no aportaba nada. Las dos marcas que quedan son las desviaciones ya declaradas en las secciones 2 y 3: cifras por página, que no aplica a una página de servicio, y encabezados con verbo conjugado, que aquí son deliberados.
+
+**La sección sobre evidencia deja un hueco marcado y visible.** Dice que la evidencia disponible sobre intervenciones basadas en TCC respalda el trabajo estructurado, y esa es la única afirmación del sitio que necesita referencia. La elige Alina: cuál fuente sostiene es también una declaración de su criterio profesional. Junto a la afirmación va la advertencia de la propia guía, que ningún enfoque funciona igual para todas las personas ni garantiza un resultado.

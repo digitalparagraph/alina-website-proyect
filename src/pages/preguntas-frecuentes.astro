@@ -38,8 +38,14 @@ const faq = {
   descripcion="Duración, frecuencia, modalidad, alcance del servicio y políticas de cancelación del coaching terapéutico con Alina Martínez."
 >
   <script slot="schema" type="application/ld+json" set:html={JSON.stringify(faq)} />
-  <section class="contenedor seccion pila">
-    <h1>Preguntas frecuentes</h1>
+  <section>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Preguntas frecuentes</h1>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
     <dl class="preguntas">
       {preguntas.map((p) => (<><dt>{p.q}</dt><dd>{p.a}</dd></>))}
     </dl>
@@ -47,6 +53,7 @@ const faq = {
       Falta aquí la tarifa vigente y, si aplica, la promoción. Pendiente de
       confirmar con Alina antes de publicar.
     </p>
+    </div>
   </section>
 </Base>
 
@@ -54,6 +61,4 @@ const faq = {
   .preguntas{margin:0;max-width:var(--measure)}
   .preguntas dt{font-weight:var(--weight-bold);margin-top:var(--space-6)}
   .preguntas dd{margin:var(--space-2) 0 0}
-  .pendiente{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
-    padding:var(--space-4);font-size:var(--text-sm);margin-top:var(--space-7)}
 </style>

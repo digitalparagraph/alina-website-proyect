@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta } from '../lib/rutas';
 
 /**
  * Activo GEO del sitio. Su valor depende de que sea útil incluso para quien
@@ -77,16 +78,20 @@ const faq = {
 >
   <script slot="schema" type="application/ld+json" set:html={JSON.stringify(faq)} />
 
-  <article class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Terapia, coaching o coaching terapéutico</h1>
-      <p class="entrada">
-        Los nombres se usan de maneras distintas según quién los use, y eso
-        vuelve difícil saber qué se está contratando. Esta comparación describe
-        en qué se diferencian por su foco, su alcance y para quién funciona
-        cada uno.
-      </p>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Terapia, coaching o coaching terapéutico</h1>
+        <p class="entrada">
+          Los nombres se usan de maneras distintas según quién los use, y eso
+          vuelve difícil saber qué se está contratando. Esta comparación describe
+          en qué se diferencian por su foco, su alcance y para quién funciona
+          cada uno.
+        </p>
+      </div>
     </header>
+
+    <div class="contenedor seccion pila">
 
     <section class="pila">
       <h2>Cómo saber cuál te corresponde</h2>
@@ -157,11 +162,12 @@ const faq = {
     <section class="pila cierre">
       <p class="medida">
         Si quieres ver con detalle qué incluye el coaching terapéutico y hasta
-        dónde llega, está explicado en <a href="/que-es-el-coaching-terapeutico/">qué
+        dónde llega, está explicado en <a href={ruta('/que-es-el-coaching-terapeutico/')}>qué
         es el coaching terapéutico</a>. La formación y el alcance profesional
-        de quien lo ofrece están en <a href="/sobre-alina/">sobre Alina</a>.
+        de quien lo ofrece están en <a href={ruta('/sobre-alina/')}>sobre Alina</a>.
       </p>
     </section>
+    </div>
   </article>
 </Base>
 

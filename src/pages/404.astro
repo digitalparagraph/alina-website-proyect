@@ -1,19 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta } from '../lib/rutas';
 ---
 <Base titulo="Página no encontrada" descripcion="La página que buscas no existe o cambió de dirección." noindex={true}>
-  <section class="contenedor seccion pila">
-    <h1>Esta página no existe</h1>
+  <section>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Esta página no existe</h1>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
     <p class="medida">
       Puede que la dirección esté mal escrita o que el contenido haya cambiado
       de lugar.
     </p>
     <ul class="atajos">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/temas/">Temas</a></li>
-      <li><a href="/proceso/">Cómo es el proceso</a></li>
-      <li><a href="/agendar/">Agendar una primera sesión</a></li>
+      <li><a href={ruta('/')}>Inicio</a></li>
+      <li><a href={ruta('/temas/')}>Temas</a></li>
+      <li><a href={ruta('/proceso/')}>Cómo es el proceso</a></li>
+      <li><a href={ruta('/agendar/')}>Agendar una primera sesión</a></li>
     </ul>
+    </div>
   </section>
 </Base>
 <style>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { ruta, raizAbsoluta } from '../../lib/rutas';
 
 export async function getStaticPaths() {
   const temas = await getCollection('temas');
@@ -16,7 +17,7 @@ const hermanos = d.temasHermanos
   .map((s) => todos.find((t) => t.slug === s))
   .filter(Boolean);
 
-const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const sitio = raizAbsoluta(Astro.site);
 const articulo = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -34,20 +35,26 @@ const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
 <Base titulo={d.titulo} descripcion={d.descripcion}>
   <script slot="schema" type="application/ld+json" set:html={JSON.stringify(articulo)} />
 
-  <article class="contenedor seccion pila">
+  <article>
+    <!-- Bloque 1 · Reconocimiento. Corto a propósito: si crece, entierra la
+         respuesta del bloque 2, que es la que los modelos extraen. -->
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <div class="grupo-titulo">
+          <p class="eyebrow">temas</p>
+          <h1>{d.titulo}</h1>
+        </div>
+        <p class="entrada">{d.reconocimiento}</p>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
 
     {d.borrador && (
       <p class="borrador">
         contenido provisional · la redacción definitiva es de la etapa 6
       </p>
     )}
-
-    <!-- Bloque 1 · Reconocimiento. Corto a propósito: si crece, entierra la
-         respuesta del bloque 2, que es la que los modelos extraen. -->
-    <header class="pila">
-      <h1>{d.titulo}</h1>
-      <p class="entrada">{d.reconocimiento}</p>
-    </header>
 
     <!-- Bloque 2 · La pregunta de búsqueda, con respuesta directa arriba. -->
     <section class="pila">
@@ -64,7 +71,7 @@ const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
     <aside class="alcance" aria-labelledby="alcance-t">
       <h2 id="alcance-t" class="alcance-titulo">Hasta dónde llega este acompañamiento</h2>
       <p>{d.delimitacionAlcance}</p>
-      <p><a href="/alcance-del-servicio/">Alcance completo del servicio</a></p>
+      <p><a href={ruta('/alcance-del-servicio/')}>Alcance completo del servicio</a></p>
     </aside>
 
     <!-- Bloque 7 · Temas hermanos. Los patrones aparecen combinados. -->
@@ -74,7 +81,7 @@ const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
         <ul class="hermanos">
           {hermanos.map((h) => (
             <li>
-              <a href={`/temas/${h.slug}/`}>{h.data.titulo}</a>
+              <a href={ruta(`/temas/${h.slug}/`)}>{h.data.titulo}</a>
               <span>{h.data.reconocimiento.split('.')[0]}.</span>
             </li>
           ))}
@@ -88,10 +95,11 @@ const fecha = d.fechaRevision.toLocaleDateString('es-MX', {
         Si algo de esto describe lo que te pasa, la primera sesión sirve para
         entender qué lo mantiene y decidir si tiene sentido trabajarlo.
       </p>
-      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p><a href={ruta('/agendar/')} class="boton">Agendar una primera sesión</a></p>
       <p class="revision">Última revisión: <time datetime={articulo.dateModified}>{fecha}</time></p>
     </section>
 
+    </div>
   </article>
 </Base>
 

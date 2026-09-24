@@ -20,3 +20,6 @@ Design System/assets/fonts/*.otf
 Design System/uploads/
 fuente.tgz
 php/config.php
+
+# Arbol espejado que usa la verificacion de enlaces cuando el sitio va en subcarpeta
+.verificacion/

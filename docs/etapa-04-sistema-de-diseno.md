@@ -48,39 +48,69 @@ El anillo de foco era el más grave: a 1.85:1 es prácticamente invisible sobre 
 
 Los cuatro se corrigen oscureciendo un paso dentro de la misma familia. La identidad no cambia.
 
-## 3. Adaptación técnica
+## 3. El moodboard del cliente
 
-Los componentes del sistema son React JSX y el stack es Astro sin framework (ADR 002).
-
-- **Los tokens pasan tal cual.** Son CSS con custom properties. Se copian a `src/styles/` con las correcciones de arriba.
-- **Los componentes se reescriben** como componentes de Astro. La especificación visual la manda el sistema; el código no se porta.
-- **Los iconos no se cargan por CDN.** El sistema sustituye Lucide vía CDN; aquí se incrustan los pocos SVG que hagan falta, porque el presupuesto de la Etapa 3 es cero peticiones a terceros.
-
-## 4. Fuera del control de versiones
-
-- `Design System/assets/fonts/*.otf` — tipografía con licencia de Adobe. No se redistribuye.
-- `Design System/uploads/` — material fuente ya destilado en el propio sistema.
-
-## 5. Aplicación al sitio
-
-El moodboard del cliente —`2026/Sitio Web/Moodboard` en Drive— fija cuatro criterios que el sistema de diseño no recoge y que el sitio sí tiene que cumplir:
+`2026/Sitio Web/Moodboard` en Drive fija cuatro criterios que el sistema de diseño no recoge y que el sitio sí cumple:
 
 - Layout limpio.
 - Información clara y jerarquizada.
 - Fotografía que destaque la conexión humana.
 - Combinaciones con elementos orgánicos y dinámicos.
 
-De ahí salen tres decisiones de composición:
+## 4. El kit de sitio web
 
-**Bandas de color por sección.** Las referencias del moodboard alternan bloques de color de borde a borde: lila, crema, salvia, blanco. El sitio hace lo mismo con `.banda--*`. Una sola superficie con líneas divisorias lee como documento, no como marca.
+El sistema incluye un kit específico para web en `Design System/ui_kits/website/`: cabecera, héroe, tarjetas de oferta, superficie de "sobre mí", contacto y pie. De ahí salen las decisiones visuales del sitio, y con el moodboard son la referencia de composición.
 
-**Sin bandas oscuras.** La marca es pastel y sólida. La primera versión usaba un bloque casi negro para destacar la objeción principal; se cambió a lila con el trazo de pincel del sistema.
+### Qué se toma
 
-**Los assets van al sitio, no al inventario.** El logo en la cabecera, el isotipo en el pie y el retrato de Alina en el home y en su página. Estaban en `Design System/assets/` desde el principio y la primera versión del sitio no los usaba, lo que dejó una maqueta tipográfica sin identidad.
+- **Cabecera sobre el campo de marca.** Mantequilla `#FFDC97`, lockup a la izquierda, navegación con subrayado de un píxel en la sección activa. Fija al desplazar en escritorio; debajo de 820 px deja de ser fija, porque a dos filas se comería un tercio de la pantalla.
+- **Héroe como campo de color.** Mantequilla a sangre, antetítulo espaciado, titular a tamaño display con la cápsula de marcador, entrada corta y una sola acción.
+- **Ritmo de bandas.** Cada sección pinta su propio fondo de borde a borde y se alterna con el papel. En el home: mantequilla, papel, crema, papel, niebla, lila, papel y negro. Una sola superficie con líneas divisorias se lee como documento, no como marca.
+- **Encabezado de color en cada página interior.** No está en el kit, que describe un sitio de una sola página. Sin él, una página interior se lee como un documento suelto colgando de la cabecera.
+- **Pie negro con el lockup en blanco.** Es el único bloque oscuro del sitio y funciona como cierre. Usa `logo-white.png` de la marca: los SVG traen relleno negro declarado y volverlos blancos exigiría editar un asset cuyos hexadecimales están pendientes de confirmar.
+- **Tarjetas planas** de 24 px de radio, con hairline y sin sombra.
+- **Motivos.** La cápsula de marcador, el trazo de pincel y los arcos de circunferencia, que son el elemento orgánico que pide el moodboard.
+- **Fotografía** con esquinas de 24 px, sin filtros ni grano. El retrato sale de `2025/01. Branding/Perfil/Alina_Perfil_Facebook.png` en Drive, reescalado a 900 px y servido en WebP con respaldo JPG.
 
-Origen de los assets: logo e isotipo de `Design System/assets/logos/`, retrato de `2025/01. Branding/Perfil/Alina_Perfil_Facebook.png` en Drive, reescalado a 900 px y servido en WebP con respaldo JPG.
+### Emparejamientos de color
 
-## 6. Pendiente de confirmar con Alina
+El sistema autoriza cuatro y el sitio no usa otros: negro sobre mantequilla, negro sobre lila claro, negro sobre niebla y blanco sobre negro.
+
+**Sage queda fuera de las bandas de sección.** El propio sistema lo declara acento orgánico de campañas, y como fondo de sección aplana el contraste entre bloques: con siete bandas de tono parejo la página deja de leerse como bloques y se lee como un mosaico.
+
+**Las bandas oscuras no se usan para contenido.** La marca es pastel y sólida, y un bloque casi negro tras un párrafo de esta materia pesa más de lo que ese párrafo pide. El negro se reserva al pie, que es como lo usa el kit: cierre, no énfasis. La objeción principal del home se destaca con lila y el trazo de pincel.
+
+Dos consecuencias que no son obvias hasta verlas en pantalla:
+
+- **Sobre el campo de marca, la cápsula mantequilla es invisible.** Deja el hueco del relleno y ninguna pintura. En el héroe la cápsula va en papel.
+- **El botón mantequilla desaparece sobre mantequilla.** En la cabecera y en el héroe va en papel.
+
+### Desviaciones deliberadas del kit
+
+**La voz no se toma.** Lo fija la sección 2: el kit documenta copy de campaña —"reinicia tu vida", "Plantea la vida planeada"— que la guía de contenido prohíbe. Del kit salen decisiones visuales; el texto lo gobierna la guía.
+
+**El héroe no lleva la figura ilustrada.** El kit la pone ahí; la sección 2 la restringe a `/sobre-alina/` porque en el home vuelve protagonista a la coach. El héroe resuelve con campo de color, tipografía y aire, que es la otra mitad del lenguaje de la marca.
+
+**El retrato tampoco va en el héroe.** Por el mismo motivo, y porque el propio kit coloca la fotografía en la superficie de "sobre mí". En el home acompaña al bloque que presenta a quien acompaña, que es donde el texto ya la introduce.
+
+**Las tarjetas de tema van todas iguales.** El kit alterna tonos entre sus tarjetas, pero ahí son tres ofertas distintas. Aquí son tres temas equivalentes, y darles color distinto sugiere una diferencia que no existe. Lo que las separa es la hairline y el aire.
+
+**Las preguntas frecuentes no llevan acordeón.** El kit lo usa; aquí las nueve respuestas quedan visibles. Un acordeón exige JavaScript, esconde el texto que el `FAQPage` declara y le quita a los modelos de lenguaje la respuesta que vienen a extraer.
+
+## 5. Adaptación técnica
+
+Los componentes del sistema son React JSX y el stack es Astro sin framework (ADR 002).
+
+- **Los tokens pasan tal cual.** Son CSS con custom properties. Se copian a `src/styles/` con las correcciones de la sección 2.
+- **Los componentes se reescriben** como componentes de Astro. La especificación visual la manda el sistema; el código no se porta.
+- **Los iconos no se cargan por CDN.** El sistema sustituye Lucide vía CDN; aquí se incrustan los pocos SVG que hagan falta, porque el presupuesto de la Etapa 3 es cero peticiones a terceros.
+
+## 6. Fuera del control de versiones
+
+- `Design System/assets/fonts/*.otf` — tipografía con licencia de Adobe. No se redistribuye.
+- `Design System/uploads/` — material fuente ya destilado en el propio sistema.
+
+## 7. Pendiente de confirmar con Alina
 
 El readme del sistema lo deja marcado y sigue abierto:
 

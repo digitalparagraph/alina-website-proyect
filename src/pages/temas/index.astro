@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { ruta } from '../../lib/rutas';
+import { AREAS_SIN_PAGINA } from '../../data/areas-de-trabajo';
 const temas = (await getCollection('temas'))
   .filter((t) => t.data.fase === 1)
   .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
@@ -9,28 +11,50 @@ const temas = (await getCollection('temas'))
   titulo="Temas"
   descripcion="Los patrones que se trabajan con más frecuencia en coaching terapéutico: autoexigencia, sobrepensar, procrastinación y evitación."
 >
-  <section class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Temas</h1>
-      <p class="entrada">
-        Estos son los patrones que aparecen con más frecuencia. Rara vez vienen
-        solos: quien se exige de más suele también sobrepensar, y quien
-        sobrepiensa suele posponer.
-      </p>
+  <section>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Temas</h1>
+        <p class="entrada">
+          Estos son los patrones que aparecen con más frecuencia y que tienen una
+          página propia. Rara vez vienen solos: quien se exige de más suele
+          también sobrepensar, y quien sobrepiensa suele posponer.
+        </p>
+      </div>
     </header>
+
+    <div class="contenedor seccion pila">
     <ul class="lista">
       {temas.map((t) => (
         <li>
-          <h2><a href={`/temas/${t.slug}/`}>{t.data.titulo}</a></h2>
+          <h2><a href={ruta(`/temas/${t.slug}/`)}>{t.data.titulo}</a></h2>
           <p>{t.data.reconocimiento}</p>
         </li>
       ))}
     </ul>
+
+    <!-- Las áreas que todavía no tienen página se nombran, no se enlazan. El
+         motivo que dio la Etapa 2 para no mostrarlas era el enlace roto y la
+         página vacía, y así no hay ninguno de los dos; lo que se evita es que
+         el índice se lea como el alcance completo del trabajo. -->
+    <section class="otras pila">
+      <h2>También se trabajan</h2>
+      <ul class="lista-simple">
+        {AREAS_SIN_PAGINA.map((a) => (
+          <li><b>{a.nombre}.</b> {a.cubre}</li>
+        ))}
+      </ul>
+    </section>
+    </div>
   </section>
 </Base>
 
 <style>
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
+  .otras{border-top:1px solid var(--border-hairline);padding-top:var(--space-6)}
+  .otras h2{font-size:var(--text-h3)}
+  .lista-simple{list-style:none;margin:0;padding:0;max-width:var(--measure);
+    display:flex;flex-direction:column;gap:var(--space-4);font-size:var(--text-sm)}
   .lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-7)}
   .lista li{border-top:1px solid var(--border-hairline);padding-top:var(--space-4)}
   .lista h2{margin-bottom:var(--space-3)}

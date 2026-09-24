@@ -1,4 +1,10 @@
 # Sitio estatico generado con Astro. Hostinger sirve Apache o LiteSpeed.
+#
+# Este archivo esta escrito para un dominio en su raiz, que es donde ira
+# produccion. Para un despliegue en subcarpeta, `npm run preparar` reescribe
+# en dist/ las dos directivas que dependen de la ubicacion: ErrorDocument y la
+# cabecera de no indexado. Si ese paso no corre, lo que se sube sigue siendo
+# valido para la raiz.
 
 # HTTPS obligatorio
 <IfModule mod_rewrite.c>
@@ -11,18 +17,29 @@
 DirectoryIndex index.html
 
 # Barra final consistente: /pagina -> /pagina/
+# Se redirige con %{REQUEST_URI} y no con $1: en un .htaccess de subcarpeta,
+# Apache entrega la ruta ya recortada, asi que $1 mandaria /pagina/ a la raiz
+# del dominio en lugar de a /alina/pagina/.
 <IfModule mod_rewrite.c>
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !(/$|\.)
-  RewriteRule ^(.*)$ /$1/ [L,R=301]
+  RewriteRule ^(.*)$ %{REQUEST_URI}/ [L,R=301]
 </IfModule>
 
-ErrorDocument 404 /404/index.html
+# Astro emite el 404 como 404.html en la raiz, no como 404/index.html, incluso
+# con build.format directory. Apuntarlo a la carpeta deja al visitante con el
+# error genérico del servidor.
+ErrorDocument 404 /404.html
 
-# Los assets con hash en el nombre se cachean un año; el HTML no se cachea.
 <IfModule mod_headers.c>
-  <FilesMatch "\.(woff2|css|js|avif|webp|png|jpg|svg)$">
+  # Los assets de /_astro/ llevan hash en el nombre: se cachean un año y son
+  # inmutables. El resto no lleva hash —el retrato, los logos— y con un año
+  # inmutable un cambio de foto tardaria un año en verse. Esos van a un dia.
+  <FilesMatch "\.(woff2|woff|css|js)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(avif|webp|png|jpg|jpeg|svg)$">
+    Header set Cache-Control "public, max-age=86400"
   </FilesMatch>
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"

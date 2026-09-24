@@ -12,8 +12,14 @@ import Base from '../layouts/Base.astro';
   descripcion="Qué datos personales se recaban en este sitio, para qué se usan, cuánto tiempo se conservan y cómo ejercer los derechos ARCO."
   noindex={true}
 >
-  <article class="contenedor seccion pila">
-    <h1>Aviso de privacidad</h1>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Aviso de privacidad</h1>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
 
     <p class="revision">
       Borrador pendiente de revisión legal. No publicar en esta forma.
@@ -100,13 +106,12 @@ import Base from '../layouts/Base.astro';
         de la última actualización.
       </p>
     </section>
+    </div>
   </article>
 </Base>
 
 <style>
   .revision{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
     padding:var(--space-4);font-weight:var(--weight-bold);font-size:var(--text-sm)}
-  .pendiente{border-left:2px solid var(--accent-brush);background:var(--surface-lilac);
-    padding:var(--space-3) var(--space-4);font-size:var(--text-sm)}
   ul{max-width:var(--measure);padding-left:1.2em;display:flex;flex-direction:column;gap:var(--space-2)}
 </style>

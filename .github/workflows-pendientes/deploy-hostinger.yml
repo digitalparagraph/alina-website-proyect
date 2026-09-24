@@ -36,6 +36,8 @@ jobs:
 
       - name: Enlaces internos
         run: npm run verificar:enlaces
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
 
       # Tercer control de la Etapa 3. Valida lo que el proyecto decidió: las dos
       # credenciales de Person, que nunca se declare terapeuta (ADR 001), y que
@@ -43,10 +45,15 @@ jobs:
       - name: Datos estructurados
         run: npm run verificar:schema
 
-      # El PHP del formulario se copia junto al sitio. config.php no está en el
+      # Ajusta el dist a la ubicación real: prefija el ErrorDocument con la
+      # subcarpeta si la hay, añade la cabecera de no indexado mientras sea
+      # staging, e incluye el endpoint del formulario. config.php no está en el
       # repo: se sube una sola vez a mano al servidor.
-      - name: Incluir el endpoint del formulario
-        run: cp php/contacto.php dist/contacto.php
+      - name: Preparar el dist para su ubicación
+        run: npm run preparar -- --con-php
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLIC_STAGING: ${{ vars.PUBLIC_STAGING }}
 
       - name: Subir por FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta } from '../lib/rutas';
 /**
  * La conversión es contacto previo, no agendado directo (Etapa 3). La etiqueta
  * dice "Agendar" porque describe mejor la intención de quien hace clic, y la
@@ -20,17 +21,21 @@ import Base from '../layouts/Base.astro';
   titulo="Agendar una primera sesión"
   descripcion="Escribe y acordamos horario. Sesión individual en línea de aproximadamente 50 minutos."
 >
-  <section class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Agendar una primera sesión</h1>
-      <p class="entrada">
-        Escribes, Alina te responde y acuerdan el horario entre las dos partes.
-        No hay calendario que elegir aquí.
-      </p>
+  <section>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Agendar una primera sesión</h1>
+        <p class="entrada">
+          Escribes, Alina te responde y acuerdan el horario entre las dos partes.
+          No hay calendario que elegir aquí.
+        </p>
+      </div>
     </header>
 
+    <div class="contenedor seccion pila">
+
     <div class="dos">
-      <form class="form pila" id="contacto" method="post" action="/contacto.php" novalidate>
+      <form class="form pila" id="contacto" method="post" action={ruta('/contacto.php')} novalidate>
         <div class="campo">
           <label for="nombre">Cómo quieres que te llame</label>
           <input id="nombre" name="nombre" type="text" required autocomplete="name" />
@@ -62,7 +67,7 @@ import Base from '../layouts/Base.astro';
             Tu mensaje llega por correo a Alina y no se guarda en este sitio.
             Del formulario se registran tu nombre, tu correo y desde qué página
             llegaste, para dar seguimiento.
-            <a href="/aviso-de-privacidad/">Aviso de privacidad</a>.
+            <a href={ruta('/aviso-de-privacidad/')}>Aviso de privacidad</a>.
           </p>
           <p>
             <strong>Esta no es una vía de atención urgente.</strong> Si estás
@@ -81,16 +86,17 @@ import Base from '../layouts/Base.astro';
         <p>
           La primera sesión sirve para entender qué está pasando y para que
           valores si esta forma de trabajo tiene sentido para ti.
-          <a href="/proceso/primera-sesion/">Qué pasa en la primera sesión</a>.
+          <a href={ruta('/proceso/primera-sesion/')}>Qué pasa en la primera sesión</a>.
         </p>
         <p>
           Si tienes dudas sobre si esto es lo que necesitas, la comparación de
           enfoques puede ayudarte a decidir:
-          <a href="/terapia-o-coaching/">terapia, coaching o coaching terapéutico</a>.
+          <a href={ruta('/terapia-o-coaching/')}>terapia, coaching o coaching terapéutico</a>.
         </p>
         <h2>Formato</h2>
         <p>Sesiones individuales en línea, de aproximadamente 50 minutos, habitualmente cada 15 días.</p>
       </aside>
+    </div>
     </div>
   </section>
 </Base>

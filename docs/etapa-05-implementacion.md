@@ -41,18 +41,20 @@ Los workflows están fuera de `.github/workflows/` porque el token con el que se
 | Comprobación | Resultado |
 |---|---|
 | Compila | 16 páginas |
-| Peso total del `dist` | 474 KB |
-| CSS | Un archivo, 6.2 KB |
+| Peso total del `dist` | 1.0 MB, de los que 593 KB son las dos ilustraciones en crudo de `public/img/` |
+| CSS | Un archivo, 9.6 KB |
 | JavaScript enviado al navegador | 1.2 KB, en línea y solo en `/agendar/` |
 | Peticiones a terceros | Cero |
 | Tipografía | Poppins autoalojada, woff2 emitidos en el build |
 | Ilustración | AVIF y WebP generados en el build; 6.3 KB en la variante que se sirve |
 | JSON-LD | 23 bloques en 16 páginas, sin problemas |
-| Enlaces internos | 21 comprobados, ninguno roto |
+| Enlaces internos | 24 comprobados, ninguno roto |
 | Un solo `h1` por página | Sí |
-| Desborde horizontal | Ninguno, ni en 1265 px ni en 375 px |
+| Desborde horizontal | Ninguno, ni en 1280 px ni en 375 px |
 
-El presupuesto de la Etapa 3 era menos de 100 KB de CSS y JavaScript sumados y cero peticiones externas. Se cumple con margen.
+El presupuesto de la Etapa 3 era menos de 100 KB de CSS y JavaScript sumados y cero peticiones externas. Se cumple con margen: 9.6 KB de CSS y 1.2 KB de JavaScript en una sola página.
+
+Las dos ilustraciones de `public/img/` se sirven tal cual, sin variantes ni optimización, y pesan más que el resto del sitio junto. `alina-figure-arms.png` está además duplicada: la que usa `/sobre-alina/` es la copia de `src/assets/ilustraciones/`, que pasa por el optimizador y se entrega en 6.3 KB de AVIF. Resolverlo está en la sección 10.
 
 ## 3. El esquema como condición de compilación
 
@@ -107,24 +109,78 @@ El validador de datos estructurados corre sobre `dist/` sin salir a la red: el p
 
 La configuración del verificador de enlaces vive en `linkinator.config.json` y no en la línea de comandos. El patrón que salta los enlaces externos se rompe al pasar por `cmd`, y roto no salta nada: escanea cero enlaces y pasa. Un control que nunca falla es peor que no tenerlo.
 
-## 7. La URL del despliegue
+## 7. Dónde vive el sitio
 
-`PUBLIC_SITE_URL` gobierna el `site` de Astro, y de ahí salen el sitemap y los canonical de golpe. Sin la variable, el respaldo es `http://localhost:4321`.
+`PUBLIC_SITE_URL` es la única variable que fija la ubicación, y de ella salen las cuatro cosas que dependen de ella:
 
-El CI de los pull request compila así a propósito, porque valida el sitio y no lo publica. Quien exige la variable es el workflow de deploy, que se detiene antes de compilar si no está cargada: un build con canonical a localhost subido al servidor es peor que un deploy que no corre.
+| De la variable sale | Gobierna |
+|---|---|
+| El origen | `site` de Astro: canonical y sitemap |
+| La ruta | `base` de Astro: el prefijo de cada ruta interna |
+| Origen + ruta | La raíz absoluta de los `@id` y las URLs del JSON-LD |
+| La ruta | El `ErrorDocument` del `.htaccess`, que lo ajusta `npm run preparar` |
 
-## 8. Nota sobre `node_modules`
+Se lee del entorno del proceso o del `.env`, en ese orden. Lo segundo importa: un archivo de configuración de Astro no ve el `.env` por su cuenta, y sin conectarlo quien llenara la variable ahí la vería ignorada justo donde se decide el dominio.
+
+Sin la variable, el respaldo es `http://localhost:4321` en la raíz. El CI de los pull request compila así a propósito, porque valida el sitio y no lo publica. Quien exige la variable es el workflow de deploy, que se detiene antes de compilar si no está cargada: un build con canonical a localhost subido al servidor es peor que un deploy que no corre.
+
+### El sitio puede ir en una subcarpeta
+
+Hoy la revisión corre en `dev.paragraph.mx/alina` y la producción irá a la raíz de su propio dominio. Por eso ninguna ruta interna está escrita a mano: todas pasan por `ruta()` de `src/lib/rutas.ts`, que las prefija con el `base`. Mover el sitio es cambiar una variable, no repasar dieciséis páginas.
+
+Dos consecuencias de servir en subcarpeta que no son evidentes:
+
+**Un `robots.txt` solo se obedece en la raíz del dominio.** En `/alina/robots.txt` no lo lee nadie. Se emite igual, porque en producción sí manda, pero mientras el sitio viva en una subcarpeta el bloqueo real son las otras dos capas: el `noindex,nofollow` de cada página y la cabecera `X-Robots-Tag` que `npm run preparar` añade al `.htaccess` para toda la carpeta. La cabecera cubre además el sitemap y los XML, que no tienen dónde llevar una etiqueta meta.
+
+**Un `.htaccess` de subcarpeta recibe la ruta recortada.** La regla de barra final redirige con `%{REQUEST_URI}` y no con `$1`: con `$1` mandaría `/pagina` a la raíz del dominio en lugar de a `/alina/pagina/`.
+
+### La verificación también tiene que saberlo
+
+`linkinator` sirve un directorio como si fuera la raíz de un dominio. Con el sitio en subcarpeta, sus enlaces apuntan a `/alina/...` y contra un `dist/` servido en la raíz darían 404 todos. `npm run verificar:enlaces` espeja el `dist` dentro de la subcarpeta y verifica sobre ese árbol, que es la forma que tendrá el servidor.
+
+Es la misma clase de error que ya tuvo este control una vez: si el verificador no reproduce la forma real del servidor, o reporta el sitio entero como roto o no comprueba nada.
+
+## 8. Cómo se sube
+
+```bash
+npm run verificar   # compila y pasa los tres controles
+npm run preparar    # ajusta el .htaccess a la ubicación
+npm run subir       # empaqueta, copia por SSH y extrae en el servidor
+```
+
+La subida es por SSH con clave, sin contraseñas: `~/.ssh/paragraph_hostinger`, la misma que usa `herramientas/deploy-ssh.sh` del proyecto App Paragraph, porque es la misma cuenta de hosting. Los datos de conexión viven en el `.env`, que no se versiona, con los mismos nombres de variable que ese proyecto.
+
+`subir-por-ssh.mjs` manda el sitio en un solo transferido —empaqueta, copia y extrae allá— en lugar de archivo por archivo: son 37 archivos pequeños y sobre una conexión con latencia cada uno cuesta más en ida y vuelta que en bytes. Y mira antes de escribir: si el destino ya tiene contenido, lo lista y se detiene. Hace falta `--reemplazar` para pisarlo.
+
+`npm run preparar` acepta `--con-php`, que incluye `contacto.php` junto al sitio. Sin esa bandera el formulario responde error al enviar, que es lo correcto en una revisión de diseño: el script necesita un `config.php` en el servidor con las credenciales de la base y el correo de destino, y sin él el `require` falla con un 500.
+
+### Dónde vive de verdad `dev.paragraph.mx`
+
+Esto cuesta una hora si nadie lo dice. El subdominio **no** tiene carpeta propia en `~/domains/`: su docroot es una subcarpeta del dominio principal.
+
+```
+~/domains/paragraph.mx/public_html/dev-projects/     ← docroot de dev.paragraph.mx
+    alina/                                           → https://dev.paragraph.mx/alina/
+    descubre/ · ricoh/ · tive/ · veolia/             → otros proyectos de la agencia
+```
+
+Buscar `~/domains/dev.paragraph.mx/` no encuentra nada y parece que el subdominio no existe. Existe, y comparte carpeta con los otros proyectos en revisión de Paragraph: cualquier cosa que se escriba en ese nivel afecta a los vecinos, así que el despliegue solo toca `alina/`.
+
+El workflow `deploy-hostinger.yml` sigue escrito para FTP y está en `.github/workflows-pendientes/` porque el token con el que se hace push no tiene permiso de Workflows. Mientras siga inactivo, la ruta vigente es la de arriba.
+
+## 9. Nota sobre `node_modules`
 
 Instalar dependencias directamente sobre una carpeta de Windows montada desde Cowork es inviable: miles de archivos pequeños a través del puente tardan más que el tiempo límite de una operación. La instalación y el build se hacen fuera de esa carpeta.
 
 Para quien retome el proyecto en local, esto no aplica: `npm install` en su propia máquina funciona normal.
 
-## 9. Pendiente en esta etapa
+## 10. Pendiente en esta etapa
 
 - **Verificar `contacto.php` ejecutándolo.** Es la única pieza del sitio que ninguna máquina del equipo ha corrido: PHP no está instalado en local y el dev server de Astro no lo interpreta. Se prueba con PHP local o contra el staging de Hostinger.
 - **Confirmar la versión de PHP** del plan contratado. El script usa sintaxis de PHP 7.4 en adelante.
 - **Proveedor de envío de correo.** Hoy el script usa `mail()`. Si el plan no entrega correo con fiabilidad, se decide SMTP autenticado y se documenta como ADR.
 - **Atribución de campaña.** Las UTM se leen de la URL de `/agendar/`. Si la persona llega por campaña a otra página y navega hasta ahí, se pierden. Capturarlas al aterrizar exige JavaScript en todas las páginas, y hoy el sitio no envía ninguno fuera de `/agendar/`. Es decisión técnica: o la resuelve Signal, o se acepta atribuir solo la llegada directa, o se añade la captura.
+- **Las ilustraciones duplicadas.** `public/img/alina-figure-arms.png` (334 KB) es la misma imagen que `src/assets/ilustraciones/alina-figura-brazos.png`, que es la que el sitio sirve optimizada, y `alina-figure-point.png` (259 KB) no se usa en ninguna página. Las dos van al `dist` y de ahí al servidor. Es decisión de Damian: o se borran de `public/img/` y la fuente canónica queda en `Design System/assets/illustrations/`, o se conservan para maquetar y se asume el peso.
 - **`QuoteBlock` del sistema de diseño.** El componente no está construido porque no tiene dónde ir: colocarlo exige elegir qué frase se convierte en cita, y eso es una decisión de la Etapa 7 con el copy definitivo puesto.
 - **Integración del SDK de Signal**, desactivada, según el ADR 006.
 - **Lighthouse contra los presupuestos** de la Etapa 3 en el CI. Necesita una URL desplegada, así que va con la Etapa 8.

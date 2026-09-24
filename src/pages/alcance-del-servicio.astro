@@ -1,16 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta } from '../lib/rutas';
 ---
 <Base
   titulo="Alcance del servicio"
   descripcion="Qué incluye y qué no incluye el coaching terapéutico, qué habilita la formación de Alina Martínez, y cómo se procede cuando una situación requiere otro tipo de atención."
 >
-  <article class="contenedor seccion pila">
-    <h1>Alcance del servicio</h1>
-    <p class="entrada">
-      Esta página existe para que sepas exactamente qué estás contratando y
-      qué no, antes de agendar.
-    </p>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Alcance del servicio</h1>
+        <p class="entrada">
+              Esta página existe para que sepas exactamente qué estás contratando y
+              qué no, antes de agendar.
+            </p>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
 
     <section class="pila">
       <h2>Qué es este servicio</h2>
@@ -46,7 +53,7 @@ import Base from '../layouts/Base.astro';
       <p>
         No cuenta con cédula profesional en psicología. No ejerce como
         psicóloga ni como psicoterapeuta, y no se presenta como tales.
-        <a href="/sobre-alina/">Ver formación completa</a>.
+        <a href={ruta('/sobre-alina/')}>Ver formación completa</a>.
       </p>
     </section>
 
@@ -73,12 +80,11 @@ import Base from '../layouts/Base.astro';
         Alina considere adecuada para México. Requisito antes de publicar.
       </p>
     </section>
+    </div>
   </article>
 </Base>
 
 <style>
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
   .urgencia{background:var(--surface-mist);padding:var(--space-6);border-left:2px solid var(--border-hairline)}
-  .pendiente{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
-    padding:var(--space-4);font-size:var(--text-sm)}
 </style>

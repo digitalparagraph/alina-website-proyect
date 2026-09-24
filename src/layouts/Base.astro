@@ -4,6 +4,7 @@ import '@fontsource/poppins/latin-700.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import Persona from '../components/schema/Persona.astro';
+import { ruta, raizAbsoluta } from '../lib/rutas';
 
 const { titulo, descripcion, noindex = false } = Astro.props;
 
@@ -11,7 +12,7 @@ const { titulo, descripcion, noindex = false } = Astro.props;
 // Un sitio de pruebas con el copy real indexado antes de tiempo compite con
 // el definitivo y expone borradores. Se apaga con PUBLIC_STAGING=false.
 const staging = import.meta.env.PUBLIC_STAGING !== 'false';
-const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+const sitio = raizAbsoluta(Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 const nav = [
@@ -20,6 +21,15 @@ const nav = [
   { href: '/terapia-o-coaching/', texto: 'Enfoques' },
   { href: '/sobre-alina/', texto: 'Sobre Alina' },
 ];
+
+// El subrayado de un pixel marca en que seccion esta el visitante. Se compara
+// por prefijo para que una pagina de tema mantenga marcado "Temas", y contra la
+// ruta ya prefijada, porque en subcarpeta el pathname trae el /alina delante.
+const rutaActual = Astro.url.pathname;
+const enSeccion = (href) => {
+  const destino = ruta(href);
+  return rutaActual === destino || rutaActual.startsWith(destino);
+};
 ---
 <html lang="es-MX">
 <head>
@@ -47,38 +57,51 @@ const nav = [
 
   <header class="cabecera">
     <div class="contenedor cabecera-fila">
-      <a href="/" class="marca" aria-label="Alina Martínez, inicio">
-        <img src="/logo/alina-logo.svg" alt="Alina Martínez · existir consciente"
+      <a href={ruta('/')} class="marca" aria-label="Alina Martínez, inicio">
+        <img src={ruta('/logo/alina-logo.svg')} alt="Alina Martínez · existir consciente"
              width="200" height="127" />
       </a>
+      <!-- Agendar sale de la lista de navegación: es una acción, no una
+           sección, y fuera de la lista puede compartir fila con el logo en
+           pantalla angosta en lugar de empujar una tercera fila. -->
       <nav aria-label="Principal">
         <ul>
-          {nav.map((i) => <li><a href={i.href}>{i.texto}</a></li>)}
-          <li><a href="/agendar/" class="boton">Agendar</a></li>
+          {nav.map((i) => (
+            <li>
+              <a
+                href={ruta(i.href)}
+                class:list={['nav-enlace', { activo: enSeccion(i.href) }]}
+                aria-current={enSeccion(i.href) ? 'page' : undefined}
+              >{i.texto}</a>
+            </li>
+          ))}
         </ul>
       </nav>
+
+      <a href={ruta('/agendar/')} class="boton boton--papel accion-cabecera">Agendar</a>
     </div>
   </header>
 
   <main id="contenido"><slot /></main>
 
   <footer class="pie">
-    <div class="contenedor pila">
-      <div class="pie-marca">
-        <img src="/logo/alina-iso-morado.svg" alt="" width="56" height="56" aria-hidden="true" />
-        <p class="eyebrow">existir consciente</p>
-      </div>
-      <p class="medida">
+    <div class="contenedor pie-fila">
+      <img class="pie-logo" src={ruta('/logo/logo-blanco.png')} alt="Alina Martínez"
+           width="588" height="398" loading="lazy" decoding="async" />
+
+      <p class="pie-nota">
         Coaching terapéutico en línea. Sesiones individuales de aproximadamente
         50 minutos, habitualmente cada 15 días.
       </p>
+
       <ul class="pie-enlaces">
         <!-- /sobre-alina/ va en el pie de todas las páginas: E-E-A-T pide que
              la autoría sea alcanzable desde cualquier punto del sitio. -->
-        <li><a href="/sobre-alina/">Sobre Alina</a></li>
-        <li><a href="/alcance-del-servicio/">Alcance del servicio</a></li>
-        <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
-        <li><a href="/terminos-y-condiciones/">Términos y condiciones</a></li>
+        <li><a href={ruta('/sobre-alina/')}>Sobre Alina</a></li>
+        <li><a href={ruta('/alcance-del-servicio/')}>Alcance del servicio</a></li>
+        <li><a href={ruta('/preguntas-frecuentes/')}>Preguntas frecuentes</a></li>
+        <li><a href={ruta('/aviso-de-privacidad/')}>Aviso de privacidad</a></li>
+        <li><a href={ruta('/terminos-y-condiciones/')}>Términos y condiciones</a></li>
       </ul>
     </div>
   </footer>
@@ -93,27 +116,50 @@ const nav = [
     font-size:var(--text-xs);letter-spacing:var(--tracking-wide)}
 
   .saltar{position:absolute;left:-9999px;top:var(--space-3)}
-  .saltar:focus{left:var(--space-5);background:var(--surface-card);padding:var(--space-3) var(--space-4);z-index:10}
+  .saltar:focus{left:var(--space-5);background:var(--surface-card);padding:var(--space-3) var(--space-4);z-index:30}
 
-  .cabecera{background:var(--surface-card);border-bottom:1px solid var(--border-subtle)}
+  /* La cabecera va sobre el campo de marca y se queda fija al desplazar. El
+     sistema la resuelve así: mantequilla, lockup a la izquierda y navegación
+     con subrayado de un píxel. Sin sombra: la marca es plana. */
+  .cabecera{position:sticky;top:0;z-index:20;background:var(--surface-brand)}
   .cabecera-fila{display:flex;flex-wrap:wrap;gap:var(--space-4);
-    align-items:center;justify-content:space-between;padding-block:var(--space-4)}
+    align-items:center;justify-content:space-between;padding-block:var(--space-3)}
   .marca{text-decoration:none;display:block;line-height:0}
-  .marca img{width:clamp(112px,16vw,175px);height:auto}
+  .marca img{width:clamp(120px,15vw,168px);height:auto}
   nav ul{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);
-    align-items:center;list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
+    align-items:center;list-style:none;margin:0;padding:0;font-size:var(--text-base)}
 
-  @media (max-width:640px){
-    .cabecera-fila{padding-block:var(--space-3);gap:var(--space-3)}
-    nav ul{gap:var(--space-2) var(--space-4);font-size:var(--text-xs);justify-content:flex-end}
-    nav ul .boton{padding:var(--space-2) var(--space-4)}
+  .nav-enlace{text-decoration:none;padding-bottom:3px;
+    border-bottom:1px solid transparent;
+    transition:border-color var(--dur-base) var(--ease)}
+  .nav-enlace:hover,.nav-enlace.activo{border-bottom-color:var(--border-hairline)}
+
+  /* Debajo de 820 px la cabecera parte en dos filas y, fija, se comería un
+     tercio de la pantalla. Ahí deja de ser fija y se desplaza con la página. */
+  @media (max-width:820px){
+    .cabecera{position:static}
   }
 
-  .pie{border-top:1px solid var(--border-subtle);
-    padding-block:var(--space-8);background:var(--butter-100)}
-  .pie-marca{display:flex;align-items:center;gap:var(--space-3)}
-  .pie-marca img{width:48px;height:auto}
-  .pie-marca p{margin:0}
-  .pie-enlaces{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);
+  /* Dos filas, no tres: logo y acción arriba, secciones debajo. */
+  @media (max-width:760px){
+    .marca{order:1}
+    .accion-cabecera{order:2}
+    nav{order:3;flex-basis:100%}
+    nav ul{gap:var(--space-2) var(--space-4);font-size:var(--text-sm)}
+    .accion-cabecera{padding:var(--space-2) var(--space-5)}
+  }
+
+  /* El pie cierra en negro con el lockup en blanco. Es el único bloque oscuro
+     del sitio: el sistema lo usa como cierre, no como decoración. */
+  .pie{background:var(--surface-inverse);color:var(--text-inverse);
+    padding-block:var(--space-8)}
+  .pie-fila{display:grid;gap:var(--space-6) var(--space-8);align-items:start}
+  @media (min-width:900px){
+    .pie-fila{grid-template-columns:auto minmax(0,1fr) auto}
+  }
+  .pie-logo{width:clamp(150px,17vw,200px);height:auto}
+  .pie-nota{max-width:34ch;margin:0;font-size:var(--text-sm);color:var(--gray-300)}
+  .pie-enlaces{display:flex;flex-direction:column;gap:var(--space-2);
     list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
+  .pie a{color:var(--white)}
 </style>

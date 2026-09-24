@@ -66,9 +66,9 @@ Prohibiciones para estas páginas:
 
 | # | Bloque | Intención del mensaje |
 |:-:|---|---|
-| 1 | Apertura | Nombrar el patrón central: entender algo y aun así seguir haciéndolo. Sin promesa, sin bienvenida |
+| 1 | Apertura | Nombrar el patrón central: saber qué necesitas y aun así no poder, tal como lo formula la guía. Sin promesa, sin bienvenida |
 | 2 | ¿Te reconoces? | Los ocho reconocimientos de "¿Para quién es este proceso?" de la guía. Es el bloque de identificación más importante del sitio |
-| 3 | Qué puedes trabajar | Las cinco categorías, cada una enlazando a su tema |
+| 3 | Qué puedes trabajar | Las cinco categorías. Enlazan a su tema las que ya tienen página; las de fase 2 se nombran sin enlace |
 | 4 | Cómo se trabaja | Las cuatro fases en una línea cada una. Enlace a `/proceso/` |
 | 5 | Qué es y qué no es | Delimitación en positivo. Enlaces a `/que-es-el-coaching-terapeutico/` y `/terapia-o-coaching/` |
 | 6 | Quién acompaña | Tres líneas sobrias. Certificación, años, enfoque. Enlace a `/sobre-alina/`. Sin fotografía aspiracional |
@@ -148,7 +148,7 @@ No lleva: testimonios, cifras de clientes, logotipos de medios, frases motivacio
 **Keyword:** ninguna propia.
 **Schema:** `BreadcrumbList`, `ItemList`.
 
-Encabezado corto, luego las seis entradas. Cada entrada se titula con el patrón como lo vive la persona y se describe en una frase de reconocimiento, no en una definición. Las de fase 2 no se muestran hasta existir: un enlace roto o una página vacía cuesta más que la promesa de completitud.
+Encabezado corto, luego las entradas que tienen página. Cada una se titula con el patrón como lo vive la persona y se describe en una frase de reconocimiento, no en una definición. Las de fase 2 se nombran al cierre, sin enlace: lo que cuesta caro es el enlace roto y la página vacía, no decir que esas áreas se trabajan.
 
 ### `/sobre-alina/`
 

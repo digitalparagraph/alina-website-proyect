@@ -7,8 +7,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "preparar": "node scripts/preparar-despliegue.mjs",
+    "subir": "node scripts/subir-por-ssh.mjs",
     "verificar": "npm run build && npm run verificar:enlaces && npm run verificar:schema",
-    "verificar:enlaces": "npx --yes linkinator dist --config linkinator.config.json",
+    "verificar:enlaces": "node scripts/verificar-enlaces.mjs",
     "verificar:schema": "node scripts/verificar-datos-estructurados.mjs"
   },
   "dependencies": {

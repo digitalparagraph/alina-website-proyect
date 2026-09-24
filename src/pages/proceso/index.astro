@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { ruta } from '../../lib/rutas';
 
 const fases = [
   {
@@ -24,15 +25,34 @@ const fases = [
   titulo="Cómo es el proceso"
   descripcion="Las cuatro fases del trabajo en coaching terapéutico: entender, observar, experimentar e integrar. Qué se hace en cada una y qué requiere de ti."
 >
-  <article class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Cómo es el proceso</h1>
-      <p class="entrada">
-        El trabajo parte de ti y de lo que quieres comprender o cambiar, y es
-        colaborativo. Consiste en crear las condiciones para que puedas
-        observarte con más claridad y ampliar tus posibilidades de elección.
-      </p>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Cómo es el proceso</h1>
+        <p class="entrada">
+          El trabajo parte de ti y de lo que quieres comprender o cambiar, y es
+          colaborativo. Consiste en crear las condiciones para que puedas
+          observarte con más claridad y ampliar tus posibilidades de elección.
+        </p>
+      </div>
     </header>
+
+    <div class="contenedor seccion pila">
+    <!-- Responde "¿me van a decir qué tengo que hacer?", que la Etapa 2 asignó
+         al primer bloque de esta página. Va antes de las fases porque quien
+         llega con esa duda no sigue leyendo un método hasta resolverla. -->
+    <section class="pila">
+      <h2>Quién decide qué se trabaja</h2>
+      <p class="medida">
+        Las decisiones sobre tu vida siguen siendo tuyas. El proceso parte de lo
+        que quieres comprender o cambiar, y trabaja para que puedas ver mejor
+        tus opciones, evaluar qué necesitas y desarrollar respuestas más útiles.
+      </p>
+      <p class="medida">
+        Aquí no se reparten instrucciones sobre cómo vivir. Lo que se construye
+        es el criterio con el que vas a decidir.
+      </p>
+    </section>
 
     <section class="pila">
       <h2>Las cuatro fases</h2>
@@ -121,10 +141,11 @@ const fases = [
     <section class="pila cierre">
       <p class="medida">
         La primera sesión tiene su propia lógica y conviene saber qué esperar:
-        <a href="/proceso/primera-sesion/">qué pasa en la primera sesión</a>.
+        <a href={ruta('/proceso/primera-sesion/')}>qué pasa en la primera sesión</a>.
       </p>
-      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p><a href={ruta('/agendar/')} class="boton">Agendar una primera sesión</a></p>
     </section>
+    </div>
   </article>
 </Base>
 

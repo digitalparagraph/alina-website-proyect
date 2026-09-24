@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { ruta } from '../lib/rutas';
 /** Borrador. Requiere revisión legal y la tarifa, que sigue pendiente. */
 ---
 <Base
@@ -7,8 +8,14 @@ import Base from '../layouts/Base.astro';
   descripcion="Condiciones del servicio de coaching terapéutico: alcance, pago, cancelación y reprogramación de sesiones."
   noindex={true}
 >
-  <article class="contenedor seccion pila">
-    <h1>Términos y condiciones</h1>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <h1>Términos y condiciones</h1>
+      </div>
+    </header>
+
+    <div class="contenedor seccion pila">
 
     <p class="revision">
       Borrador pendiente de revisión legal y de la tarifa. No publicar en esta
@@ -20,7 +27,7 @@ import Base from '../layouts/Base.astro';
       <p>
         Sesiones individuales de coaching terapéutico, en línea, de
         aproximadamente 50 minutos. El alcance del servicio está descrito en
-        <a href="/alcance-del-servicio/">alcance del servicio</a> y forma parte
+        <a href={ruta('/alcance-del-servicio/')}>alcance del servicio</a> y forma parte
         de estos términos.
       </p>
       <p>
@@ -67,12 +74,11 @@ import Base from '../layouts/Base.astro';
         profesional correspondiente.
       </p>
     </section>
+    </div>
   </article>
 </Base>
 
 <style>
   .revision{border:1px dashed var(--border-hairline);background:var(--surface-lilac);
     padding:var(--space-4);font-weight:var(--weight-bold);font-size:var(--text-sm)}
-  .pendiente{border-left:2px solid var(--accent-brush);background:var(--surface-lilac);
-    padding:var(--space-3) var(--space-4);font-size:var(--text-sm)}
 </style>

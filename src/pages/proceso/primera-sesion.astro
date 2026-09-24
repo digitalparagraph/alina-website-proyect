@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-const sitio = Astro.site?.href.replace(/\/$/, '') ?? '';
+import { ruta, raizAbsoluta } from '../../lib/rutas';
+const sitio = raizAbsoluta(Astro.site);
 const art = {
   '@context': 'https://schema.org', '@type': 'Article',
   headline: 'Qué pasa en la primera sesión',
@@ -15,15 +16,22 @@ const art = {
 >
   <script slot="schema" type="application/ld+json" set:html={JSON.stringify(art)} />
 
-  <article class="contenedor seccion pila">
-    <header class="pila">
-      <h1>Qué pasa en la primera sesión</h1>
-      <p class="entrada">
-        Es sobre todo un espacio para entender qué está pasando. Exploramos qué
-        te trae, qué has intentado hasta ahora, qué situaciones se repiten y
-        qué impacto tienen en tu vida.
-      </p>
+  <article>
+    <header class="banda banda--crema portada-pagina">
+      <div class="contenedor pila">
+        <div class="grupo-titulo">
+          <p class="eyebrow">el proceso</p>
+          <h1>Qué pasa en la primera sesión</h1>
+          <p class="entrada">
+            Es sobre todo un espacio para entender qué está pasando. Exploramos qué
+            te trae, qué has intentado hasta ahora, qué situaciones se repiten y
+            qué impacto tienen en tu vida.
+          </p>
+        </div>
+      </div>
     </header>
+
+    <div class="contenedor seccion pila">
 
     <section class="pila">
       <h2>Ir más allá del problema tal como llega</h2>
@@ -74,8 +82,9 @@ const art = {
 
     <section class="pila cierre">
       <p class="medida">Sesión individual en línea, de aproximadamente 50 minutos.</p>
-      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p><a href={ruta('/agendar/')} class="boton">Agendar una primera sesión</a></p>
     </section>
+    </div>
   </article>
 </Base>
 

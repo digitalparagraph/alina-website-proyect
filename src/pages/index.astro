@@ -1,10 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-
-const temas = (await getCollection('temas'))
-  .filter((t) => t.data.fase === 1)
-  .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
+import { ruta } from '../lib/rutas';
+import { AREAS } from '../data/areas-de-trabajo';
 
 /** Los ocho reconocimientos de la guía de contenido. Es el bloque de
  *  identificación más importante del sitio. Pendiente que Alina confirme si
@@ -26,64 +23,85 @@ const fases = [
   ['Experimentar', 'Probar respuestas distintas y aprender de lo que ocurre.'],
   ['Integrar', 'Convertir eso en herramientas que puedas usar sin acompañamiento.'],
 ];
+
 ---
 <Base
   titulo="Alina Martínez · Coaching terapéutico en línea"
   descripcion="Acompañamiento para comprender y modificar patrones de pensamiento, emoción y conducta que interfieren con cómo quieres vivir, decidir o relacionarte."
 >
-  <!-- Hero: bloque lila con retrato, según el moodboard -->
-  <section class="banda banda--lila marco">
-    <div class="contenedor par">
-      <div class="pila">
-        <p class="eyebrow">coaching terapéutico en línea</p>
-        <h1>
-          Hay cosas que <span class="marcador">entiendes perfectamente</span> y
-          aun así sigues haciendo.
-        </h1>
-        <p class="entrada">
-          Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
-          Este es un espacio para entender qué mantiene ese patrón y qué otras
-          respuestas tienes disponibles.
-        </p>
-        <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
-      </div>
-      <div>
-        <picture>
-          <source srcset="/img/alina-retrato.webp" type="image/webp" />
-          <img class="retrato" src="/img/alina-retrato.jpg"
-               alt="Alina Martínez" width="900" height="900"
-               fetchpriority="high" decoding="async" />
-        </picture>
-      </div>
+  <!-- Héroe sobre el campo de marca. Sin retrato: el protagonista es el
+       proceso, no la coach, y ese es el primer criterio de la guía de
+       contenido. El aire grande es intencional y se queda vacío. -->
+  <section class="banda banda--butter marco apertura">
+    <svg class="arco arco--hero" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+      <circle cx="200" cy="200" r="199" fill="none" stroke="currentColor" stroke-width="1" />
+      <circle cx="200" cy="200" r="148" fill="none" stroke="currentColor" stroke-width="1" />
+    </svg>
+
+    <div class="contenedor pila">
+      <p class="eyebrow">coaching terapéutico en línea</p>
+      <!-- El titular nombra el mecanismo tal como lo formula la guía: saber qué
+           necesitas y aun así no poder. La versión anterior decía "cosas que
+           entiendes y aun así sigues haciendo", que apunta al revés que su
+           propio subtítulo y que la guía. -->
+      <h1>
+        Entender qué te pasa
+        <span class="marcador marcador--papel">no siempre alcanza</span>
+        para cambiarlo.
+      </h1>
+      <p class="entrada">
+        Saber que necesitas poner un límite no es lo mismo que poder ponerlo.
+        Este es un espacio para entender qué mantiene ese patrón y qué otras
+        respuestas tienes disponibles.
+      </p>
+      <p><a href={ruta('/agendar/')} class="boton boton--papel">Agendar una primera sesión</a></p>
     </div>
   </section>
 
   <section class="banda banda--pagina">
     <div class="contenedor pila">
-      <h2>Este espacio puede ser para ti si</h2>
+      <h2 class="titular">Este espacio puede ser para ti si</h2>
       <ul class="reconocimientos">
         {reconocimientos.map((r) => <li>{r}</li>)}
       </ul>
     </div>
   </section>
 
-  <section class="banda banda--blanco">
+  <section class="banda banda--crema">
     <div class="contenedor pila">
-      <h2>Qué puedes trabajar</h2>
+      <div class="grupo-titulo">
+        <p class="eyebrow">temas</p>
+        <h2 class="titular">Qué puedes trabajar</h2>
+      </div>
+      <!-- Las cinco áreas de la guía, no solo las tres que tienen página. El
+           brief de la Etapa 2 pide las cinco categorías aquí; mostrar únicamente
+           lo construido hacía leer el servicio como más estrecho de lo que es.
+
+           Las tarjetas van todas iguales: el kit del sistema alterna tonos, pero
+           ahí son tres ofertas distintas y aquí son áreas equivalentes. Lo que
+           las separa es la hairline y el aire, no el color. -->
       <ul class="rejilla temas">
-        {temas.map((t) => (
-          <li class="tarjeta">
-            <h3><a href={`/temas/${t.slug}/`}>{t.data.titulo}</a></h3>
-            <p>{t.data.reconocimiento}</p>
+        {AREAS.map((a) => (
+          <li class="tarjeta tarjeta--papel">
+            <h3>{a.nombre}</h3>
+            <p>{a.cubre}</p>
+            {a.tema && (
+              <p class="tarjeta-enlace">
+                <a href={ruta(`/temas/${a.tema}/`)}>Ver el tema</a>
+              </p>
+            )}
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="banda banda--sage">
+  <section class="banda banda--pagina">
     <div class="contenedor pila">
-      <h2>Cómo se trabaja</h2>
+      <div class="grupo-titulo">
+        <p class="eyebrow">el proceso</p>
+        <h2 class="titular">Cómo se trabaja</h2>
+      </div>
       <ol class="fases">
         {fases.map(([n, t], i) => (
           <li>
@@ -92,30 +110,47 @@ const fases = [
           </li>
         ))}
       </ol>
-      <p><a href="/proceso/">Ver el proceso completo</a></p>
+      <p><a href={ruta('/proceso/')}>Ver el proceso completo</a></p>
     </div>
   </section>
 
-  <section class="banda banda--crema">
-    <div class="contenedor pila">
-      <h2>Qué es esto</h2>
-      <p class="medida">
-        Coaching terapéutico: un proceso que combina herramientas de coaching
-        con principios de la terapia cognitivo conductual. Tiene un alcance
-        definido y no sustituye psicoterapia. Quien acompaña es coach
-        certificada con formación en TCC.
-      </p>
-      <p class="enlaces">
-        <a href="/que-es-el-coaching-terapeutico/">Qué incluye</a>
-        <a href="/terapia-o-coaching/">En qué se diferencia de la terapia</a>
-        <a href="/sobre-alina/">Quién acompaña</a>
-      </p>
+  <!-- El retrato acompaña al bloque que presenta a quien acompaña, que es
+       donde el texto ya la introduce. En el kit del sistema la fotografía
+       vive en esta superficie, no en el héroe. -->
+  <section class="banda banda--mist">
+    <div class="contenedor par">
+      <div class="pila">
+        <div class="grupo-titulo">
+          <p class="eyebrow">sobre alina</p>
+          <h2 class="titular">Qué es esto</h2>
+        </div>
+        <p class="medida">
+          Coaching terapéutico: un proceso que combina herramientas de coaching
+          con principios de la terapia cognitivo conductual. Tiene un alcance
+          definido y no sustituye psicoterapia. Quien acompaña es
+          <span class="pincel">coach certificada con formación en TCC</span>.
+        </p>
+        <hr class="regla" />
+        <p class="enlaces">
+          <a href={ruta('/que-es-el-coaching-terapeutico/')}>Qué incluye</a>
+          <a href={ruta('/terapia-o-coaching/')}>En qué se diferencia de la terapia</a>
+          <a href={ruta('/sobre-alina/')}>Quién acompaña</a>
+        </p>
+      </div>
+      <div>
+        <picture>
+          <source srcset={ruta('/img/alina-retrato.webp')} type="image/webp" />
+          <img class="retrato" src={ruta('/img/alina-retrato.jpg')}
+               alt="Alina Martínez" width="900" height="900"
+               loading="lazy" decoding="async" />
+        </picture>
+      </div>
     </div>
   </section>
 
   <section class="banda banda--lila objecion">
     <div class="contenedor pila">
-      <h2>"¿Lo que me pasa es suficientemente importante?"</h2>
+      <h2 class="titular">"¿Lo que me pasa es suficientemente importante?"</h2>
       <p class="medida">
         No hace falta estar al límite para pedir acompañamiento. Si algo está
         ocupando demasiado espacio mental, o afectando tus relaciones, tus
@@ -126,6 +161,11 @@ const fases = [
         más comunes. Y los patrones tienden a sostenerse mientras las
         condiciones que los mantienen sigan igual.
       </p>
+      <p class="medida">
+        A veces lo que detiene es la idea de que deberías poder resolverlo por
+        tu cuenta. Pedir ayuda para entender un patrón no dice nada sobre lo
+        que eres capaz de manejar.
+      </p>
     </div>
   </section>
 
@@ -135,13 +175,19 @@ const fases = [
         La primera sesión sirve para entender qué está pasando y para que
         valores si esta forma de trabajo tiene sentido para ti.
       </p>
-      <p><a href="/agendar/" class="boton">Agendar una primera sesión</a></p>
+      <p><a href={ruta('/agendar/')} class="boton">Agendar una primera sesión</a></p>
     </div>
   </section>
 </Base>
 
 <style>
-  h1{font-size:var(--text-display);line-height:var(--leading-tight)}
+  /* El titular del héroe es la única pieza a tamaño display del sitio. Lleva
+     interlineado algo mayor que --leading-tight porque carga una cápsula de
+     marcador: a 1.06 la pintura no tiene dónde caber sin tocar la línea de al
+     lado. Un titular sin cápsula sí usa el token cerrado. */
+  .apertura h1{font-size:var(--text-display);line-height:1.12;max-width:20ch}
+  .apertura .entrada{max-width:38ch}
+  .apertura > .contenedor{position:relative;padding-block:var(--space-6)}
   .entrada{font-size:var(--text-lg);line-height:var(--leading-normal)}
 
   .reconocimientos{list-style:none;margin:0;padding:0;display:grid;
@@ -152,9 +198,11 @@ const fases = [
 
   .temas{list-style:none;margin:0;padding:0}
   .temas h3{margin:0}
-  .temas a{text-decoration:none}
-  .temas a:hover{text-decoration:underline}
-  .temas p{font-size:var(--text-sm);color:var(--text-secondary)}
+  .temas p{font-size:var(--text-sm);color:var(--text-secondary);margin:0}
+  /* Solo el enlace se ancla abajo. Con space-between en la tarjeta, la que no
+     lleva enlace separaba título y descripción como si faltara algo. */
+  .tarjeta-enlace{margin-top:auto;padding-top:var(--space-4)}
+  .tarjeta-enlace a{font-weight:var(--weight-bold);color:var(--text-primary)}
 
   .fases{list-style:none;margin:0;padding:0;max-width:var(--measure);
     display:flex;flex-direction:column;gap:var(--space-4)}
@@ -164,12 +212,5 @@ const fases = [
 
   .enlaces{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);max-width:none}
 
-  /* La objeción más común del visitante. Se destaca con el trazo de pincel
-     del sistema, no con una banda oscura. */
-  /* Trazo de pincel pintado como fondo del propio texto: con z-index
-     negativo quedaba detrás del fondo de la banda y no se veía. */
-  .objecion h2{max-width:22ch;
-    background:linear-gradient(var(--accent-brush),var(--accent-brush))
-      0 .86em / 100% .34em no-repeat;
-    background-origin:content-box;padding-inline:.15em}
+  .objecion h2{max-width:26ch}
 </style>
