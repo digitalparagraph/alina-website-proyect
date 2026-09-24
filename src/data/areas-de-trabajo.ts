@@ -46,5 +46,10 @@ export const AREAS: Area[] = [
   },
 ];
 
-/** Las áreas que todavía no tienen página propia. */
+/** Las áreas con página propia. Se muestran como tarjeta, que promete destino. */
+export const AREAS_CON_PAGINA = AREAS.filter((a) => a.tema !== null);
+
+/** Las que todavía no la tienen. Se nombran en texto: una tarjeta sin enlace
+ *  deja un hueco donde debería ir el destino y se lee como algo que falló al
+ *  cargar, no como un área que sí se trabaja. */
 export const AREAS_SIN_PAGINA = AREAS.filter((a) => a.tema === null);

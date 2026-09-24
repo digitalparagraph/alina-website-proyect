@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { ruta } from '../lib/rutas';
-import { AREAS } from '../data/areas-de-trabajo';
+import { AREAS_CON_PAGINA, AREAS_SIN_PAGINA } from '../data/areas-de-trabajo';
 
 /** Los ocho reconocimientos de la guía de contenido. Es el bloque de
  *  identificación más importante del sitio. Pendiente que Alina confirme si
@@ -73,26 +73,34 @@ const fases = [
         <p class="eyebrow">temas</p>
         <h2 class="titular">Qué puedes trabajar</h2>
       </div>
-      <!-- Las cinco áreas de la guía, no solo las tres que tienen página. El
-           brief de la Etapa 2 pide las cinco categorías aquí; mostrar únicamente
-           lo construido hacía leer el servicio como más estrecho de lo que es.
+      <!-- Las cinco áreas de la guía, como pide el brief de la Etapa 2. Las que
+           tienen página van en tarjeta, porque una tarjeta promete un destino;
+           las que no, en texto. Mezclarlas dejaba dos tarjetas con un hueco
+           donde iría el enlace, y eso se lee como algo que falló al cargar.
 
            Las tarjetas van todas iguales: el kit del sistema alterna tonos, pero
            ahí son tres ofertas distintas y aquí son áreas equivalentes. Lo que
            las separa es la hairline y el aire, no el color. -->
       <ul class="rejilla temas">
-        {AREAS.map((a) => (
+        {AREAS_CON_PAGINA.map((a) => (
           <li class="tarjeta tarjeta--papel">
             <h3>{a.nombre}</h3>
             <p>{a.cubre}</p>
-            {a.tema && (
-              <p class="tarjeta-enlace">
-                <a href={ruta(`/temas/${a.tema}/`)}>Ver el tema</a>
-              </p>
-            )}
+            <p class="tarjeta-enlace">
+              <a href={ruta(`/temas/${a.tema}/`)}>Ver el tema</a>
+            </p>
           </li>
         ))}
       </ul>
+
+      <div class="tambien">
+        <h3>También se trabajan</h3>
+        <ul class="lista-simple">
+          {AREAS_SIN_PAGINA.map((a) => (
+            <li><b>{a.nombre}.</b> {a.cubre}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -199,9 +207,14 @@ const fases = [
   .temas{list-style:none;margin:0;padding:0}
   .temas h3{margin:0}
   .temas p{font-size:var(--text-sm);color:var(--text-secondary);margin:0}
-  /* Solo el enlace se ancla abajo. Con space-between en la tarjeta, la que no
-     lleva enlace separaba título y descripción como si faltara algo. */
+  /* El enlace se ancla abajo para que las tres tarjetas compartan línea de base
+     aunque sus descripciones midan distinto. */
   .tarjeta-enlace{margin-top:auto;padding-top:var(--space-4)}
+
+  .tambien{display:flex;flex-direction:column;gap:var(--space-3)}
+  .tambien h3{font-size:var(--text-lg)}
+  .lista-simple{list-style:none;margin:0;padding:0;max-width:var(--measure);
+    display:flex;flex-direction:column;gap:var(--space-3);font-size:var(--text-sm)}
   .tarjeta-enlace a{font-weight:var(--weight-bold);color:var(--text-primary)}
 
   .fases{list-style:none;margin:0;padding:0;max-width:var(--measure);
