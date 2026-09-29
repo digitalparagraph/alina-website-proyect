@@ -119,6 +119,7 @@ La configuración del verificador de enlaces vive en `linkinator.config.json` y 
 | La ruta | `base` de Astro: el prefijo de cada ruta interna |
 | Origen + ruta | La raíz absoluta de los `@id` y las URLs del JSON-LD |
 | La ruta | El `ErrorDocument` del `.htaccess`, que lo ajusta `npm run preparar` |
+| El host | La redirección de cualquier otro dominio al canónico, con 301 (ADR 010) |
 
 Se lee del entorno del proceso o del `.env`, en ese orden. Lo segundo importa: un archivo de configuración de Astro no ve el `.env` por su cuenta, y sin conectarlo quien llenara la variable ahí la vería ignorada justo donde se decide el dominio.
 
@@ -131,6 +132,8 @@ Hoy la revisión corre en `dev.paragraph.mx/alina` y la producción irá a la ra
 Dos consecuencias de servir en subcarpeta que no son evidentes:
 
 **Un `robots.txt` solo se obedece en la raíz del dominio.** En `/alina/robots.txt` no lo lee nadie. Se emite igual, porque en producción sí manda, pero mientras el sitio viva en una subcarpeta el bloqueo real son las otras dos capas: el `noindex,nofollow` de cada página y la cabecera `X-Robots-Tag` que `npm run preparar` añade al `.htaccess` para toda la carpeta. La cabecera cubre además el sitemap y los XML, que no tienen dónde llevar una etiqueta meta.
+
+**La redirección de host no se aplica en subcarpeta.** En `dev.paragraph.mx/alina` el sitio comparte dominio con los otros proyectos en revisión de la agencia, y una regla que redirige por host se los llevaría por delante. `npm run preparar` la añade solo cuando el despliegue va a la raíz de su propio dominio.
 
 **Un `.htaccess` de subcarpeta recibe la ruta recortada.** La regla de barra final redirige con `%{REQUEST_URI}` y no con `$1`: con `$1` mandaría `/pagina` a la raíz del dominio en lugar de a `/alina/pagina/`.
 

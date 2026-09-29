@@ -28,7 +28,7 @@
  */
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { PREFIJO, STAGING, URL_DESPLIEGUE } from './entorno.mjs';
+import { PREFIJO, STAGING, SUBCARPETA, URL_DESPLIEGUE } from './entorno.mjs';
 
 const RAIZ = 'dist';
 const conPhp = process.argv.includes('--con-php');
@@ -78,9 +78,49 @@ ${MARCA}
   hechos.push('sin cabecera de no indexado (PUBLIC_STAGING=false)');
 }
 
+// --- 3. Host canonico (ADR 010) ---
+// Cualquier host que no sea el del despliegue redirige a el con 301,
+// conservando la ruta. Eso cubre de una vez el www y el dominio alterno
+// .com.mx, que existe para proteger la marca y no para servir contenido.
+//
+// Se inserta ANTES de la regla de HTTPS, no al final: puesto despues, una
+// peticion a http://www.dominio daria dos saltos, uno para el protocolo y otro
+// para el host. Delante, resuelve las dos cosas en uno.
+//
+// No se aplica en local ni en el despliegue de revision en subcarpeta: ahi el
+// sitio convive con otros proyectos bajo el mismo host y redirigir por host
+// se llevaria por delante a los vecinos.
+const host = URL_DESPLIEGUE.hostname;
+const esLocal = host === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(host);
+const MARCA_HOST = '# --- host canonico ---';
+const ANCLA_HTTPS = '# HTTPS obligatorio';
+
+if (!esLocal && !SUBCARPETA && !contenido.includes(MARCA_HOST)) {
+  // El punto se escapa para que el patron no acepte cualquier caracter ahi.
+  const patron = host.replace(/\./g, '\\.');
+  const bloque = `${MARCA_HOST}
+# Un solo dominio sirve el sitio. El resto redirige con 301 para que la
+# autoridad se consolide en uno y no se reparta entre varios (ADR 010).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} !^${patron}$ [NC]
+  RewriteRule ^(.*)$ https://${host}/$1 [L,R=301]
+</IfModule>
+
+`;
+  if (!contenido.includes(ANCLA_HTTPS)) {
+    console.error('No se encontro el bloque de HTTPS del .htaccess.');
+    process.exit(1);
+  }
+  contenido = contenido.replace(ANCLA_HTTPS, bloque + ANCLA_HTTPS);
+  hechos.push(`host canonico ${host}: cualquier otro redirige con 301`);
+} else if (SUBCARPETA) {
+  hechos.push('sin redireccion de host: el sitio va en subcarpeta y comparte dominio');
+}
+
 writeFileSync(htaccess, contenido, 'utf8');
 
-// --- 3. Endpoint del formulario ---
+// --- 4. Endpoint del formulario ---
 if (conPhp) {
   copyFileSync('php/contacto.php', join(RAIZ, 'contacto.php'));
   hechos.push('contacto.php copiado — recuerda subir config.php al servidor');

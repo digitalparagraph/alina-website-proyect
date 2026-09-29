@@ -18,7 +18,7 @@ Decisiones razonadas en los ADR 002, 003, 004, 005 y 006. Este documento reúne 
 | Medición server-side | Signal integrado y desactivado. Sin destino publicitario en este sitio |
 | Tipografía | Autoalojada y subsetada. Sin CDN de terceros |
 | Imágenes | Optimización nativa de Astro, AVIF y WebP con respaldo |
-| Dominio | Pendiente. Ver sección 6 |
+| Dominio | `alinamartinez.mx`, con `alinamartinez.com.mx` redirigiendo. Ver ADR 010 |
 
 ## 2. Estructura del proyecto
 
@@ -85,7 +85,9 @@ No existe todavía. Con la Etapa 0 quedó claro que un dominio de keyword no apo
 
 Criterios: nombre de Alina, `.com` o `.mx`, sin guiones, sin la palabra coaching como relleno, pronunciable por teléfono.
 
-**Decisión pendiente de Damian.** Hay que verificar disponibilidad antes de proponer. Bloquea el despliegue, no la implementación: se desarrolla contra `localhost` y se despliega contra la URL que entregue Hostinger, ambas por `PUBLIC_SITE_URL`.
+**Decidido.** `alinamartinez.mx` es el dominio canónico y `alinamartinez.com.mx` redirige con 301. Los dos están registrados en Akky y el hosting es Hostinger. Ver ADR 010.
+
+Mientras el DNS no apunte, la revisión corre en `dev.paragraph.mx/alina`. Cambiar de una a otra es cambiar `PUBLIC_SITE_URL`: de ahí salen el canonical, el sitemap, el prefijo de las rutas y la redirección de host.
 
 ## 7. Integración continua
 
@@ -140,7 +142,6 @@ Definido en el ADR 005. Lo que la implementación tiene que respetar:
 
 ## 11. Pendiente
 
-- **Dominio.** Verificar disponibilidad y decidir. Bloquea el despliegue.
 - **Proveedor de envío de correo** del script PHP. Hoy usa `mail()`; si el plan no entrega correo con fiabilidad se decide SMTP autenticado y se documenta como ADR.
 - **Versión de PHP** del plan contratado, requisito del ADR 008.
 - **Herramienta de analítica** concreta. El requisito está fijado; la elección es de implementación.

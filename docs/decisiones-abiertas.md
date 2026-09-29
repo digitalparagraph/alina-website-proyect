@@ -10,7 +10,7 @@ Estas cuatro impiden que el sitio salga a producción. Ninguna impide seguir con
 
 | Qué | Por defecto | Quién decide |
 |---|---|---|
-| **Dominio** | Sin dominio; la revisión corre en `dev.paragraph.mx/alina` con `PUBLIC_STAGING=true` y sin indexar | Damian con Alina |
+| **Dominio** | Decidido: `alinamartinez.mx` canónico, `alinamartinez.com.mx` redirige (ADR 010). Falta apuntar el DNS en Akky y darlo de alta en Hostinger | Damian |
 | **Tarifa y promoción** | Los bloques de precio en `/preguntas-frecuentes/` y `/terminos-y-condiciones/` quedan marcados como pendientes, visibles | Alina |
 | **Línea de apoyo en crisis** | El hueco está marcado en `/alcance-del-servicio/`. **No se publica el sitio sin esto** | Alina |
 | **Aviso de privacidad y términos** | Ambos con `noindex` y aviso visible de borrador | Revisión legal |
