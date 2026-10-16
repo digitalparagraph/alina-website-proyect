@@ -1,0 +1,19 @@
+# El DirectoryIndex global del sitio solo busca index.html, asi que /panel/ sin
+# esto devuelve 403 en vez del login. Comprobado en el servidor.
+DirectoryIndex index.php
+
+<IfModule mod_headers.c>
+  # El panel nunca se indexa, ni antes ni despues del lanzamiento. La cabecera
+  # global del sitio se quita el dia que PUBLIC_STAGING pase a false; esta no.
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  Header set Cache-Control "no-store"
+  # Se repite aqui porque mod_headers pisa lo que manda el PHP, y el valor
+  # global del sitio es mas laxo que el que este panel necesita.
+  Header set Referrer-Policy "no-referrer"
+</IfModule>
+
+# lib_panel.php no es una pantalla: se incluye desde las demas. Pedirlo por URL
+# no deberia devolver nada, ni siquiera un error que confirme que existe.
+<Files "lib_panel.php">
+  Require all denied
+</Files>

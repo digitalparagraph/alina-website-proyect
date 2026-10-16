@@ -24,7 +24,11 @@ linkinator.config.json
 /php
   contacto.php               Endpoint del formulario
   config.example.php         Plantilla de credenciales; config.php no se versiona
-/db/schema.mysql.sql         CRM
+  /panel                     Panel del CRM: entrar, alta, listado, motor
+  /cron/retencion.php        Borrado a los 24 meses
+/db
+  schema.mysql.sql           Tabla de contactos
+  migracion-panel.sql        Usuario del panel y registro de accesos
 /public
   .htaccess                  Rutas, cabeceras y caché de Apache o LiteSpeed
   /logo · /img               Assets servidos tal cual

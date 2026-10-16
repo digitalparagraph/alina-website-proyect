@@ -43,7 +43,7 @@ Contrástalo siempre con `docs/aprobaciones/`. Si discrepan, mandan las aprobaci
 | [`docs/decisiones-abiertas.md`](docs/decisiones-abiertas.md) | Lo que falta definir, con su valor por defecto |
 | [`docs/insumos-requeridos.md`](docs/insumos-requeridos.md) | Qué falta del cliente |
 | [`docs/revision-tracker-paragraph.md`](docs/revision-tracker-paragraph.md) | Revisión de Signal, el tracker server-side de Paragraph |
-| `docs/decisiones/` | ADRs |
+| `docs/decisiones/` | ADRs, incluidos el dominio (010) y el panel del CRM (011) |
 | `docs/aprobaciones/` | Registro de vistos buenos |
 
 ## Decisiones que ya no se discuten

@@ -20,13 +20,14 @@
  *     en una subcarpeta nadie lee /alina/robots.txt. La cabecera cubre además
  *     el sitemap y los XML, que no tienen dónde llevar una etiqueta meta.
  *
- *  3. Copia el endpoint del formulario solo si se pide con --con-php. Requiere
- *     que exista un config.php en el servidor: sin él, el require falla y
- *     enviar el formulario devuelve un error 500.
+ *  3. Copia el PHP solo si se pide con --con-php: el endpoint del formulario,
+ *     el panel del CRM y el cron de retención. Requiere que exista un
+ *     config.php un nivel arriba del docroot: sin él, el require falla y tanto
+ *     el formulario como el panel devuelven un error 500.
  *
  * Uso: node scripts/preparar-despliegue.mjs [--con-php]
  */
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, cpSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { PREFIJO, STAGING, SUBCARPETA, URL_DESPLIEGUE } from './entorno.mjs';
 
@@ -120,12 +121,19 @@ if (!esLocal && !SUBCARPETA && !contenido.includes(MARCA_HOST)) {
 
 writeFileSync(htaccess, contenido, 'utf8');
 
-// --- 4. Endpoint del formulario ---
+// --- 4. PHP: formulario, panel y cron ---
+// Van dentro del despliegue, no subidos a mano. Si vivieran fuera, el primer
+// `npm run subir --reemplazar` se los llevaría, que es exactamente el error que
+// ya cometimos con config.php. Lo único que queda fuera es config.php, que vive
+// un nivel arriba del docroot justo por eso.
 if (conPhp) {
   copyFileSync('php/contacto.php', join(RAIZ, 'contacto.php'));
-  hechos.push('contacto.php copiado — recuerda subir config.php al servidor');
+  cpSync('php/panel', join(RAIZ, 'panel'), { recursive: true });
+  cpSync('php/cron', join(RAIZ, 'cron'), { recursive: true });
+  hechos.push('contacto.php, panel/ y cron/ copiados');
+  hechos.push('config.php NO se copia: vive arriba del docroot y se sube una sola vez');
 } else {
-  hechos.push('sin contacto.php: el formulario mostrará error al enviar');
+  hechos.push('sin PHP: el formulario mostrará error y el panel no existirá');
 }
 
 console.log(`Despliegue preparado para ${URL_DESPLIEGUE.href}`);

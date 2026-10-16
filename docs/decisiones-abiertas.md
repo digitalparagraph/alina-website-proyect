@@ -37,13 +37,17 @@ Es la opción sin dependencias y suele bastar para el volumen de este sitio. Si 
 
 ### Acceso al panel del CRM
 
-**No se construye por ahora.** El formulario funciona con correo y la tabla `contactos` registra el seguimiento; Alina consulta sus mensajes en su buzón.
+**Construido**, con el ADR 011. Vive en `/panel/` y pide contraseña más código TOTP: la contraseña sola no abre nada.
 
-Cloudflare Access resolvía la autenticación sin escribir código y en Hostinger hay que construirla. Un panel con autenticación hecha a la carrera sobre datos de contacto de salud mental es peor que no tener panel.
+La objeción que lo tenía aplazado era sobre la calidad de la autenticación, no sobre el panel, y se atendió: segundo factor obligatorio, bloqueo por intentos, registro de accesos revisable, error único que no distingue qué falló, y un TOTP propio verificado contra los seis vectores del RFC 6238.
+
+Queda pendiente **activar el cron de retención**. Sin él, el aviso de privacidad declara un plazo de conservación que el sitio no cumple.
 
 ### Retención de datos del CRM
 
-**24 meses** desde el último cambio de estado, con borrado automático. Es el valor por defecto hasta que la revisión legal diga otro. El aviso de privacidad debe declarar el plazo que quede.
+**24 meses** desde el último cambio de estado, con borrado automático. Se cuenta desde el último cambio y no desde la llegada: un contacto en proceso no se borra por viejo.
+
+Está escrito en `php/cron/retencion.php` y probado, pero **el cron no está dado de alta todavía**. El aviso de privacidad debe declarar el plazo que quede. El registro de accesos al panel caduca aparte, a los 12 meses.
 
 ### Signal
 
