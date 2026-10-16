@@ -3,6 +3,8 @@ import '@fontsource/poppins/latin-300.css';
 import '@fontsource/poppins/latin-700.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import { Picture } from 'astro:assets';
+import logoPie from '../assets/logo-blanco.png';
 import Persona from '../components/schema/Persona.astro';
 import { ruta, raizAbsoluta } from '../lib/rutas';
 
@@ -14,6 +16,16 @@ const { titulo, descripcion, noindex = false } = Astro.props;
 const staging = import.meta.env.PUBLIC_STAGING !== 'false';
 const sitio = raizAbsoluta(Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// La marca se añade aquí y no en cada página: así ninguna se queda sin ella al
+// crearse, y el texto que escribe quien redacta es el que describe la página.
+// Las que ya la llevan en la frase no la repiten.
+const MARCA = 'Alina Martínez';
+const tituloCompleto = titulo.includes(MARCA) ? titulo : `${titulo} · ${MARCA}`;
+
+// Imagen de la tarjeta al compartir. Absoluta porque las redes no resuelven
+// rutas relativas, y con la raíz del despliegue para que funcione en subcarpeta.
+const imagenSocial = new URL(ruta('/og.png'), Astro.site).href;
 
 const nav = [
   { href: '/proceso/', texto: 'El proceso' },
@@ -35,14 +47,28 @@ const enSeccion = (href) => {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{titulo}</title>
+  <title>{tituloCompleto}</title>
   <meta name="description" content={descripcion} />
   <link rel="canonical" href={canonical} />
   {(noindex || staging) && <meta name="robots" content="noindex,nofollow" />}
-  <meta property="og:title" content={titulo} />
+
+  <link rel="icon" href={ruta('/favicon.svg')} type="image/svg+xml" />
+  <link rel="icon" href={ruta('/favicon-32.png')} sizes="32x32" />
+  <link rel="apple-touch-icon" href={ruta('/apple-touch-icon.png')} />
+
+  <meta property="og:title" content={tituloCompleto} />
   <meta property="og:description" content={descripcion} />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_MX" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content={MARCA} />
+  <meta property="og:image" content={imagenSocial} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Alina Martínez · existir consciente" />
+  <!-- summary_large_image y no summary: con la tarjeta chica la imagen se
+       recorta a cuadrado y el lockup pierde el nombre. -->
+  <meta name="twitter:card" content="summary_large_image" />
   <Persona sitio={sitio} />
   <slot name="schema" />
 </head>
@@ -86,8 +112,19 @@ const enSeccion = (href) => {
 
   <footer class="pie">
     <div class="contenedor pie-fila">
-      <img class="pie-logo" src={ruta('/logo/logo-blanco.png')} alt="Alina Martínez"
-           width="588" height="398" loading="lazy" decoding="async" />
+      <!-- El PNG de origen mide 588 px y en el pie nunca se ve a más de 200.
+           Se emite al tamaño real, con su 2x. -->
+      <Picture
+        src={logoPie}
+        formats={['avif', 'webp']}
+        fallbackFormat="png"
+        width={200}
+        densities={[1, 2]}
+        alt="Alina Martínez"
+        class="pie-logo"
+        loading="lazy"
+        decoding="async"
+      />
 
       <p class="pie-nota">
         Coaching terapéutico en línea. Sesiones individuales de aproximadamente

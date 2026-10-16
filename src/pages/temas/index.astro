@@ -10,8 +10,8 @@ const temas = (await getCollection('temas'))
   .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'es'));
 ---
 <Base
-  titulo="Temas"
-  descripcion="Los patrones que se trabajan con más frecuencia en coaching terapéutico: autoexigencia, sobrepensar, procrastinación y evitación."
+  titulo="Temas que se trabajan en el proceso"
+  descripcion="Los patrones que se trabajan con más frecuencia: autoexigencia, sobrepensar, procrastinación, límites en las relaciones y decisiones que llevan meses abiertas."
 >
   <section>
     <header class="banda banda--crema portada-pagina">
@@ -20,6 +20,11 @@ const temas = (await getCollection('temas'))
         <p class="entrada">
           Estos son los patrones que aparecen con más frecuencia. Rara vez vienen solos: quien se exige de más suele
           también sobrepensar, y quien sobrepiensa suele posponer.
+        </p>
+        <p class="medida">
+          Todos se trabajan dentro del mismo proceso:
+          <a href={ruta('/que-es-el-coaching-terapeutico/')}>qué es el coaching terapéutico</a>
+          explica en qué consiste y hasta dónde llega.
         </p>
       </div>
     </header>
