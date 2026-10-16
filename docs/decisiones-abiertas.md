@@ -4,22 +4,21 @@ Todo lo que falta por definir, con una **decisión por defecto ya tomada** para 
 
 Si trabajas en el proyecto y encuentras un hueco que no está aquí, añádelo con su valor por defecto en lugar de dejarlo abierto.
 
-## Bloquean la publicación
+## Huecos en el sitio ya publicado
 
-Estas cuatro impiden que el sitio salga a producción. Ninguna impide seguir construyendo.
+El sitio está en producción y abierto a los buscadores (ADR 013). Estos tres huecos siguen visibles en el texto, marcados como "Pendiente", y se indexan así. Ninguno impide seguir construyendo; todos urgen.
 
-| Qué | Por defecto | Quién decide |
+| Qué | Dónde se ve | Quién decide |
 |---|---|---|
-| **Dominio** | Decidido: `alinamartinez.mx` canónico, `alinamartinez.com.mx` redirige (ADR 010). Falta apuntar el DNS en Akky y darlo de alta en Hostinger | Damian |
-| **Tarifa y promoción** | Los bloques de precio en `/preguntas-frecuentes/` y `/terminos-y-condiciones/` quedan marcados como pendientes, visibles | Alina |
-| **Línea de apoyo en crisis** | El hueco está marcado en `/alcance-del-servicio/`. **No se publica el sitio sin esto** | Alina |
-| **Aviso de privacidad y términos** | Ambos con `noindex` y aviso visible de borrador | Revisión legal |
+| **Línea de apoyo en crisis** | `/alcance-del-servicio/`. Es el hueco urgente: es lo que le dice a alguien a dónde ir cuando el acompañamiento no alcanza | Alina |
+| **Tarifa y promoción** | `/preguntas-frecuentes/` y `/terminos-y-condiciones/` | Alina |
+| **Aviso de privacidad y términos** | Falta el responsable, el domicilio, el correo para derechos ARCO y el plazo de conservación. La LFPDPPP tiene elementos obligatorios | Revisión legal |
 
 ## Decididas por defecto, reversibles
 
 ### Ilustraciones de la figura de Alina
 
-Van **solo en `/sobre-alina/`**, y por ahora no se usan. Están en `public/img/alina-figure-*.png`.
+Van **solo en `/sobre-alina/`**, a través del componente `Figura.astro`. El arte está en `src/assets/ilustraciones/`, para que pase por el pipeline de imagen.
 
 El motivo está en la Etapa 4: en el home convierten a la coach en protagonista, contra el primer criterio de la guía de contenido. Si Alina las quiere en más lugares, se reabre esa decisión, no se añade y ya.
 
