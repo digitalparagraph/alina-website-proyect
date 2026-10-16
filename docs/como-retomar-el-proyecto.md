@@ -50,7 +50,7 @@ Un rechazo se documenta en el mismo PR con el motivo. No se corrige en privado.
 | Qué | Dónde / cómo |
 |---|---|
 | Repositorio | `digitalparagraph/alina-website-proyect`, privado. Pide acceso como colaborador |
-| Push por HTTPS | Cada persona usa su propio Personal Access Token fine-grained, con permisos Contents y Pull requests de lectura y escritura, limitado a este repo |
+| Permiso de escritura | Solo la cuenta `digitalparagraph`, la de digital@paragraph.mx. Comprueba con `gh auth status` antes de empujar: un push con otra cuenta devuelve 403 y GitHub no dice que el problema sea la cuenta |
 | Semrush | Necesario para las etapas de research y para verificar datos de demanda. Base `mx` |
 | Drive del cliente | Carpeta "Alina Martínez". Insumos crudos: logos, fotografía, material original |
 | Google Search Console | Se configura en la etapa 10. Aún no existe |
@@ -77,4 +77,4 @@ Git funciona, con dos particularidades del entorno:
 
 - Necesita permiso de borrado en la carpeta para manejar sus archivos de bloqueo. Si `git commit` falla con `Operation not permitted` sobre `.git/objects/tmp_obj_*` o `HEAD.lock`, pide ese permiso a la sesión.
 - Si aparece `index.lock: File exists`, bórralo y repite: `rm -f .git/index.lock`.
-- `gh` CLI no viene instalado. Los PR se pueden abrir por la API de GitHub con curl, o desde la web.
+- `gh` CLI está instalado. Sirve para abrir los PR y, sobre todo, para comprobar con `gh auth status` con qué cuenta se va a empujar.

@@ -53,8 +53,10 @@ Construido y compilando: 16 páginas en Astro estático, 8 KB de CSS, cero JavaS
 
 ## Entorno
 
-- `gh` CLI no está instalado. Los PR se abren por la API de GitHub o desde la web.
-- Cada persona hace push con su propio Personal Access Token fine-grained. No hay credenciales en el repo ni en el remote.
+- `gh` CLI sí está instalado. Con él se abren los PR y se comprueba con qué cuenta se está operando.
+- **El repositorio vive en la cuenta `digitalparagraph`, la de digital@paragraph.mx.** Es la única con permiso de escritura. Antes de empujar, verifica con `gh auth status` cuál es la cuenta activa: en esta máquina hay dos autenticadas y un push con la equivocada devuelve 403 sin explicar por qué.
+- La identidad de los commits se fija por repositorio, no en la configuración global: `Paragraph <digital@paragraph.mx>`.
+- No hay credenciales en el repo ni en el remote.
 - Trabajando desde Cowork con carpeta local montada, git necesita permiso de borrado para sus archivos de bloqueo. Si `git commit` falla con `Operation not permitted` sobre `.git/objects/tmp_obj_*` o `HEAD.lock`, pide ese permiso. Si aparece `index.lock: File exists`, borra el archivo y repite.
 - `insumos/*.PDF` está en el `.gitignore`: son documentos personales de la clienta con CURP y cédula profesional. Los hechos verificados están en `docs/credenciales.md`.
 
