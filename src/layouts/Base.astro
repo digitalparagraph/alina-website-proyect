@@ -5,6 +5,7 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import { Picture } from 'astro:assets';
 import logoPie from '../assets/logo-blanco.png';
+import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import Persona from '../components/schema/Persona.astro';
 import { ruta, raizAbsoluta } from '../lib/rutas';
 
@@ -109,6 +110,8 @@ const enSeccion = (href) => {
   </header>
 
   <main id="contenido"><slot /></main>
+
+  <BotonWhatsApp />
 
   <footer class="pie">
     <div class="contenedor pie-fila">
