@@ -18,7 +18,10 @@
  */
 declare(strict_types=1);
 
-require __DIR__ . '/config.php';   // no se versiona; ver config.example.php
+// Un nivel ARRIBA del docroot, a propósito. Dentro quedaría en el árbol
+// público, y sobre todo: `npm run subir --reemplazar` vacía el docroot en cada
+// despliegue y se llevaría por delante las credenciales.
+require __DIR__ . '/../config.php';   // no se versiona; ver config.example.php
 
 $tipoEntrada = $_SERVER['CONTENT_TYPE'] ?? '';
 $esJson = stripos($tipoEntrada, 'application/json') !== false;
