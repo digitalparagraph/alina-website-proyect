@@ -29,6 +29,12 @@ Se usa `public/logo/alina-logo.svg` tal como viene del sistema de diseño: gris 
 
 **Esos hexadecimales están inferidos**, no confirmados. Los SVG originales llegaron sin definiciones de relleno y el sistema de diseño los reconstruyó a partir de los PNG de la marca. Su propio readme lo advierte. Pendiente de confirmar con Alina; mientras tanto, se usan.
 
+### Buzón de destino del formulario
+
+`alinamtzherrera@gmail.com`, ya configurado en el `config.php` del servidor.
+
+El remitente es `sitio@alinamartinez.mx`, que **todavía no existe como buzón**. El dominio ya trae MX a Hostinger, SPF y DMARC en `p=none`, pero enviar desde una dirección que no existe perjudica la entrega y deja los rebotes sin destino. Crear ese buzón en hPanel es el siguiente paso.
+
 ### Proveedor de envío de correo
 
 `php/contacto.php` usa la función `mail()` de PHP, que Hostinger provee.
