@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+// El apartado de cookies describe algo que solo existe si hay contenedor de
+// Tag Manager configurado (ADR 014). Sin el, el sitio no instala ninguna y el
+// documento tiene que decir eso, no describir una banda que nadie va a ver.
+const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== '';
 /**
  * Describe con precisión lo que el sistema hace de verdad (ADR 003 y 005) y
  * marca lo que falta. Sigue pendiente de revisión legal: la LFPDPPP tiene
@@ -55,6 +59,7 @@ import Base from '../layouts/Base.astro';
       </p>
     </section>
 
+    {gtm ? (
     <section class="pila">
       <h2>Cookies</h2>
       <p>
@@ -86,6 +91,15 @@ import Base from '../layouts/Base.astro';
         sitio: funciona igual.
       </p>
     </section>
+    ) : (
+    <section class="pila">
+      <h2>Cookies</h2>
+      <p>
+        Este sitio no instala cookies de publicidad ni de análisis, y no
+        utiliza identificadores que te sigan entre sesiones.
+      </p>
+    </section>
+    )}
 
     <section class="pila">
       <h2>Dónde se guarda cada cosa</h2>
