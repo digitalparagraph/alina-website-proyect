@@ -1,0 +1,108 @@
+---
+/**
+ * Modo de consentimiento de Google, implementación **básica**, y carga de Tag
+ * Manager. Va en el `<head>` porque los valores por defecto tienen que estar
+ * declarados antes de que exista cualquier etiqueta, que es lo único que la
+ * especificación exige del orden. Quien decide si este componente existe es
+ * `Base.astro`, según haya contenedor configurado o no.
+ *
+ * Básica y no avanzada: con la avanzada, Tag Manager carga siempre y manda
+ * pings sin cookies aunque la persona no haya aceptado. Da mejor dato modelado
+ * y es lo que Google recomienda. Aquí se eligió la básica —no se carga nada
+ * hasta que alguien acepta— porque este sitio recibe a gente que llega
+ * buscando ayuda con un problema personal, y lo que el ADR 004 protegía era
+ * justo eso. Cambiar a avanzada es mover la llamada a cargarGTM() fuera del
+ * condicional (ADR 014).
+ *
+ * Sin `<noscript>` con el iframe de Tag Manager: ese iframe dispara sin
+ * consultar nada, así que en una implementación básica sería la puerta de
+ * atrás que invalida todo lo demás.
+ */
+const GTM = (import.meta.env.PUBLIC_GTM_ID ?? '').trim();
+
+// Si cambian las categorías que se ofrecen, sube este número: una decisión
+// tomada sobre otro juego de categorías deja de valer y se vuelve a preguntar.
+const VERSION = 1;
+---
+<script is:inline define:vars={{ GTM, VERSION }}>
+  (function () {
+    var LLAVE = 'am-consentimiento';
+    var raiz = document.documentElement;
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+
+    // security_storage y functionality_storage quedan concedidos: sostienen
+    // cosas sin las que el sitio no funciona y no siguen a nadie. El resto
+    // arranca denegado. wait_for_update no hace falta en la implementación
+    // básica, pero queda puesto para que cambiar a avanzada no obligue a
+    // tocar esto.
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      personalization_storage: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500,
+    });
+
+    function leer() {
+      try {
+        var crudo = localStorage.getItem(LLAVE);
+        if (!crudo) return null;
+        var d = JSON.parse(crudo);
+        return d && d.v === VERSION ? d : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    var cargado = false;
+    function cargarGTM() {
+      if (cargado) return;
+      cargado = true;
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM;
+      document.head.appendChild(s);
+    }
+
+    function aplicar(decision, guardar) {
+      var publicidad = decision.publicidad ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        ad_storage: publicidad,
+        ad_user_data: publicidad,
+        ad_personalization: publicidad,
+        personalization_storage: publicidad,
+        analytics_storage: decision.analitica ? 'granted' : 'denied',
+      });
+
+      if (guardar) {
+        try {
+          localStorage.setItem(LLAVE, JSON.stringify({
+            v: VERSION,
+            analitica: !!decision.analitica,
+            publicidad: !!decision.publicidad,
+            fecha: new Date().toISOString(),
+          }));
+        } catch (e) { /* modo privado: la decisión vale para esta sesión */ }
+      }
+
+      raiz.dataset.consent = 'resuelto';
+      if (decision.analitica || decision.publicidad) cargarGTM();
+    }
+
+    var previa = leer();
+    if (previa) {
+      // Quien ya decidió no vuelve a ver la banda, ni un parpadeo de ella.
+      aplicar(previa, false);
+    } else {
+      raiz.dataset.consent = 'pendiente';
+    }
+
+    window.__consentimiento = { aplicar: aplicar, leer: leer, raiz: raiz };
+  })();
+</script>

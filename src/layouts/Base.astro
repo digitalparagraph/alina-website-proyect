@@ -6,6 +6,8 @@ import '../styles/base.css';
 import { Picture } from 'astro:assets';
 import logoPie from '../assets/logo-blanco.png';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import ConsentimientoModo from '../components/ConsentimientoModo.astro';
+import ConsentimientoBanda from '../components/ConsentimientoBanda.astro';
 import Persona from '../components/schema/Persona.astro';
 import { ruta, raizAbsoluta } from '../lib/rutas';
 
@@ -21,6 +23,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 // La marca se añade aquí y no en cada página: así ninguna se queda sin ella al
 // crearse, y el texto que escribe quien redacta es el que describe la página.
 // Las que ya la llevan en la frase no la repiten.
+// Sin contenedor de Tag Manager no se emite ni el script del modo de
+// consentimiento ni la banda: sin etiquetas no hay nada que consentir, y el
+// sitio vuelve a ser el de cero JavaScript de terceros (ADR 014).
+const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== '';
+
 const MARCA = 'Alina Martínez';
 const tituloCompleto = titulo.includes(MARCA) ? titulo : `${titulo} · ${MARCA}`;
 
@@ -48,6 +55,8 @@ const enSeccion = (href) => {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  {gtm && <ConsentimientoModo />}
+
   <title>{tituloCompleto}</title>
   <meta name="description" content={descripcion} />
   <link rel="canonical" href={canonical} />
@@ -112,6 +121,7 @@ const enSeccion = (href) => {
   <main id="contenido"><slot /></main>
 
   <BotonWhatsApp />
+  {gtm && <ConsentimientoBanda />}
 
   <footer class="pie">
     <div class="contenedor pie-fila">
@@ -142,6 +152,9 @@ const enSeccion = (href) => {
         <li><a href={ruta('/preguntas-frecuentes/')}>Preguntas frecuentes</a></li>
         <li><a href={ruta('/aviso-de-privacidad/')}>Aviso de privacidad</a></li>
         <li><a href={ruta('/terminos-y-condiciones/')}>Términos y condiciones</a></li>
+        {gtm && (
+          <li><button type="button" class="pie-boton" data-consent-abrir>Cookies</button></li>
+        )}
       </ul>
     </div>
   </footer>
@@ -202,4 +215,9 @@ const enSeccion = (href) => {
   .pie-enlaces{display:flex;flex-direction:column;gap:var(--space-2);
     list-style:none;margin:0;padding:0;font-size:var(--text-sm)}
   .pie a{color:var(--white)}
+  /* Mismo aspecto que los enlaces vecinos: reabrir el consentimiento es una
+     opción más del pie, no un control aparte. Es un button y no un enlace
+     porque no lleva a ninguna página. */
+  .pie-boton{background:none;border:0;padding:0;font:inherit;cursor:pointer;
+    color:var(--white);text-decoration:underline}
 </style>

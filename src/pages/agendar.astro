@@ -181,6 +181,14 @@ import { ruta } from '../lib/rutas';
         estado.textContent =
           'Tu mensaje llegó al correo de Alina. Te responde ahí para acordar el horario.';
         estado.classList.add('estado-listo');
+
+        // El envío es la conversión del sitio (ADR 004). Como se manda por
+        // fetch y la página no cambia, Tag Manager no puede verlo por su
+        // cuenta: hace falta decírselo. El push no lleva ningún dato de quien
+        // escribió, solo que ocurrió. Y se hace exista o no Tag Manager: si no
+        // está, el evento se queda en la cola y nadie lo lee.
+        ((window as any).dataLayer = (window as any).dataLayer || [])
+          .push({ event: 'contacto_enviado' });
         return;
       }
 

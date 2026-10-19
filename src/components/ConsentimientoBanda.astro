@@ -1,0 +1,191 @@
+---
+/**
+ * La banda de consentimiento y el panel de categorías.
+ *
+ * Va al final del `<body>`: los valores por defecto ya quedaron declarados en
+ * el `<head>` por `ConsentimientoModo.astro`, y lo que falta aquí es solo la
+ * interfaz. Quien decide si este componente existe es `Base.astro`, según haya
+ * contenedor de Tag Manager configurado o no.
+ *
+ * Tres cosas que no son de estilo:
+ *
+ *  - **Aceptar y rechazar pesan lo mismo.** Un rechazo escondido detrás de dos
+ *    clics mientras aceptar es un botón grande no es consentimiento libre.
+ *  - **No atrapa.** No es un modal, no bloquea el fondo y no roba el foco.
+ *    El ADR 004 advertía que un banner es lo primero que ve alguien que llegó
+ *    buscando ayuda con un problema personal; que no lo obligue a tratar con
+ *    él antes de leer.
+ *  - **Se puede cambiar de opinión.** El pie lleva un botón que la reabre.
+ *    Sin eso, la primera decisión sería definitiva.
+ *
+ * La banda se emite siempre en el HTML y se muestra u oculta con el atributo
+ * `data-consent` que pone el script del `<head>`. Así quien ya decidió no la ve
+ * aparecer y desaparecer.
+ */
+import { ruta } from '../lib/rutas';
+---
+<div class="consent" id="consent" role="region" aria-label="Consentimiento de cookies">
+  <div class="consent-caja">
+    <div class="consent-texto">
+      <p class="consent-titulo">Cookies</p>
+      <p>
+        Este sitio puede instalar cookies de medición, para saber qué páginas
+        llevan a contacto, y de publicidad, si hay campañas activas. No se
+        instala ninguna hasta que lo decidas, y lo que escribes en el
+        formulario no pasa por ahí.
+        <a href={ruta('/aviso-de-privacidad/')}>Aviso de privacidad</a>
+      </p>
+    </div>
+
+    <div class="consent-botones">
+      <button type="button" class="boton boton--papel" data-consent-accion="rechazar">Rechazar</button>
+      <button type="button" class="boton boton--papel" data-consent-accion="aceptar">Aceptar</button>
+      <button type="button" class="consent-enlace" data-consent-accion="elegir"
+              aria-expanded="false" aria-controls="consent-panel">Elegir</button>
+    </div>
+
+    <div class="consent-panel" id="consent-panel" hidden>
+      <label class="consent-opcion">
+        <input type="checkbox" name="analitica" />
+        <span>
+          <b>Medición.</b> Qué páginas se leen y cuáles llevan a contacto.
+          Datos agregados, no un expediente de tu visita.
+        </span>
+      </label>
+      <label class="consent-opcion">
+        <input type="checkbox" name="publicidad" />
+        <span>
+          <b>Publicidad.</b> Permite saber si una campaña trajo a alguien que
+          después agendó. Hoy no hay campañas activas.
+        </span>
+      </label>
+      <p>
+        <button type="button" class="boton boton--papel" data-consent-accion="guardar">Guardar</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * Cablea los botones contra la API que dejó el script del `<head>`
+   * (`window.__consentimiento`). Si ese script no corrió, no hay nada que
+   * cablear y la banda no se muestra, que es el estado seguro: sin decisión,
+   * Tag Manager no carga.
+   */
+  const api = (window as any).__consentimiento;
+  const banda = document.querySelector<HTMLElement>('#consent');
+
+  if (api && banda) {
+    const panel = banda.querySelector<HTMLElement>('#consent-panel')!;
+    const botonElegir = banda.querySelector<HTMLElement>('[data-consent-accion="elegir"]')!;
+    const casillas = {
+      analitica: banda.querySelector<HTMLInputElement>('input[name="analitica"]')!,
+      publicidad: banda.querySelector<HTMLInputElement>('input[name="publicidad"]')!,
+    };
+
+    const mostrarPanel = (abierto: boolean) => {
+      panel.hidden = !abierto;
+      botonElegir.setAttribute('aria-expanded', String(abierto));
+    };
+
+    const abrir = () => {
+      const previa = api.leer();
+      casillas.analitica.checked = !!(previa && previa.analitica);
+      casillas.publicidad.checked = !!(previa && previa.publicidad);
+      api.raiz.dataset.consent = 'pendiente';
+    };
+
+    const resolver = (decision: { analitica: boolean; publicidad: boolean }) => {
+      api.aplicar(decision, true);
+      mostrarPanel(false);
+    };
+
+    banda.addEventListener('click', (evento) => {
+      const destino = (evento.target as HTMLElement).closest<HTMLElement>('[data-consent-accion]');
+      const accion = destino?.dataset.consentAccion;
+      if (!accion) return;
+
+      if (accion === 'aceptar') resolver({ analitica: true, publicidad: true });
+      else if (accion === 'rechazar') resolver({ analitica: false, publicidad: false });
+      else if (accion === 'guardar') resolver({
+        analitica: casillas.analitica.checked,
+        publicidad: casillas.publicidad.checked,
+      });
+      else if (accion === 'elegir') mostrarPanel(panel.hidden);
+    });
+
+    // El botón del pie reabre la decisión en cualquier momento.
+    document.addEventListener('click', (evento) => {
+      if (!(evento.target as HTMLElement).closest('[data-consent-abrir]')) return;
+      evento.preventDefault();
+      abrir();
+      mostrarPanel(true);
+    });
+
+    if (api.raiz.dataset.consent === 'pendiente') abrir();
+  }
+</script>
+
+<style is:global>
+  /* La banda solo existe mientras no haya decisión tomada. */
+  .consent{display:none}
+  html[data-consent="pendiente"] .consent{
+    display:block;position:fixed;inset-inline:0;bottom:0;z-index:28;
+    background:var(--surface-card);
+    border-top:1px solid var(--border-hairline);
+    box-shadow:0 -4px 24px rgb(0 0 0 / .10);
+    padding:var(--space-5) 0 calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+    /* En una ventana baja —un telefono en horizontal, una ventana a medias— el
+       texto envuelve tanto que la banda crecia mas alto que la pantalla y se
+       salia por arriba, dejando el titulo y parte del texto fuera de alcance.
+       Acotada, lo que sobre se desplaza dentro de la propia banda. */
+    max-height:min(70dvh, 70vh);overflow-y:auto;overscroll-behavior:contain;
+  }
+
+  /* Dos elementos flotando en la misma esquina se estorban. Mientras haya que
+     decidir sobre cookies, el boton de WhatsApp se quita de en medio. */
+  html[data-consent="pendiente"] .wa{display:none}
+
+  .consent-caja{width:min(100% - var(--space-5) * 2, var(--container-max));
+    margin-inline:auto;display:grid;gap:var(--space-4) var(--space-6);
+    align-items:start}
+  @media (min-width:900px){
+    .consent-caja{grid-template-columns:minmax(0,1fr) auto}
+    .consent-panel{grid-column:1 / -1}
+  }
+
+  .consent-texto{display:flex;flex-direction:column;gap:var(--space-1)}
+  .consent-texto p{margin:0;max-width:72ch;font-size:var(--text-sm);
+    line-height:var(--leading-normal)}
+  .consent-titulo{font-weight:var(--weight-bold)}
+  .consent-texto a{color:inherit}
+
+  .consent-botones{display:flex;flex-wrap:wrap;gap:var(--space-3);
+    align-items:center}
+  /* Aceptar y rechazar comparten estilo a proposito: ninguno de los dos es el
+     camino facil. */
+  /* 44 px de alto minimo: es el area tactil que pide WCAG, y aqui pesa mas que
+     en cualquier otro control del sitio, porque es donde se decide. */
+  .consent-botones .boton,.consent-enlace{min-height:44px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .consent-botones .boton{font-size:var(--text-sm);padding:var(--space-2) var(--space-5)}
+  .consent-enlace{background:none;border:0;padding-inline:var(--space-3);cursor:pointer;
+    font:inherit;font-size:var(--text-sm);text-decoration:underline;color:inherit}
+
+  .consent-panel{border-top:1px solid var(--border-subtle);
+    padding-top:var(--space-4);display:flex;flex-direction:column;gap:var(--space-4)}
+  /* Sin esta linea el panel sale siempre abierto: el atributo hidden oculta
+     poniendo display:none desde la hoja del navegador, y cualquier display
+     declarado aqui le gana. */
+  .consent-panel[hidden]{display:none}
+  .consent-panel p{margin:0}
+  .consent-opcion{display:grid;grid-template-columns:auto 1fr;gap:var(--space-3);
+    align-items:start;max-width:72ch;font-size:var(--text-sm);
+    line-height:var(--leading-normal);cursor:pointer}
+  .consent-opcion input{margin-top:.25em;width:18px;height:18px;
+    accent-color:var(--lilac-700)}
+
+  /* Al imprimir no pinta nada: es un control, no contenido. */
+  @media print{.consent{display:none !important}}
+</style>

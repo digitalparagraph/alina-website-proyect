@@ -47,7 +47,11 @@ Después `docs/como-retomar-el-proyecto.md`. Contiene el orden de lectura, los a
 
 ## Estado del sitio
 
-Construido y compilando: 16 páginas en Astro estático, 8 KB de CSS, cero JavaScript enviado al navegador. El copy está escrito y pendiente de revisión de Alina. Falta desplegar en Hostinger.
+En producción en `alinamartinez.mx` y abierto a los buscadores (ADR 013): 18 páginas en Astro estático, 12.8 KB de CSS y 1.3 KB de JavaScript, solo en `/agendar/`. El CRM y su panel están desplegados y el formulario entrega al buzón de Alina.
+
+Con `PUBLIC_GTM_ID` configurado se añaden Tag Manager y la banda de consentimiento (ADR 014); vacío, el sitio no manda una sola petición a terceros.
+
+El copy sigue pendiente de revisión de Alina, y cuatro páginas llevan huecos visibles marcados como "Pendiente": tarifa, política de cancelación, línea de apoyo en crisis y los datos del responsable en el aviso de privacidad.
 
 `npm install` sobre la carpeta montada de Cowork no termina; en Windows nativo funciona normal. Verificado en navegador a 1280 y 390 px.
 

@@ -52,13 +52,21 @@ Queda pendiente **activar el cron de retención**. Sin él, el aviso de privacid
 
 **24 meses** desde el último cambio de estado, con borrado automático. Se cuenta desde el último cambio y no desde la llegada: un contacto en proceso no se borra por viejo.
 
-Está escrito en `php/cron/retencion.php` y probado, pero **el cron no está dado de alta todavía**. El aviso de privacidad debe declarar el plazo que quede. El registro de accesos al panel caduca aparte, a los 12 meses.
+Está escrito en `php/cron/retencion.php` y **el cron corre a diario a las 10:00**. El aviso de privacidad debe declarar el plazo que quede. El registro de accesos al panel caduca aparte, a los 12 meses.
 
 ### Signal
 
 Integrado y **desactivado**, según el ADR 006. El SDK no se ha añadido al sitio todavía porque el collector de Paragraph no está corriendo.
 
-Cuando se añada: `PUBLIC_SIGNAL_ENDPOINT` vacío, `consent` fijo en `{analytics: true, advertising: false}`, y **el destino de Meta CAPI no se habilita en este sitio**. El campo abierto del formulario nunca viaja como propiedad de un evento.
+Cuando se añada: `PUBLIC_SIGNAL_ENDPOINT` vacío y **el destino de Meta CAPI no se habilita en este sitio**. El campo abierto del formulario nunca viaja como propiedad de un evento.
+
+El `consent` ya no se fija a mano: desde el ADR 014 existe una decisión real del visitante, y Signal tiene que leer esa y no un valor escrito en el código.
+
+### Qué etiquetas van dentro de Tag Manager
+
+El ADR 014 instaló el contenedor y la capa de consentimiento, no la medición. Falta decidir qué se configura dentro —GA4, conversiones de Google Ads, alguna otra— y revisar que cada etiqueta respete el modo de consentimiento: una mal configurada en la interfaz de Tag Manager se salta todo lo que el sitio hace, y eso ya no se controla desde este repositorio.
+
+Por defecto, mientras nadie lo decida: el contenedor vacío. Con `PUBLIC_GTM_ID` sin valor el sitio no manda una sola petición a Google.
 
 ### Tipografía
 
@@ -70,7 +78,9 @@ Si Alina adquiere esa licencia, se reabre el ADR 007 y se revalúa el presupuest
 
 Los objetivos de la Etapa 3 se mantienen como están —sin JavaScript en la ruta crítica, menos de 100 KB de CSS y JS, cero peticiones a terceros— **salvo el LCP**, que se fijó en 2.0 s contando con una red de borde.
 
-En hosting compartido se mide primero y se ajusta el objetivo o el plan de hosting. No se toca el sitio para alcanzarlo: hoy son 8 KB de CSS y cero JavaScript.
+En hosting compartido se mide primero y se ajusta el objetivo o el plan de hosting. No se toca el sitio para alcanzarlo: hoy son 12.8 KB de CSS y 1.3 KB de JavaScript en una sola página.
+
+Lo de "cero peticiones a terceros" vale mientras `PUBLIC_GTM_ID` esté vacío, y después solo para quien rechace las cookies (ADR 014).
 
 ### Temas de fase 2
 

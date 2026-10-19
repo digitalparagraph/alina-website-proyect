@@ -44,21 +44,23 @@ Los workflows están fuera de `.github/workflows/` porque el token con el que se
 
 | Comprobación | Resultado |
 |---|---|
-| Compila | 16 páginas |
-| Peso total del `dist` | 1.0 MB, de los que 593 KB son las dos ilustraciones en crudo de `public/img/` |
-| CSS | Un archivo, 9.6 KB |
-| JavaScript enviado al navegador | 1.2 KB, en línea y solo en `/agendar/` |
+| Compila | 18 páginas |
+| Peso total del `dist` | 1.1 MB |
+| CSS | Un archivo, 12.8 KB |
+| JavaScript enviado al navegador | 1.3 KB, en línea y solo en `/agendar/` |
 | Peticiones a terceros | Cero |
 | Tipografía | Poppins autoalojada, woff2 emitidos en el build |
-| Ilustración | AVIF y WebP generados en el build; 6.3 KB en la variante que se sirve |
-| JSON-LD | 23 bloques en 16 páginas, sin problemas |
-| Enlaces internos | 24 comprobados, ninguno roto |
+| Imágenes | AVIF, WebP y respaldo generados en el build, en los anchos que el layout usa |
+| JSON-LD | 27 bloques en 18 páginas, sin problemas |
+| Enlaces internos | 41 comprobados, ninguno roto |
 | Un solo `h1` por página | Sí |
 | Desborde horizontal | Ninguno, ni en 1280 px ni en 375 px |
 
-El presupuesto de la Etapa 3 era menos de 100 KB de CSS y JavaScript sumados y cero peticiones externas. Se cumple con margen: 9.6 KB de CSS y 1.2 KB de JavaScript en una sola página.
+Con `PUBLIC_GTM_ID` configurado (ADR 014) se añaden 3.7 KB de JavaScript en línea por página —el modo de consentimiento y la banda— y, **solo para quien acepta**, la descarga de Tag Manager. Vacío, nada de eso se emite y las cifras son las de arriba.
 
-Las dos ilustraciones de `public/img/` se sirven tal cual, sin variantes ni optimización, y pesan más que el resto del sitio junto. `alina-figure-arms.png` está además duplicada: la que usa `/sobre-alina/` es la copia de `src/assets/ilustraciones/`, que pasa por el optimizador y se entrega en 6.3 KB de AVIF. Resolverlo está en la sección 10.
+El presupuesto de la Etapa 3 era menos de 100 KB de CSS y JavaScript sumados y cero peticiones externas. Se cumple con margen: 12.8 KB de CSS y 1.3 KB de JavaScript en una sola página.
+
+La parte de "cero peticiones externas" deja de cumplirse para quien acepta cookies, y eso está asumido en el ADR 014. Para quien rechaza se sigue cumpliendo entero.
 
 ## 3. El esquema como condición de compilación
 
