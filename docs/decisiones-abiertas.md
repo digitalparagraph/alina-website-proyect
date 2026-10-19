@@ -66,7 +66,7 @@ El `consent` ya no se fija a mano: desde el ADR 014 existe una decisión real de
 
 El ADR 014 instaló el contenedor y la capa de consentimiento, no la medición. Falta decidir qué se configura dentro —GA4, conversiones de Google Ads, alguna otra— y revisar que cada etiqueta respete el modo de consentimiento: una mal configurada en la interfaz de Tag Manager se salta todo lo que el sitio hace, y eso ya no se controla desde este repositorio.
 
-Por defecto, mientras nadie lo decida: el contenedor vacío. Con `PUBLIC_GTM_ID` sin valor el sitio no manda una sola petición a Google.
+Por defecto, mientras nadie lo decida: el contenedor `GTM-WC58FXFZ` cargado y sin etiquetas dentro, que no instala ninguna cookie. Con `PUBLIC_GTM_ID` sin valor el sitio no manda una sola petición a Google.
 
 ### Tipografía
 

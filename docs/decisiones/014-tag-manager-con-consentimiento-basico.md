@@ -25,6 +25,8 @@ Lo que cambia respecto de aquel escenario es que la pieza que entra es Google Ta
 
 ## Decisión
 
+El contenedor es **`GTM-WC58FXFZ`**, y vive en `PUBLIC_GTM_ID`. No es un secreto —viaja en el HTML de cada página— y queda escrito aquí para que quien despliegue no tenga que pedirlo.
+
 Tag Manager cargado desde el propio sitio, con modo de consentimiento de Google **en implementación básica** y una banda de consentimiento propia.
 
 ### Cómo funciona
