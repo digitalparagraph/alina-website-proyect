@@ -1,9 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-// El apartado de cookies describe algo que solo existe si hay contenedor de
-// Tag Manager configurado (ADR 014). Sin el, el sitio no instala ninguna y el
-// documento tiene que decir eso, no describir una banda que nadie va a ver.
-const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== '';
+// El apartado de cookies describe algo que solo existe si hay medicion
+// configurada: el contenedor de Tag Manager (ADR 014), GA4 directo (ADR 015) o
+// los dos. Sin ninguno, el sitio no instala cookies y el documento tiene que
+// decir eso, no describir una banda que nadie va a ver.
+const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== ''
+         || (import.meta.env.PUBLIC_GA4_ID ?? '').trim() !== '';
 /**
  * Describe con precisión lo que el sistema hace de verdad (ADR 003 y 005) y
  * marca lo que falta. Sigue pendiente de revisión legal: la LFPDPPP tiene
@@ -63,10 +65,16 @@ const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== '';
     <section class="pila">
       <h2>Cookies</h2>
       <p>
-        Al entrar por primera vez, el sitio te pregunta. Hasta que respondas no
-        se instala ninguna cookie de medición ni de publicidad, y no se carga
-        ningún script de Google: la pregunta no es un trámite para informarte
-        de algo que ya pasó.
+        Al entrar por primera vez, el sitio te pregunta. <b>Hasta que respondas
+        no se instala ninguna cookie</b>, ni de medición ni de publicidad, y no
+        se guarda en tu navegador ningún identificador que permita reconocerte
+        en una visita posterior.
+      </p>
+      <p>
+        Sí se carga desde el principio la herramienta de medición de Google,
+        que cuenta la visita sin identificarte y sin escribir nada en tu
+        equipo. Si aceptas la medición, pasa a usar cookies; si la rechazas,
+        se queda contando de forma anónima.
       </p>
       <ul>
         <li>

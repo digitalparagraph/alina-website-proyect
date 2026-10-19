@@ -1,0 +1,36 @@
+---
+/**
+ * GA4 cargado directamente, sin pasar por Tag Manager y sin esperar a la banda
+ * de consentimiento.
+ *
+ * Por qué existe, teniendo contenedor: la etiqueta de GA4 que vive dentro de
+ * `GTM-WC58FXFZ` cuelga del evento `gtm.init`, que no se genera, y nunca
+ * dispara. Esto mide mientras eso se resuelve.
+ *
+ * **Va después de `ConsentimientoModo.astro`, nunca antes.** Ese componente
+ * declara los valores por defecto del modo de consentimiento, y gtag.js los
+ * respeta si ya están puestos cuando arranca. Con `analytics_storage` denegado,
+ * GA4 carga y mide sin escribir identificadores; al aceptar, el `consent
+ * update` lo habilita y pasa a medición completa. Invertir el orden convierte
+ * esto en medición sin consentimiento.
+ *
+ * Esa combinación —cargar siempre, guardar solo con permiso— es el modo
+ * avanzado de Google. Tag Manager sigue en modo básico, que es lo que decidió
+ * el ADR 014: son dos piezas distintas con dos tratos distintos, y el aviso de
+ * privacidad lo dice.
+ *
+ * Si `PUBLIC_GA4_ID` está vacío no se emite nada.
+ */
+const GA4 = (import.meta.env.PUBLIC_GA4_ID ?? '').trim();
+---
+{GA4 && (
+  <Fragment>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4}`}></script>
+    <script is:inline define:vars={{ GA4 }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA4);
+    </script>
+  </Fragment>
+)}

@@ -62,6 +62,18 @@ Cuando se añada: `PUBLIC_SIGNAL_ENDPOINT` vacío y **el destino de Meta CAPI no
 
 El `consent` ya no se fija a mano: desde el ADR 014 existe una decisión real del visitante, y Signal tiene que leer esa y no un valor escrito en el código.
 
+### La etiqueta de GA4 del contenedor no dispara
+
+Las reglas de `GTM-WC58FXFZ` cuelgan todas del evento `gtm.init`, que no se genera. Se descartó el consentimiento y la forma de insertar el script; el resto hay que verlo con el modo Vista previa de GTM, que es donde se ve qué disparador falta.
+
+Mientras tanto GA4 va por `gtag.js` directo (ADR 015). **Al destrabar el contenedor hay que quitar la etiqueta de GA4 de dentro**, o la medición se duplica.
+
+### Recolección automática de datos del usuario
+
+El contenedor la trae encendida —correo, teléfono y dirección, sin selectores de exclusión— y en GA4 directo la misma opción vive en la interfaz de la propiedad. Si queda activa, GA4 lee el correo que alguien escribe en `/agendar/` y lo manda a Google, contra el ADR 003 y contra lo que promete el aviso de privacidad.
+
+Por defecto, hasta que alguien lo confirme apagado: **hay que darlo por encendido y revisarlo**.
+
 ### Qué etiquetas van dentro de Tag Manager
 
 El ADR 014 instaló el contenedor y la capa de consentimiento, no la medición. Falta decidir qué se configura dentro —GA4, conversiones de Google Ads, alguna otra— y revisar que cada etiqueta respete el modo de consentimiento: una mal configurada en la interfaz de Tag Manager se salta todo lo que el sitio hace, y eso ya no se controla desde este repositorio.

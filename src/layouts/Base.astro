@@ -8,6 +8,7 @@ import logoPie from '../assets/logo-blanco.png';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import ConsentimientoModo from '../components/ConsentimientoModo.astro';
 import ConsentimientoBanda from '../components/ConsentimientoBanda.astro';
+import GoogleTag from '../components/GoogleTag.astro';
 import Persona from '../components/schema/Persona.astro';
 import { ruta, raizAbsoluta } from '../lib/rutas';
 
@@ -27,6 +28,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 // consentimiento ni la banda: sin etiquetas no hay nada que consentir, y el
 // sitio vuelve a ser el de cero JavaScript de terceros (ADR 014).
 const gtm = (import.meta.env.PUBLIC_GTM_ID ?? '').trim() !== '';
+// La banda hace falta en cuanto haya algo que consentir, y GA4 directo cuenta:
+// sin ella no habria forma de aceptar la medicion ni de rechazarla.
+const hayMedicion = gtm || (import.meta.env.PUBLIC_GA4_ID ?? '').trim() !== '';
 
 const MARCA = 'Alina Martínez';
 const tituloCompleto = titulo.includes(MARCA) ? titulo : `${titulo} · ${MARCA}`;
@@ -55,7 +59,8 @@ const enSeccion = (href) => {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  {gtm && <ConsentimientoModo />}
+  {hayMedicion && <ConsentimientoModo />}
+  <GoogleTag />
 
   <title>{tituloCompleto}</title>
   <meta name="description" content={descripcion} />
@@ -121,7 +126,7 @@ const enSeccion = (href) => {
   <main id="contenido"><slot /></main>
 
   <BotonWhatsApp />
-  {gtm && <ConsentimientoBanda />}
+  {hayMedicion && <ConsentimientoBanda />}
 
   <footer class="pie">
     <div class="contenedor pie-fila">
@@ -152,7 +157,7 @@ const enSeccion = (href) => {
         <li><a href={ruta('/preguntas-frecuentes/')}>Preguntas frecuentes</a></li>
         <li><a href={ruta('/aviso-de-privacidad/')}>Aviso de privacidad</a></li>
         <li><a href={ruta('/terminos-y-condiciones/')}>Términos y condiciones</a></li>
-        {gtm && (
+        {hayMedicion && (
           <li><button type="button" class="pie-boton" data-consent-abrir>Cookies</button></li>
         )}
       </ul>
